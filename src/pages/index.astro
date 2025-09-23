@@ -2,70 +2,299 @@
 export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
-import '../styles/global.css';
+import Hero from '../components/widgets/Hero.astro';
+import Features from '../components/widgets/Features.astro';
+import Features2 from '../components/widgets/Features2.astro';
+import Stats from '../components/widgets/Stats.astro';
+import FAQs from '../components/widgets/FAQs.astro';
+import CallToAction from '../components/widgets/CallToAction.astro';
+import Footer from '../components/widgets/Footer.astro';
+import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from '@sanity/image-url';
+
+const builder = imageUrlBuilder(sanityClient);
+
+function urlFor(source) {
+  return builder.image(source);
+}
+
+// Fetch latest posts from Sanity
+const latestPosts = await sanityClient.fetch(`*[_type == "post"] | order(publishedAt desc)[0...6] {
+  _id,
+  title,
+  slug,
+  excerpt,
+  mainImage,
+  publishedAt,
+  category->{title, slug}
+}`);
+
+// Fetch categories
+const categories = await sanityClient.fetch(`*[_type == "category"] | order(title asc) {
+  title,
+  slug,
+  description,
+  _id
+}`);
+
+// Fetch featured posts
+const featuredPosts = await sanityClient.fetch(`*[_type == "post" && featured == true] | order(publishedAt desc)[0...3] {
+  _id,
+  title,
+  slug,
+  excerpt,
+  mainImage,
+  category->{title}
+}`);
 ---
 
-<Layout title="Relocation Quest">
-  <main class="min-h-screen relative overflow-hidden">
-    <!-- Hero gradient background -->
-    <div class="absolute inset-0 bg-gradient-primary opacity-5"></div>
-    <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-radial opacity-10 blur-3xl"></div>
-    <div class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-radial opacity-10 blur-3xl"></div>
-    
-    <div class="relative container mx-auto px-6 py-12">
-      <header class="text-center mb-16 animate-fade-in">
-        <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-800 to-secondary-700 bg-clip-text text-transparent">
-          Relocation Quest
-        </h1>
-        <p class="text-xl text-gray-700 max-w-2xl mx-auto">Your comprehensive guide to relocating abroad</p>
-      </header>
+<Layout title="Relocation Quest - Your Guide to Global Living">
+  <Hero
+    title="Your Journey to Global Living Starts Here"
+    subtitle="Expert guidance on international relocation, visa applications, tax optimization, and building your dream life abroad."
+    tagline="Relocation Made Simple"
+    callToAction={{
+      text: "Explore Countries",
+      href: "/countries",
+      variant: "primary",
+    }}
+    callToAction2={{
+      text: "Read Latest Articles",
+      href: "/articles",
+    }}
+  />
+
+  <Features
+    title="Why Choose Relocation Quest?"
+    subtitle="Comprehensive resources and expert guidance for your international move"
+    items={[
+      {
+        title: "Golden Visa Programs",
+        description: "Navigate investment residency programs in Cyprus, Portugal, Malta, and more. Get expert guidance on requirements and benefits.",
+        icon: "tabler:passport",
+      },
+      {
+        title: "Tax Optimization",
+        description: "Understand international tax planning, non-dom status, and how to legally minimize your tax burden abroad.",
+        icon: "tabler:calculator",
+      },
+      {
+        title: "Digital Nomad Visas",
+        description: "Discover countries offering remote work visas and learn how to work from paradise legally.",
+        icon: "tabler:world",
+      },
+      {
+        title: "Company Formation",
+        description: "Set up your business in tax-efficient jurisdictions with our comprehensive guides and partner network.",
+        icon: "tabler:building",
+      },
+      {
+        title: "Banking & Finance",
+        description: "Open international bank accounts, understand FATCA/CRS requirements, and manage your wealth globally.",
+        icon: "tabler:credit-card",
+      },
+      {
+        title: "Lifestyle & Culture",
+        description: "From finding schools to understanding healthcare systems, we cover all aspects of expat life.",
+        icon: "tabler:heart",
+      },
+    ]}
+  />
+
+  <!-- Latest Articles Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
+          Latest Relocation Insights
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Stay informed with our latest articles on visas, taxes, and international living
+        </p>
+      </div>
       
-      <nav class="flex justify-center gap-4 mb-16">
-        <a href="/" class="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-full hover:shadow-glow transform hover:scale-105 transition-all font-medium">
-          Home
-        </a>
-        <a href="/articles" class="px-6 py-3 bg-white/80 backdrop-blur text-gray-700 rounded-full hover:bg-white hover:shadow-soft transform hover:scale-105 transition-all font-medium">
-          Articles
-        </a>
-        <a href="/studio" class="px-6 py-3 bg-white/80 backdrop-blur text-gray-700 rounded-full hover:bg-white hover:shadow-soft transform hover:scale-105 transition-all font-medium">
-          Studio
-        </a>
-      </nav>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {latestPosts.map((post) => (
+          <article class="bg-white rounded-xl shadow-soft hover:shadow-xl transition-all group">
+            {post.mainImage && (
+              <div class="aspect-video overflow-hidden rounded-t-xl">
+                <img
+                  src={urlFor(post.mainImage).width(600).height(400).url()}
+                  alt={post.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
+            )}
+            <div class="p-6">
+              {post.category && (
+                <span class="text-sm text-primary-600 font-medium">
+                  {post.category.title}
+                </span>
+              )}
+              <h3 class="text-xl font-bold mt-2 mb-3 group-hover:text-primary-600 transition-colors">
+                <a href={`/articles/${post.slug.current}`}>
+                  {post.title}
+                </a>
+              </h3>
+              <p class="text-gray-600 line-clamp-3 mb-4">
+                {post.excerpt}
+              </p>
+              <a 
+                href={`/articles/${post.slug.current}`}
+                class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium"
+              >
+                Read More
+                <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
       
-      <section class="max-w-5xl mx-auto">
-        <div class="bg-white/95 backdrop-blur rounded-2xl shadow-soft p-10 mb-12 animate-fade-up">
-          <h2 class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-primary-700 to-secondary-600 bg-clip-text text-transparent">
-            Welcome to Your Relocation Journey
-          </h2>
-          <p class="text-gray-700 text-lg mb-4 leading-relaxed">
-            Whether you're moving for work, lifestyle, or adventure, we're here to guide you through every step of your international relocation.
-          </p>
-          <p class="text-gray-700 text-lg mb-8 leading-relaxed">
-            Explore our comprehensive articles covering everything from visa requirements to cultural adaptation, housing, and more.
-          </p>
-          <a href="/articles" class="inline-block px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-full hover:shadow-glow transform hover:scale-105 transition-all font-semibold text-lg">
-            Browse Articles
-          </a>
-        </div>
-        
-        <div class="grid md:grid-cols-3 gap-8">
-          <div class="group bg-white/95 backdrop-blur p-8 rounded-xl shadow-soft hover:shadow-xl transform hover:-translate-y-1 transition-all cursor-pointer">
-            <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg mb-4 group-hover:scale-110 transition-transform"></div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-700 transition-colors">Cyprus</h3>
-            <p class="text-gray-600">Discover the Mediterranean lifestyle</p>
-          </div>
-          <div class="group bg-white/95 backdrop-blur p-8 rounded-xl shadow-soft hover:shadow-xl transform hover:-translate-y-1 transition-all cursor-pointer">
-            <div class="w-12 h-12 bg-gradient-to-br from-secondary-500 to-secondary-700 rounded-lg mb-4 group-hover:scale-110 transition-transform"></div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-secondary-700 transition-colors">Portugal</h3>
-            <p class="text-gray-600">Experience the Atlantic charm</p>
-          </div>
-          <div class="group bg-white/95 backdrop-blur p-8 rounded-xl shadow-soft hover:shadow-xl transform hover:-translate-y-1 transition-all cursor-pointer">
-            <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg mb-4 group-hover:scale-110 transition-transform"></div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-700 transition-colors">Spain</h3>
-            <p class="text-gray-600">Embrace the vibrant culture</p>
-          </div>
-        </div>
-      </section>
+      <div class="text-center mt-12">
+        <a 
+          href="/articles" 
+          class="inline-flex items-center px-8 py-4 bg-gradient-primary text-white rounded-full hover:shadow-glow transform hover:scale-105 transition-all font-semibold text-lg"
+        >
+          View All Articles
+          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
     </div>
-  </main>
+  </section>
+
+  <!-- Categories Grid -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">Explore by Category</h2>
+        <p class="text-xl text-gray-600">Find exactly what you need for your relocation journey</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {categories.slice(0, 8).map((category) => (
+          <a 
+            href={`/category/${category.slug.current}`}
+            class="group p-6 bg-white rounded-xl shadow-soft hover:shadow-xl transition-all hover:-translate-y-1"
+          >
+            <div class="w-12 h-12 bg-gradient-primary rounded-lg mb-4 group-hover:scale-110 transition-transform"></div>
+            <h3 class="text-lg font-bold mb-2 group-hover:text-primary-600 transition-colors">
+              {category.title}
+            </h3>
+            <p class="text-gray-600 text-sm">
+              {category.description || "Explore articles in this category"}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Stats
+    title="Trusted by Global Citizens"
+    stats={[
+      { title: "50+", subtitle: "Countries Covered" },
+      { title: "500+", subtitle: "Expert Articles" },
+      { title: "100K+", subtitle: "Monthly Readers" },
+      { title: "24/7", subtitle: "Updated Content" },
+    ]}
+  />
+
+  <Features2
+    title="Popular Destinations"
+    subtitle="Discover the best countries for your international move"
+    items={[
+      {
+        title: "Cyprus",
+        description: "EU citizenship pathway, non-dom tax benefits, Mediterranean lifestyle, and English-speaking environment.",
+        callToAction: {
+          text: "Explore Cyprus",
+          href: "/countries/cyprus",
+        },
+      },
+      {
+        title: "Portugal",
+        description: "Golden Visa program, NHR tax regime, affordable living, and excellent climate year-round.",
+        callToAction: {
+          text: "Explore Portugal",
+          href: "/countries/portugal",
+        },
+      },
+      {
+        title: "Dubai",
+        description: "Zero income tax, golden visa options, business hub, and world-class infrastructure.",
+        callToAction: {
+          text: "Explore Dubai",
+          href: "/countries/dubai",
+        },
+      },
+      {
+        title: "Malta",
+        description: "EU passport program, English-speaking, favorable tax system, and strategic location.",
+        callToAction: {
+          text: "Explore Malta",
+          href: "/countries/malta",
+        },
+      },
+      {
+        title: "Singapore",
+        description: "Asian business hub, territorial tax system, excellent education, and political stability.",
+        callToAction: {
+          text: "Explore Singapore",
+          href: "/countries/singapore",
+        },
+      },
+      {
+        title: "Caribbean",
+        description: "Citizenship by investment, tax havens, tropical paradise, and fast processing times.",
+        callToAction: {
+          text: "Explore Caribbean",
+          href: "/countries/caribbean",
+        },
+      },
+    ]}
+  />
+
+  <FAQs
+    title="Frequently Asked Questions"
+    subtitle="Get answers to common relocation questions"
+    items={[
+      {
+        title: "What is a Golden Visa?",
+        description: "A Golden Visa is a residency-by-investment program that grants residency rights to individuals who make qualifying investments in a country, typically in real estate, government bonds, or business ventures. These programs often lead to permanent residency and citizenship.",
+      },
+      {
+        title: "How long does it take to get residency?",
+        description: "Processing times vary by country and program. Golden Visa applications typically take 2-6 months, while standard residency permits can take 1-3 months. Citizenship through naturalization usually requires 5-10 years of residency.",
+      },
+      {
+        title: "What are the tax implications of relocating?",
+        description: "Tax implications depend on your citizenship, tax residency status, and the country you're moving to. Many countries offer favorable tax regimes for new residents, including non-dom status, territorial taxation, or special expat tax programs.",
+      },
+      {
+        title: "Can I work remotely on a tourist visa?",
+        description: "Generally no. Working remotely on a tourist visa is illegal in most countries. Instead, look for Digital Nomad Visas or remote work permits specifically designed for location-independent workers.",
+      },
+      {
+        title: "Which country is best for digital nomads?",
+        description: "Popular digital nomad destinations include Portugal, Estonia, Dubai, Barbados, and Croatia. Each offers dedicated digital nomad visas with different requirements, costs, and benefits. The best choice depends on your budget, lifestyle preferences, and tax situation.",
+      },
+    ]}
+  />
+
+  <CallToAction
+    title="Ready to Start Your Relocation Journey?"
+    subtitle="Get expert guidance and comprehensive resources for your international move"
+    callToAction={{
+      text: "Explore All Articles",
+      href: "/articles",
+    }}
+  />
+
+  <Footer />
 </Layout>

@@ -15,12 +15,53 @@ Create authoritative, helpful content for individuals and businesses relocating 
 
 ## 🔴 MANDATORY CHECKLIST FOR EVERY ARTICLE
 
+### ⚠️ CRITICAL: Complete ALL Fields BEFORE Publishing
+**DO NOT leave fields empty** - populate everything when creating the article to avoid manual fixes later.
+
+### 📝 LESSON LEARNED & PROCESS IMPROVEMENT:
+**What happened:** Articles were published before ensuring ALL had complete metadata (including hero images). Some images were generated after publishing, which created inconsistency.
+
+**MANDATORY Future Process:**
+1. Create articles ✅
+2. Add ALL metadata (author, categories) ✅  
+3. Generate hero images for ALL articles ✅
+4. Verify completeness BEFORE publishing ✅
+5. Publish only when 100% complete ✅
+
+**NEVER publish partial content - always ensure everything is ready first!**
+
 ### Phase 0: Research Phase (REQUIRED FIRST!)
 **ALWAYS use Tavily to research current information:**
 - `tavily_search` for latest updates, statistics, and regulations
 - `tavily_extract` for authoritative sources (PwC, KPMG, government sites)
 - Document all sources for citation
 - Find 1-2 HIGH AUTHORITY external links to include
+
+### ✅ Required SEO Fields (MUST BE SET ON CREATION):
+- **SEO Title** - Keyword-optimized, 50-60 characters
+- **Meta Description** - Compelling, 150-160 characters, includes focus keyword
+- **Focus Keyword** - Primary target keyword
+- **Secondary Keywords** - 3-5 related keywords
+- **Excerpt** - 2-3 sentences, mentions focus keyword naturally
+
+### ✅ Required Metadata (MUST BE SET ON CREATION):
+- **Author** - Always assign "Relocation Quest"
+- **Categories** - 1-3 relevant categories from:
+  - Digital Nomad
+  - Golden Visa
+  - Tax & Finance
+  - Residency & Immigration
+  - Business & Investment
+  - Healthcare & Education
+  - Lifestyle & Culture
+- **Tags** - 3-5 relevant tags
+- **Published Date** - Set appropriate publication date
+
+### ✅ Content Requirements:
+- **Comprehensive Content** - Minimum 800+ words (target 1500-2000)
+- **Keyword Integration** - Focus keyword in title, first paragraph, headings
+- **Alt Text** - All images have keyword-optimized alt text
+- **Internal Structure** - H1, H2, H3 headers with keywords
 
 ### External Links - REQUIRED:
 ✅ **MUST ADD 1-2 external links to HIGH AUTHORITY sites:**
@@ -239,18 +280,38 @@ Before completing any article, ensure:
 
 ---
 
-## 🔧 MCP CONTENT CREATION COMMANDS
+## 🔧 CONTENT CREATION PROMPT TEMPLATE
 
-### Create New Article
-```javascript
-// In Claude Desktop with MCP
-Create a blog post about [topic] with:
-- Research using Tavily for current requirements
-- Title: '[SEO-optimized title]'
-- Slug: '[url-friendly-slug]'
-- External links to government/authority sites
-- Images at 500-word intervals
-- Target length: 1,800-2,000 words
+### 🎯 Use This Template for ALL Future Content Creation:
+```
+Create a comprehensive [TOPIC] article with the following SEO requirements:
+
+**SEO Fields:**
+- SEO Title: [KEYWORD-optimized title, 50-60 chars]
+- Meta Description: [Compelling description with focus keyword, 150-160 chars] 
+- Focus Keyword: [PRIMARY_KEYWORD]
+- Secondary Keywords: [keyword1, keyword2, keyword3]
+- Excerpt: Brief excerpt naturally mentioning [PRIMARY_KEYWORD]
+
+**Metadata:**
+- Author: Relocation Quest
+- Categories: [Select 1-3 relevant categories]
+- Tags: [3-5 relevant tags]
+- Alt Text: SEO-optimized alt text for images including [PRIMARY_KEYWORD]
+
+**Content Requirements:**
+- Minimum 800 words (target 1500-2000)
+- Focus keyword in title, first paragraph, and 2-3 headings
+- Natural keyword distribution (1-2% density)
+- Include 1-2 external authority links (government, Big 4, .edu)
+- Images at 500-word intervals with optimized alt text
+- Comprehensive, actionable information
+- Professional, authoritative tone
+
+**Technical SEO:**
+- URL Slug: Clean, keyword-focused slug
+- Published Date: Set appropriate publication date
+- Internal links: 5+ links to related content
 ```
 
 ### Update Existing Article
