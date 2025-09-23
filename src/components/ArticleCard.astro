@@ -16,32 +16,51 @@ function formatDate(dateString: string) {
 }
 ---
 
-<article class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden">
+<article class="group bg-white/95 backdrop-blur rounded-xl shadow-soft hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
   {imageUrl && (
-    <a href={`/articles/${slug}`}>
+    <a href={`/articles/${slug}`} class="block relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
       <img 
         src={imageUrl} 
         alt={title}
-        class="w-full h-48 object-cover"
+        class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
         loading="lazy"
       />
     </a>
   )}
   
+  {!imageUrl && (
+    <div class="h-48 bg-gradient-to-br from-primary-500 to-secondary-500 relative overflow-hidden">
+      <div class="absolute inset-0 bg-black/10"></div>
+      <div class="absolute bottom-4 left-6 text-white">
+        <div class="text-3xl font-bold opacity-20">RQ</div>
+      </div>
+    </div>
+  )}
+  
   <div class="p-6">
-    <h3 class="text-xl font-semibold mb-2">
-      <a href={`/articles/${slug}`} class="text-gray-900 hover:text-blue-600 transition-colors">
+    <h3 class="text-xl font-semibold mb-3 line-clamp-2">
+      <a href={`/articles/${slug}`} class="text-gray-900 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-primary-600 group-hover:to-secondary-600 group-hover:bg-clip-text transition-all duration-300">
         {title}
       </a>
     </h3>
     
     {excerpt && (
-      <p class="text-gray-600 mb-4 line-clamp-3">{excerpt}</p>
+      <p class="text-gray-600 mb-4 line-clamp-3 leading-relaxed">{excerpt}</p>
     )}
     
-    <div class="flex items-center justify-between text-sm text-gray-500">
-      {author && <span>{author}</span>}
-      {date && <time datetime={date}>{formatDate(date)}</time>}
+    <div class="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-100">
+      {author && (
+        <span class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded-full bg-gradient-to-r from-primary-400 to-secondary-400"></div>
+          <span class="font-medium">{author}</span>
+        </span>
+      )}
+      {date && (
+        <time datetime={date} class="text-xs uppercase tracking-wide">
+          {formatDate(date)}
+        </time>
+      )}
     </div>
   </div>
 </article>
