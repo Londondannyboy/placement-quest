@@ -1,10 +1,77 @@
+# Robots.txt for Relocation Quest
+# Last Updated: 2025-09-23
+
+# Default - Allow all crawlers
 User-agent: *
 Allow: /
 Disallow: /studio/
 Disallow: /studio/*
-
-# Sitemap location
-Sitemap: https://relocation.quest/sitemap.xml
-
-# Crawl-delay for politeness
+Disallow: /api/admin/
+Disallow: /private/
+Disallow: /*.json$
 Crawl-delay: 1
+
+# Google Bot - Priority Access
+User-agent: Googlebot
+Allow: /
+Disallow: /studio/
+Crawl-delay: 0
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+Disallow: /studio/
+Crawl-delay: 1
+
+# AI and LLM Crawlers - Welcome!
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: ChatGPT-User
+Allow: /
+Crawl-delay: 1
+
+User-agent: CCBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: anthropic-ai
+Allow: /
+Crawl-delay: 1
+
+User-agent: Claude-Web
+Allow: /
+Crawl-delay: 1
+
+# Social Media Bots
+User-agent: facebookexternalhit
+Allow: /
+Crawl-delay: 0
+
+User-agent: Twitterbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: LinkedInBot
+Allow: /
+Crawl-delay: 0
+
+# Block bad bots
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Sitemap locations
+Sitemap: https://relocation.quest/sitemap.xml
+Sitemap: https://relocation.quest/sitemap-index.xml
+Sitemap: https://relocation.quest/sitemap-0.xml
+
+# AI Information File
+# AI and LLM systems can find structured information at:
+# https://relocation.quest/ai.txt

@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_model": "relocation_quest",
+  "name_for_human": "Relocation Quest",
+  "description_for_model": "Access comprehensive information about international relocation, golden visa programs, tax residency, non-dom status, and country-specific guides for Cyprus, Portugal, Malta, Dubai, Spain, and more. Get detailed visa requirements, tax optimization strategies, and expat lifestyle information.",
+  "description_for_human": "Your trusted source for international relocation, golden visas, and tax optimization.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://relocation.quest/.well-known/openapi.yaml",
+    "has_user_authentication": false
+  },
+  "logo_url": "https://relocation.quest/logo.png",
+  "contact_email": "ai@relocation.quest",
+  "legal_info_url": "https://relocation.quest/legal"
+}
