@@ -4,7 +4,6 @@ import sanity from '@sanity/astro';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
-import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,12 +17,6 @@ export default defineConfig({
     }),
     react(),
     tailwind(),
-    sitemap({
-      filter: (page) => !page.includes('/studio'),
-      changefreq: 'weekly',
-      priority: 0.7,
-      lastmod: new Date(),
-    }),
   ],
   output: 'hybrid',
   adapter: vercel(),
