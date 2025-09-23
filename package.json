@@ -9,6 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.13.10"
+    "@sanity/vision": "^4.9.0",
+    "astro": "^5.13.10",
+    "sanity": "^4.9.0"
   }
 }
