@@ -3,6 +3,15 @@
 ## Project Overview
 This is the Relocation Quest project - a content platform focused on international relocation, visas, tax optimization, and global lifestyle information.
 
+### 🎯 UNIFIED PROJECT NAMING
+**IMPORTANT**: All services now use the same project name:
+- **GitHub Repository**: `relocation-quest`
+- **Vercel Project**: `relocation-quest` (previously was relocation-quest-clean)
+- **Sanity Project**: `relocation-quest`
+- **Local Directory**: `/Users/dankeegan/relocation-quest`
+
+This unified naming eliminates confusion across all platforms.
+
 ## Document Management Rules
 
 ### 📚 IMPORTANT: Document Organization
