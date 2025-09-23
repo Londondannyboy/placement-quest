@@ -1,0 +1,90 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  author?: string;
+  keywords?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'Relocation Quest - Your comprehensive guide to international relocation, visas, residency programs, and global lifestyle.',
+  image = '/default-og-image.jpg',
+  canonical,
+  type = 'website',
+  publishedTime,
+  author,
+  keywords = 'relocation, immigration, residency, visa, golden visa, expat, international living',
+  noindex = false
+} = Astro.props;
+
+const siteUrl = 'https://relocation.quest';
+const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
+const canonicalURL = canonical || Astro.url.href;
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+{!noindex && <meta name="robots" content="index, follow" />}
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={fullImageUrl} />
+<meta property="og:site_name" content="Relocation Quest" />
+{type === 'article' && publishedTime && (
+  <meta property="article:published_time" content={publishedTime} />
+)}
+{type === 'article' && author && (
+  <meta property="article:author" content={author} />
+)}
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={fullImageUrl} />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+  {JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": type === 'article' ? "Article" : "WebPage",
+    "headline": title,
+    "description": description,
+    "image": fullImageUrl,
+    "url": canonicalURL,
+    ...(type === 'article' && {
+      "datePublished": publishedTime,
+      "author": {
+        "@type": "Person",
+        "name": author || "Relocation Quest Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Relocation Quest",
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${siteUrl}/logo.png`
+        }
+      }
+    }),
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalURL
+    }
+  })}
+</script>

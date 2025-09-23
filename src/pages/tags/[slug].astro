@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from '@sanity/image-url';
+
+export async function getStaticPaths() {
+  const tags = await sanityClient.fetch(`
+    *[_type == "tag"] {
+      slug
+    }
+  `);
+
+  return tags.map((tag) => ({
+    params: { slug: tag.slug.current },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const tag = await sanityClient.fetch(`
+  *[_type == "tag" && slug.current == $slug][0] {
+    _id,
+    title
+  }
+`, { slug });
+
+const posts = await sanityClient.fetch(`
+  *[_type == "post" && references($tagId)] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    excerpt,
+    mainImage,
+    publishedAt,
+    author->
+  }
+`, { tagId: tag._id });
+
+const builder = imageUrlBuilder(sanityClient);
+
+function urlFor(source) {
+  return builder.image(source);
+}
+---
+
+<Layout title={`Articles tagged with "${tag.title}" - Relocation Quest`}>
+  <main class="container mx-auto px-4 py-8 max-w-6xl">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-4">
+        Articles tagged with <span class="text-blue-600">"{tag.title}"</span>
+      </h1>
+      <div class="text-sm text-gray-500">
+        {posts.length} {posts.length === 1 ? 'article' : 'articles'} found
+      </div>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {posts.map((post) => (
+        <ArticleCard 
+          title={post.title}
+          excerpt={post.excerpt}
+          slug={post.slug.current}
+          imageUrl={post.mainImage ? urlFor(post.mainImage).width(400).height(250).url() : null}
+          date={post.publishedAt}
+          author={post.author?.name}
+        />
+      ))}
+    </div>
+    
+    {posts.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-gray-500 text-lg">No articles with this tag yet.</p>
+      </div>
+    )}
+    
+    <div class="mt-12 text-center">
+      <a href="/tags" class="text-blue-600 hover:text-blue-800">
+        ← Back to all tags
+      </a>
+    </div>
+  </main>
+</Layout>

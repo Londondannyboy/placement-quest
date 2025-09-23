@@ -1,0 +1,86 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from '@sanity/image-url';
+
+export async function getStaticPaths() {
+  const categories = await sanityClient.fetch(`
+    *[_type == "category"] {
+      slug
+    }
+  `);
+
+  return categories.map((category) => ({
+    params: { slug: category.slug.current },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const category = await sanityClient.fetch(`
+  *[_type == "category" && slug.current == $slug][0] {
+    _id,
+    title,
+    description,
+    color
+  }
+`, { slug });
+
+const posts = await sanityClient.fetch(`
+  *[_type == "post" && references($categoryId)] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    excerpt,
+    mainImage,
+    publishedAt,
+    author->
+  }
+`, { categoryId: category._id });
+
+const builder = imageUrlBuilder(sanityClient);
+
+function urlFor(source) {
+  return builder.image(source);
+}
+---
+
+<Layout title={`${category.title} Articles - Relocation Quest`}>
+  <main class="container mx-auto px-4 py-8 max-w-6xl">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-4">{category.title}</h1>
+      {category.description && (
+        <p class="text-lg text-gray-600">{category.description}</p>
+      )}
+      <div class="mt-4 text-sm text-gray-500">
+        {posts.length} {posts.length === 1 ? 'article' : 'articles'} in this category
+      </div>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {posts.map((post) => (
+        <ArticleCard 
+          title={post.title}
+          excerpt={post.excerpt}
+          slug={post.slug.current}
+          imageUrl={post.mainImage ? urlFor(post.mainImage).width(400).height(250).url() : null}
+          date={post.publishedAt}
+          author={post.author?.name}
+        />
+      ))}
+    </div>
+    
+    {posts.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-gray-500 text-lg">No articles in this category yet.</p>
+      </div>
+    )}
+    
+    <div class="mt-12 text-center">
+      <a href="/categories" class="text-blue-600 hover:text-blue-800">
+        ← Back to all categories
+      </a>
+    </div>
+  </main>
+</Layout>

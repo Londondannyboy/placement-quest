@@ -1,0 +1,45 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { sanityClient } from 'sanity:client';
+
+const categories = await sanityClient.fetch(`
+  *[_type == "category"] | order(title asc) {
+    _id,
+    title,
+    slug,
+    description,
+    color,
+    "postCount": count(*[_type == "post" && references(^._id)])
+  }
+`);
+---
+
+<Layout title="Categories - Relocation Quest">
+  <main class="container mx-auto px-4 py-8 max-w-6xl">
+    <h1 class="text-4xl font-bold mb-8">Article Categories</h1>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      {categories.map((category) => (
+        <a 
+          href={`/categories/${category.slug.current}`}
+          class="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          style={category.color ? `border-left: 4px solid ${category.color}` : ''}
+        >
+          <h2 class="text-2xl font-semibold mb-2">{category.title}</h2>
+          {category.description && (
+            <p class="text-gray-600 mb-4">{category.description}</p>
+          )}
+          <span class="text-sm text-gray-500">
+            {category.postCount} {category.postCount === 1 ? 'article' : 'articles'}
+          </span>
+        </a>
+      ))}
+    </div>
+    
+    {categories.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-gray-500 text-lg">No categories available yet.</p>
+      </div>
+    )}
+  </main>
+</Layout>

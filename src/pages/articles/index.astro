@@ -4,7 +4,7 @@ import { client } from '../../lib/sanity';
 import '../../styles/global.css';
 
 const articles = await client.fetch(`
-  *[_type == "article"] | order(publishedAt desc) {
+  *[_type == "post"] | order(publishedAt desc) {
     _id,
     title,
     slug,
