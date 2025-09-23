@@ -1,0 +1,47 @@
+---
+export interface Props {
+  title: string;
+  excerpt?: string;
+  slug: string;
+  imageUrl?: string;
+  date?: string;
+  author?: string;
+}
+
+const { title, excerpt, slug, imageUrl, date, author } = Astro.props;
+
+function formatDate(dateString: string) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+}
+---
+
+<article class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden">
+  {imageUrl && (
+    <a href={`/articles/${slug}`}>
+      <img 
+        src={imageUrl} 
+        alt={title}
+        class="w-full h-48 object-cover"
+        loading="lazy"
+      />
+    </a>
+  )}
+  
+  <div class="p-6">
+    <h3 class="text-xl font-semibold mb-2">
+      <a href={`/articles/${slug}`} class="text-gray-900 hover:text-blue-600 transition-colors">
+        {title}
+      </a>
+    </h3>
+    
+    {excerpt && (
+      <p class="text-gray-600 mb-4 line-clamp-3">{excerpt}</p>
+    )}
+    
+    <div class="flex items-center justify-between text-sm text-gray-500">
+      {author && <span>{author}</span>}
+      {date && <time datetime={date}>{formatDate(date)}</time>}
+    </div>
+  </div>
+</article>
