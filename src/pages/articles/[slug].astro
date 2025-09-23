@@ -11,9 +11,11 @@ export async function getStaticPaths() {
     }
   `);
 
-  return articles.map((article: any) => ({
-    params: { slug: article.slug.current },
-  }));
+  return articles
+    .filter((article: any) => article.slug?.current)
+    .map((article: any) => ({
+      params: { slug: article.slug.current },
+    }));
 }
 
 const { slug } = Astro.params;

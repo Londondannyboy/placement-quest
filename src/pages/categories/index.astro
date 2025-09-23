@@ -20,7 +20,7 @@ const categories = await sanityClient.fetch(`
     <h1 class="text-4xl font-bold mb-8">Article Categories</h1>
     
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-      {categories.map((category) => (
+      {categories.filter((category) => category.slug?.current).map((category) => (
         <a 
           href={`/categories/${category.slug.current}`}
           class="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"

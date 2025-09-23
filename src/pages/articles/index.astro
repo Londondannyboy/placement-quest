@@ -47,7 +47,7 @@ const articles = await client.fetch(`
           </div>
         ) : (
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {articles.map((article: any) => (
+            {articles.filter((article: any) => article.slug?.current).map((article: any) => (
               <article class="bg-white rounded-lg shadow hover:shadow-lg transition">
                 {article.mainImage && (
                   <img
