@@ -18,17 +18,24 @@
 - Use markDefs format for all links
 - External links: add `blank: true` for new tab
 
-#### 2. IMAGE HANDLING - WORKING METHOD CONFIRMED!
+#### 2. IMAGE HANDLING - ENHANCED v3.0 METHOD!
 - **Hero Image:** Use `mainImage` field (NOT heroImage)
 - **Content Images:** Use body array with _key
-- **Two-step process:** Minimal placeholder + AI generate
-- **NEVER** add alt, caption, or asset in placeholder
-- **AI-generated ONLY** - NO stock photo APIs
+- **Image Asset References:** Find and reuse existing image assets
+- **CRITICAL:** Add descriptions and alt text for SEO and selection
+- **Process:** 
+  1. Query image asset bank for best matches
+  2. Set image with asset reference AND description
+  3. Reuse same images across related articles
+- **Descriptions:** Rich, keyword-heavy descriptions for better matching
 
-#### 3. CONTENT CREATION LIMITS
+#### 3. CONTENT CREATION LIMITS & BATCH SIZES
 - Maximum 500-800 words per operation
 - Build articles through multiple patches
 - Never attempt 1,800 words in one operation
+- **BATCH SIZES for Sonnet:** 3-5 articles per batch (optimal)
+- **Per Session:** 15-20 articles before new chat
+- **Daily Target:** 50-100 articles (10-20 batches)
 
 #### 4. MANDATORY LANGUAGE
 - Always: "our [Country] partners" (e.g., "our Cyprus partners")

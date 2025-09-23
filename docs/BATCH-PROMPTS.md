@@ -1,6 +1,239 @@
-# Relocation Quest Batch Content Creation Prompts
+# 🚀 RELOCATION QUEST BATCH ARTICLE SYSTEM v3.0
 
-## 🚀 Initial Setup Prompt (Start EVERY Session)
+## 📊 BATCH SIZES & EXPECTATIONS
+- **Per Response**: 3-5 articles maximum (optimal for Sonnet)
+- **Per Session**: 15-20 articles before new chat
+- **Daily Target**: 50-100 articles (10-20 batches)
+- **Time Per Batch**: 20-30 minutes
+
+## 🎯 PHASE 0: PREPARATION (Once Per Session)
+
+### Research Topics with Tavily:
+```
+tavily_search: "[country] residence visa 2025 requirements"
+tavily_extract: Official government sources
+Build fact bank for accuracy
+```
+
+### Build Image Asset Bank:
+```javascript
+// Query all images with descriptions
+*[_type == "sanity.imageAsset"]{
+  _id,
+  originalFilename,
+  description,
+  "keywords": lower(originalFilename + " " + coalesce(description, ""))
+}
+```
+
+## 🎯 PHASE 1: BATCH ARTICLE CREATION
+
+### Command Template:
+```
+Create these 3 articles about Cyprus:
+
+1. "cyprus-permanent-residency-guide"
+   Focus: Fast-track PR program
+   Keywords: permanent residency, investment, EU benefits
+
+2. "cyprus-company-formation-guide"
+   Focus: 12.5% corporate tax
+   Keywords: business, incorporation, tax benefits
+
+3. "cyprus-banking-for-expats"
+   Focus: Account opening process
+   Keywords: banking, financial services, non-residents
+```
+
+### For EACH Article:
+```
+✅ 1,800+ words structured as:
+- Introduction (300-400 words)
+- Requirements section (400-500 words)
+- Benefits section (400-500 words)
+- Process section (400-500 words)
+- Conclusion (200-300 words)
+
+✅ Set publishedAt to current time
+✅ Assign to appropriate category
+✅ Add focus keyword for SEO
+```
+
+## 🎯 PHASE 2: INTELLIGENT IMAGE ASSIGNMENT
+
+### After Article Creation:
+```javascript
+// For each article
+for (article of articles) {
+  // 1. Find best matching image
+  bestMatch = findImageByKeywords(article.slug, imageBank)
+  
+  // 2. Set hero image WITH DESCRIPTION
+  await patch({
+    path: "mainImage",
+    value: {
+      _type: "image",
+      asset: {_ref: bestMatch._id, _type: "reference"},
+      alt: "Generated alt text for SEO",
+      description: "Cyprus coastal city view - perfect for expats"
+    }
+  })
+  
+  // 3. Add same image mid-article
+  await patch({
+    op: "append",
+    path: "body",
+    value: [{
+      _key: "img_middle",
+      _type: "image",
+      asset: {_ref: bestMatch._id, _type: "reference"},
+      alt: "Different alt text for variety"
+    }]
+  })
+}
+```
+
+## 🎯 PHASE 3: LINK INJECTION
+
+### Add Links Systematically:
+
+**External Links (1-2 per article):**
+- Government sites (.gov)
+- Big 4 firms (PwC, KPMG, EY, Deloitte)
+- Official EU portals
+- INSERT naturally in first 500 words
+
+**Internal Links (3-5 per article):**
+- Related country articles
+- Similar visa types
+- Comparison articles
+- Use FULL URLs: https://relocation.quest/articles/...
+
+## 🎯 PHASE 4: IMAGE DESCRIPTION ENHANCEMENT
+
+### Update Image Descriptions:
+```javascript
+await patch({
+  path: "mainImage.description",
+  value: "Panoramic view of Limassol Marina in Cyprus showcasing luxury yachts, modern apartments, and Mediterranean lifestyle - ideal for expatriates considering Cyprus permanent residency through investment programs"
+})
+```
+
+**This enables:**
+- Better keyword matching for future use
+- Rich alt text for SEO
+- Context for image placement decisions
+- Accessibility compliance
+
+## 🎯 PHASE 5: BATCH PUBLISHING
+
+### Final Checklist Per Article:
+```
+□ Word count verified (1,800+)
+□ Hero image has asset reference
+□ Hero image has description/alt text
+□ Content image inserted (reused asset)
+□ External authority link present
+□ 3+ internal links added
+□ Category assigned
+□ Author set to "Relocation Team"
+□ publishedAt timestamp set
+```
+
+### Batch Publish Command:
+```javascript
+for (articleId of completedArticles) {
+  await publish(articleId)
+}
+```
+
+## 📋 QUALITY METRICS
+
+### Track Per Batch:
+- Articles completed: X/5
+- Images successfully linked: X/10
+- Links added: X external, Y internal
+- Categories used: [list]
+- Time taken: XX minutes
+
+## 🔄 ITERATION PATTERN
+
+### Session Structure:
+```
+Batch 1 (Cyprus): 5 articles → 20 mins
+Batch 2 (Malta): 5 articles → 20 mins
+Batch 3 (Portugal): 5 articles → 20 mins
+--- BREAK / CLEAR CONTEXT ---
+Batch 4 (Spain): 5 articles → 20 mins
+```
+
+## 🚨 ERROR RECOVERY
+
+### If Image Asset Missing:
+```javascript
+// Get latest uploaded image
+const fallback = await query(
+  '*[_type == "sanity.imageAsset"] | order(_createdAt desc)[0]'
+)
+// Use as temporary placeholder
+```
+
+### If Timeout Occurs:
+- Complete current article only
+- Publish what's done
+- Start fresh batch
+
+## 📊 SAMPLE BATCH COMMAND
+
+```
+Create 3 Cyprus articles NOW:
+
+1. cyprus-non-dom-tax-regime
+   Topic: 17-year tax exemptions
+   Research: Use Tavily for 2025 updates
+   Image hint: Financial/business theme
+
+2. cyprus-real-estate-investment  
+   Topic: Property purchase process
+   Research: Current price ranges
+   Image hint: Coastal properties
+
+3. cyprus-crypto-regulations
+   Topic: Blockchain-friendly laws
+   Research: Latest regulations
+   Image hint: Tech/finance theme
+
+For ALL articles:
+- 1,800+ words
+- Add to "Tax & Finance" category
+- Include PwC.com external link
+- Cross-link between all three
+- Reuse best matching images from bank
+- Add detailed image descriptions
+```
+
+## ✅ SUCCESS CRITERIA
+
+### Per Article:
+- Published and live
+- Properly formatted
+- Images displaying
+- Links working
+- SEO optimized
+
+### Per Batch (5 articles):
+- Completed in <30 mins
+- Zero broken images
+- All cross-linked
+- Consistent quality
+
+### Per Day (100 articles):
+- 20 batches completed
+- 5-7 chat sessions
+- Full site interconnected
+- Image bank enriched
+
+## 🚀 INITIAL SETUP PROMPT (Start EVERY Session)
 
 ```
 I'm working with Relocation Quest Sanity CMS.
@@ -10,310 +243,25 @@ CRITICAL RULES ACKNOWLEDGED:
 - Full URLs for all internal links (https://relocation.quest/articles/...)
 - Hero image in mainImage field (not heroImage)
 - Content images in body array with _key
-- 500-800 words per operation max
+- 3-5 articles per batch for Sonnet
 - "Our [country] partners" language
 - publishedAt field required
+- Image asset references with descriptions
 
-I understand the WORKING two-step image process:
-1. Minimal placeholder (only _type/_key)
-2. AI generation with sanity.images.generate
+WORKING IMAGE PROCESS:
+1. Find existing image assets
+2. Assign with proper references and descriptions
+3. Reuse assets across articles for efficiency
 
 MCP TOOLS CONNECTED:
 - Sanity MCP Server
 - Vercel Deployment
-- Web Search/Fetch
+- Web Search/Fetch (Tavily)
 
 PRE-APPROVED: All operations. Execute without asking.
 ```
 
-## 📋 REALISTIC Article Creation Strategy
-
-### Daily Goal: 3-5 COMPLETE Articles
-
-```
-REALISTIC TIMELINE:
-- 1 complete article: 2-3 hours
-- 3 articles: Full day (8 hours)
-- 5 articles: Long day (12 hours)
-- 100 articles: 20-30 working days
-```
-
-## 🎯 Phase 1: Create Article Shell
-
-### Prompt Template:
-```
-Create article shell for "[Country] [Topic]":
-1. Check for duplicate slug
-2. Create with title, slug, publishedAt, and 500-word intro
-3. Focus on [specific angle]
-4. Include quick facts section
-
-Slug: [country]-[topic]-guide
-Title: [Country] [Topic]: Complete Guide 2025
-```
-
-### Example Implementation:
-```javascript
-// Check duplicates
-await sanity.documents.query(
-  '*[_type == "post" && slug.current == $slug]{_id}',
-  {slug: "cyprus-tax-residency-guide"}
-)
-
-// Create shell
-await sanity.documents.create({
-  _type: 'post',  // Document type is 'post'
-  title: 'Cyprus Tax Residency: Complete Guide 2025',
-  slug: { current: 'cyprus-tax-residency-guide' },
-  excerpt: 'Complete guide to obtaining tax residency in Cyprus...',
-  publishedAt: new Date().toISOString(),
-  body: [
-    {
-      _type: 'block',
-      _key: 'intro1',
-      style: 'h2',
-      children: [{ _type: 'span', text: 'Quick Facts' }]
-    },
-    // ... intro content (500 words max)
-  ]
-})
-```
-
-## 🎯 Phase 2: Expand Content
-
-### Prompt for Each Section:
-```
-Add [Section Name] section to article ID [xxx]:
-- 400-500 words
-- Include specific requirements/benefits/process
-- Add relevant statistics
-- Maintain professional tone
-```
-
-### Section Templates:
-
-#### Requirements Section:
-```javascript
-await sanity.documents.patch(articleId, {
-  insert: {
-    after: 'body[-1]',
-    items: [
-      {
-        _type: 'block',
-        _key: 'req_heading',
-        style: 'h2',
-        children: [{ text: 'Tax Residency Requirements' }]
-      },
-      // ... requirements content
-    ]
-  }
-})
-```
-
-#### Benefits Section:
-```javascript
-// Include table for tax rates
-{
-  _type: 'block',
-  _key: 'benefits_table',
-  style: 'normal',
-  children: [{ text: 'Tax rates table here...' }]
-}
-```
-
-#### Process Section:
-```javascript
-// Step-by-step format
-{
-  _type: 'block',
-  _key: 'step1',
-  style: 'h3',
-  children: [{ text: 'Step 1: Pre-Application' }]
-}
-```
-
-## 🎯 Phase 3: AI Image Generation
-
-### Hero Image Prompt:
-```
-Add hero image to article [ID]:
-1. Set mainImage placeholder
-2. Generate with prompt: "[Country] [landmark/skyline], professional vector illustration, blue-orange gradient"
-```
-
-### Implementation:
-```javascript
-// Step 1: Placeholder
-await sanity.documents.patch(articleId, {
-  set: { 'mainImage': { '_type': 'image' } }
-})
-
-// Step 2: Generate
-await sanity.images.generate({
-  documentId: articleId,
-  imagePath: 'mainImage',
-  instruction: 'Cyprus Limassol skyline, vector illustration, blue to orange gradient',
-  operation: 'generate'
-})
-```
-
-### Content Images Prompt:
-```
-Add infographic after section [X]:
-1. Insert image placeholder with key 'img_[position]'
-2. Generate with context-appropriate prompt
-```
-
-### Implementation:
-```javascript
-// After ~500 words
-await sanity.documents.patch(articleId, {
-  insert: {
-    after: 'body[5]',
-    items: [{ '_key': 'img_500', '_type': 'image' }]
-  }
-})
-
-await sanity.images.generate({
-  documentId: articleId,
-  imagePath: 'body[_key=="img_500"]',
-  instruction: 'Tax calculation infographic, clean design, blue-orange theme',
-  operation: 'generate'
-})
-```
-
-## 🎯 Phase 4: Add Internal Links
-
-### Prompt Template:
-```
-Add internal links to article [ID]:
-1. Find 5+ related articles
-2. Update relevant paragraphs with markDefs
-3. Add "Related Articles" section at end
-4. Use FULL URLs (https://relocation.quest/articles/...)
-```
-
-### Implementation:
-```javascript
-// Find related articles
-const related = await sanity.documents.query(
-  '*[_type == "article" && slug.current match "cyprus*"]{_id, slug, title}'
-)
-
-// Update paragraph with link
-await sanity.documents.patch(articleId, {
-  set: {
-    'body[2]': {
-      _type: 'block',
-      _key: 'para_with_link',
-      markDefs: [{
-        _key: 'link1',
-        _type: 'link',
-        href: 'https://relocation.quest/articles/cyprus-permanent-residency',
-        blank: false
-      }],
-      children: [
-        { text: 'Learn about ', marks: [] },
-        { text: 'permanent residency options', marks: ['link1'] },
-        { text: ' in Cyprus.', marks: [] }
-      ]
-    }
-  }
-})
-```
-
-## 🎯 Phase 5: Quality Check
-
-### Final Review Prompt:
-```
-Complete quality check for article [ID]:
-1. Verify 1,800+ words
-2. Check all images generated
-3. Confirm 5+ internal links
-4. Add excerpt if missing
-5. Verify publishedAt is set
-6. Final republish to sync
-```
-
-## 📊 Batch Creation Commands
-
-### Create 5 Cyprus Articles:
-```
-Create these 5 Cyprus articles in sequence:
-1. cyprus-tax-residency-guide
-2. cyprus-permanent-residency-guide
-3. cyprus-golden-visa-guide
-4. cyprus-digital-nomad-guide
-5. cyprus-vs-malta-comparison
-
-For each:
-- Phase 1: Shell (500 words)
-- Phase 2: Expand (4 sections × 400 words)
-- Phase 3: Images (hero + 3 content)
-- Phase 4: Links (5+ internal)
-- Phase 5: QA & publish
-```
-
-### Bulk Image Generation:
-```
-For articles [ID1, ID2, ID3]:
-1. Add mainImage placeholders
-2. Generate hero images with location-specific prompts
-3. Add content images at 500, 1000, 1500 word marks
-4. Generate all content images
-```
-
-### Mass Link Addition:
-```
-Update all Cyprus articles with cross-links:
-1. Query all Cyprus articles
-2. Add reciprocal links between related topics
-3. Ensure all use full URLs
-4. Add consistent "Related Articles" sections
-```
-
-## 🔧 Troubleshooting Prompts
-
-### If Images Fail:
-```
-Retry image generation for [ID]:
-1. Verify placeholder exists
-2. Simplify prompt to basic elements
-3. Try alternative instruction
-4. Check imagePath syntax
-```
-
-### If Content Too Long:
-```
-Split content addition for [ID]:
-1. Break section into 2 parts
-2. Add first 400 words
-3. Add remaining in separate patch
-```
-
-### If Links Don't Work:
-```
-Fix links in article [ID]:
-1. Query current body content
-2. Find broken link patterns
-3. Replace with full URLs
-4. Verify markDefs structure
-```
-
-## ✅ Success Verification
-
-### After Each Article:
-```
-Verify article [ID] complete:
-- [ ] Word count: 1,800+
-- [ ] Hero image visible
-- [ ] 3+ content images
-- [ ] 5+ internal links working
-- [ ] Published status
-- [ ] Live at: https://relocation.quest/articles/[slug]
-```
-
-## 🚀 Deployment Command
+## 🔧 DEPLOYMENT
 
 After batch creation:
 ```bash
@@ -321,22 +269,8 @@ cd /Users/dankeegan/relocation-quest
 VERCEL_TOKEN=gAYaR1sjB2NTXl4oYQ4CrmeY npx vercel --token gAYaR1sjB2NTXl4oYQ4CrmeY --yes --prod
 ```
 
-## 📈 Progress Tracking
-
-### Daily Report Template:
-```
-Day [X] Progress:
-- Articles created: [List]
-- Total word count: [X]
-- Images generated: [X]
-- Links added: [X]
-- Published & live: [X]
-- Issues encountered: [List]
-- Tomorrow's targets: [List]
-```
-
 ---
 
-*Version: 1.0 - Batch Creation System*
+*Version: 3.0 - Complete Batch Content Creation Strategy*
 *Last Updated: September 2025*
-*Optimized for Relocation Quest Current Setup*
+*Optimized for Sonnet with 3-5 article batches*
