@@ -102,6 +102,35 @@ For issues or questions:
 - Review error logs carefully
 - Test locally before deploying
 
+## 🤖 Automated Content Publishing (Cron Jobs)
+
+### Available Cron Endpoints
+The project has automated content publishing via Vercel cron jobs:
+
+1. **Publish Content** - `/api/cron/publish-content`
+   - Schedule: Every 6 hours (00:00, 06:00, 12:00, 18:00 UTC)
+   - Publishes up to 3 draft articles
+
+2. **Daily Content** - `/api/cron/daily-content`  
+   - Schedule: Daily at 9 AM UTC
+   - Creates 2-3 new articles from templates
+
+3. **Weekly Review** - `/api/cron/weekly-review`
+   - Schedule: Mondays at 10 AM UTC
+   - Generates content health reports
+
+### Manual Triggering from Claude Desktop
+```javascript
+// Trigger immediate publishing
+await fetch('https://relocation.quest/api/cron/publish-content', {
+  method: 'POST',
+  headers: { 'Authorization': 'Bearer CRON_SECRET' }
+});
+```
+
+### Documentation
+Full details in `docs/CRON-AUTOMATION.md`
+
 ## Design Phase (AstroWind Template Integration)
 
 When starting the design phase after clearing:
