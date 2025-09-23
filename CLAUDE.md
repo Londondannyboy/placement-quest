@@ -102,5 +102,21 @@ For issues or questions:
 - Review error logs carefully
 - Test locally before deploying
 
+## Design Phase (AstroWind Template Integration)
+
+When starting the design phase after clearing:
+1. Refer to `docs/DESIGN-PHASE.md` for complete instructions
+2. Use AstroWind template components and styling
+3. Keep Sanity CMS integration intact
+4. Apply design system from the successful AstroWind template we used before
+
+### Design Phase Priorities
+- Modern, clean design from AstroWind template
+- Responsive layouts with Tailwind CSS
+- Hero sections with gradients (blue to orange theme)
+- Card-based article layouts
+- Smooth animations and transitions
+- Mobile-first approach
+
 ---
 Last Updated: 2025-09-23

@@ -1,4 +1,15 @@
-# Relocation Quest Content Creation Guide
+# Relocation Quest Content Creation Guide v4.0
+
+## 🚨 CRITICAL: Publishing Rules
+
+**NEVER delete published articles when "cleaning up drafts"**
+- Published articles have clean IDs (no "drafts." prefix)
+- Draft articles have "drafts." prefix
+- Only delete actual drafts that failed to publish
+
+**PUBLISHING OPTIONS:**
+- Option A: Direct publish during creation (set publishedAt during create_document)
+- Option B: Draft then publish (create as draft, use publish_document, LEAVE published version alone)
 
 ## 🚨 CRITICAL RULES - PROVEN TO WORK!
 
@@ -30,12 +41,21 @@
 - **Descriptions:** Rich, keyword-heavy descriptions for better matching
 
 #### 3. CONTENT CREATION LIMITS & BATCH SIZES
+
+**⚠️ RATE LIMITING STRATEGY:**
+- **Maximum 2-3 articles per session** to avoid rate limits
+- If rate limited, pause and resume later
+- Don't rush through all operations at once
+
+**CONTENT LIMITS:**
 - Maximum 500-800 words per operation
 - Build articles through multiple patches
 - Never attempt 1,800 words in one operation
-- **BATCH SIZES for Sonnet:** 3-5 articles per batch (optimal)
-- **Per Session:** 15-20 articles before new chat
-- **Daily Target:** 50-100 articles (10-20 batches)
+
+**SEQUENTIAL APPROACH:**
+1. Create articles in smaller batches (2-3 at a time)
+2. Complete full workflow for each batch
+3. Verify articles are live before next batch
 
 #### 4. MANDATORY LANGUAGE
 - Always: "our [Country] partners" (e.g., "our Cyprus partners")
@@ -173,11 +193,13 @@ Add sections ONE AT A TIME:
 3. Add Related Articles section
 4. Verify all URLs start with https://relocation.quest/
 
-### Phase 5: Quality Check & Publish (30 min)
+### Phase 5: Quality Check ONLY (30 min)
 - Verify word count
 - Check all requirements
 - Fix any issues
-- Final republish to sync ALL content
+- Verify article is published and live
+- NEVER delete published articles
+- Only delete drafts if they failed to publish properly
 
 ## 📊 Image Prompt Templates
 
@@ -214,7 +236,22 @@ After each article:
 - [ ] PublishedAt field set
 - [ ] Article visible on site
 
-## 🔧 Troubleshooting
+## 🔧 Troubleshooting & Common Issues
+
+### ARTICLES DISAPPEAR AFTER CREATION:
+- Check if accidentally deleted during "cleanup"
+- Query both drafts and published versions
+- Never delete published articles (IDs without "drafts.")
+
+### RATE LIMITING:
+- Error: "Too Many Requests - Agent actions request limit"
+- Solution: Wait and continue in smaller batches
+- Create 2-3 articles max per session
+
+### NAMING CONVENTION ISSUES:
+- Always use kebab-case: cyprus-permanent-residency-guide
+- Follow pattern: [country]-[topic]-guide
+- Check existing articles to avoid duplicates
 
 ### Images Not Generating?
 1. Check hero uses `mainImage` field (not heroImage)
@@ -231,6 +268,27 @@ After each article:
 1. Break into 400-500 word patches
 2. Use multiple patch operations
 3. Never exceed 800 words per operation
+
+## 📈 Session Report Template
+
+Batch [X] Results:
+- Articles INTENDED: [List planned articles]
+- Articles CREATED: [Query result count] 
+- Articles PUBLISHED: [List with IDs]
+- Articles MISSING: [Any that disappeared]
+- Rate Limits Hit: [Yes/No - if yes, continue next session]
+- Next Session Plan: [Remaining articles to create]
+
+**VERIFICATION QUERIES:**
+```groq
+// Check all Cyprus articles exist
+*[_type == "post" && slug.current match "cyprus*"]{
+  _id, title, slug, publishedAt, mainImage
+}
+
+// Count recent articles  
+count(*[_type == "post" && _createdAt > "2025-09-23T00:00:00Z"])
+```
 
 ## 🎯 Success Metrics
 
@@ -253,6 +311,6 @@ After each article:
 
 ---
 
-*Version: 1.0 - Adapted for Current Relocation Quest*
+*Version: 4.0 - Critical Updates for Batch Content Creation*
 *Last Updated: September 2025*
-*Key Difference from Legacy: mainImage field instead of heroImage*
+*Key Changes: Rate limiting strategy, no draft deletion, smaller batches*

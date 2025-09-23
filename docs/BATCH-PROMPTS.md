@@ -1,9 +1,32 @@
-# 🚀 RELOCATION QUEST BATCH ARTICLE SYSTEM v3.0
+# 🚀 RELOCATION QUEST BATCH ARTICLE SYSTEM v4.0
+
+## 🚨 CRITICAL: Publishing Rules
+
+**NEVER delete published articles when "cleaning up drafts"**
+- Published articles have clean IDs (no "drafts." prefix)
+- Draft articles have "drafts." prefix
+- Only delete actual drafts that failed to publish
+
+**PUBLISHING OPTIONS:**
+- Option A: Direct publish during creation (set publishedAt during create_document)
+- Option B: Draft then publish (create as draft, use publish_document, LEAVE published version alone)
+
+## ⚠️ Rate Limiting Strategy
+
+**BATCH CREATION LIMITS:**
+- Maximum 2-3 documents per session to avoid rate limits
+- If rate limited, pause and resume later
+- Don't rush through all operations at once
+
+**SEQUENTIAL APPROACH:**
+1. Create articles in smaller batches (2-3 at a time)
+2. Complete full workflow for each batch
+3. Verify articles are live before next batch
 
 ## 📊 BATCH SIZES & EXPECTATIONS
-- **Per Response**: 3-5 articles maximum (optimal for Sonnet)
-- **Per Session**: 15-20 articles before new chat
-- **Daily Target**: 50-100 articles (10-20 batches)
+- **Per Response**: 2-3 articles maximum (rate limit safe)
+- **Per Session**: 5-10 articles before new chat
+- **Daily Target**: 20-50 articles (multiple sessions)
 - **Time Per Batch**: 20-30 minutes
 
 ## 🎯 PHASE 0: PREPARATION (Once Per Session)
@@ -125,7 +148,7 @@ await patch({
 - Context for image placement decisions
 - Accessibility compliance
 
-## 🎯 PHASE 5: BATCH PUBLISHING
+## 🎯 PHASE 5: Quality Check ONLY
 
 ### Final Checklist Per Article:
 ```
@@ -138,14 +161,25 @@ await patch({
 □ Category assigned
 □ Author set to "Relocation Team"
 □ publishedAt timestamp set
+□ Article is published and live
+□ NEVER delete published articles
+□ Only delete drafts if they failed to publish properly
 ```
 
-### Batch Publish Command:
-```javascript
-for (articleId of completedArticles) {
-  await publish(articleId)
-}
-```
+## ✅ Success Verification - UPDATED
+
+After Each Batch:
+- [ ] Query recent posts to confirm articles exist
+- [ ] Verify slugs match naming convention  
+- [ ] Check publishedAt is set (not null)
+- [ ] Confirm hero images are present
+- [ ] Test internal links work
+- [ ] Count total Cyprus articles (should increase)
+
+**RED FLAGS:**
+- Articles created but disappeared later
+- publishedAt is null
+- No mainImage despite generation attempts
 
 ## 📋 QUALITY METRICS
 
@@ -167,9 +201,24 @@ Batch 3 (Portugal): 5 articles → 20 mins
 Batch 4 (Spain): 5 articles → 20 mins
 ```
 
-## 🚨 ERROR RECOVERY
+## 🔧 Common Issues & Fixes
 
-### If Image Asset Missing:
+**ARTICLES DISAPPEAR AFTER CREATION:**
+- Check if accidentally deleted during "cleanup"
+- Query both drafts and published versions
+- Never delete published articles (IDs without "drafts.")
+
+**RATE LIMITING:**
+- Error: "Too Many Requests - Agent actions request limit"
+- Solution: Wait and continue in smaller batches
+- Create 2-3 articles max per session
+
+**NAMING CONVENTION ISSUES:**
+- Always use kebab-case: cyprus-permanent-residency-guide
+- Follow pattern: [country]-[topic]-guide
+- Check existing articles to avoid duplicates
+
+**IMAGE ASSET MISSING:**
 ```javascript
 // Get latest uploaded image
 const fallback = await query(
@@ -178,7 +227,7 @@ const fallback = await query(
 // Use as temporary placeholder
 ```
 
-### If Timeout Occurs:
+**TIMEOUT OCCURS:**
 - Complete current article only
 - Publish what's done
 - Start fresh batch
@@ -212,26 +261,49 @@ For ALL articles:
 - Add detailed image descriptions
 ```
 
+## 📈 Session Report Template - UPDATED
+
+Batch [X] Results:
+- Articles INTENDED: [List planned articles]
+- Articles CREATED: [Query result count] 
+- Articles PUBLISHED: [List with IDs]
+- Articles MISSING: [Any that disappeared]
+- Rate Limits Hit: [Yes/No - if yes, continue next session]
+- Next Session Plan: [Remaining articles to create]
+
+**VERIFICATION QUERIES:**
+```groq
+// Check all Cyprus articles exist
+*[_type == "post" && slug.current match "cyprus*"]{
+  _id, title, slug, publishedAt, mainImage
+}
+
+// Count recent articles  
+count(*[_type == "post" && _createdAt > "2025-09-23T00:00:00Z"])
+```
+
 ## ✅ SUCCESS CRITERIA
 
 ### Per Article:
-- Published and live
+- Published and live (not draft)
+- publishedAt is not null
 - Properly formatted
 - Images displaying
 - Links working
 - SEO optimized
 
-### Per Batch (5 articles):
-- Completed in <30 mins
+### Per Batch (2-3 articles):
+- Completed without rate limits
 - Zero broken images
 - All cross-linked
 - Consistent quality
+- No articles deleted
 
-### Per Day (100 articles):
-- 20 batches completed
-- 5-7 chat sessions
+### Per Day (20-50 articles):
+- Multiple sessions completed
 - Full site interconnected
 - Image bank enriched
+- No missing articles
 
 ## 🚀 INITIAL SETUP PROMPT (Start EVERY Session)
 
