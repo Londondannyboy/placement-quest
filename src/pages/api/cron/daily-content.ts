@@ -46,12 +46,15 @@ function generateArticleContent(country: string, topic: string) {
       }
     ],
     publishedAt: new Date().toISOString(),
+    _createdAt: new Date().toISOString(),
+    _updatedAt: new Date().toISOString(),
     author: {
       _type: 'reference',
       _ref: 'relocation-team'
     },
     categories: [],
     tags: [country, topic],
+    published: true, // Mark as published directly
   };
 }
 
