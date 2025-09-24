@@ -24,42 +24,39 @@ const muxEnvKey = "26hi0t52rcm3pl738jugp7sp8";
 <div class="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-600 to-orange-500">
   <!-- Fallback gradient background (maintains current design) -->
   
-  <!-- Desktop Video with Performance Optimization -->
+  <!-- Desktop Video - Direct Loading for Testing -->
   {desktopPlaybackId && (
     <div class="hidden md:block absolute inset-0">
       <video
-        class="w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+        class="w-full h-full object-cover"
+        autoplay
         muted
         loop
         playsinline
         poster={`https://image.mux.com/${desktopPlaybackId}/thumbnail.webp?width=1920&height=1080&fit=crop&crop=smart`}
-        preload="none"
-        data-src={`https://stream.mux.com/${desktopPlaybackId}.m3u8`}
-        data-lazy="true"
-        onloadeddata="this.style.opacity='1'"
+        preload="metadata"
       >
-        <!-- Sources will be added by JavaScript when in viewport -->
+        <source src={`https://stream.mux.com/${desktopPlaybackId}.m3u8`} type="application/vnd.apple.mpegurl" />
+        <source src={`https://stream.mux.com/${desktopPlaybackId}/medium.mp4`} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
   )}
   
-  <!-- Mobile Video with Aggressive Performance Optimization -->
+  <!-- Mobile Video - Direct Loading for Testing -->
   {mobilePlaybackId && (
     <div class="md:hidden absolute inset-0">
       <video
-        class="w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+        class="w-full h-full object-cover"
+        autoplay
         muted
         loop
         playsinline
         poster={`https://image.mux.com/${mobilePlaybackId}/thumbnail.webp?width=1080&height=1920&fit=crop&crop=smart`}
-        preload="none"
-        data-src-mobile={`https://stream.mux.com/${mobilePlaybackId}.m3u8`}
-        data-lazy="true"
-        data-mobile="true"
-        onloadeddata="this.style.opacity='1'"
+        preload="metadata"
       >
-        <!-- Sources will be added by JavaScript based on connection speed -->
+        <source src={`https://stream.mux.com/${mobilePlaybackId}.m3u8`} type="application/vnd.apple.mpegurl" />
+        <source src={`https://stream.mux.com/${mobilePlaybackId}/medium.mp4`} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
