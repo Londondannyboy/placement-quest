@@ -11,6 +11,22 @@ function urlFor(source) {
   return builder.image(source);
 }
 
+// Optimized image helper for better performance
+function optimizedImageUrl(source, width = 400, height = 250, quality = 80) {
+  if (!source) return null;
+  
+  return builder
+    .image(source)
+    .width(width)
+    .height(height)
+    .quality(quality)
+    .format('webp')
+    .fit('crop')
+    .crop('center')
+    .auto('format')
+    .url();
+}
+
 // Fetch latest posts from Sanity
 const latestPosts = await sanityClient.fetch(`*[_type == "post"] | order(publishedAt desc)[0...6] {
   _id,
@@ -199,14 +215,21 @@ function getCategoryIcon(categoryTitle) {
           <article class="bg-white rounded-xl shadow-soft hover:shadow-xl transition-all group">
             {post.mainImage && (
               <div class="aspect-video overflow-hidden rounded-t-xl">
-                <img
-                  src={urlFor(post.mainImage).width(600).height(400).url()}
-                  alt={post.mainImage.alt || `Featured image for article: ${post.title} - International relocation guidance`}
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                  width="600"
-                  height="400"
-                />
+                <picture>
+                  <source 
+                    srcset={`${optimizedImageUrl(post.mainImage, 380, 253)} 380w, ${optimizedImageUrl(post.mainImage, 600, 400)} 600w`}
+                    sizes="(max-width: 768px) 380px, 600px"
+                    type="image/webp"
+                  />
+                  <img
+                    src={optimizedImageUrl(post.mainImage, 600, 400)}
+                    alt={post.mainImage.alt || `Featured image for article: ${post.title} - International relocation guidance`}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    width="600"
+                    height="400"
+                  />
+                </picture>
               </div>
             )}
             <div class="p-6">
