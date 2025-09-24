@@ -201,9 +201,11 @@ function getCategoryIcon(categoryTitle) {
               <div class="aspect-video overflow-hidden rounded-t-xl">
                 <img
                   src={urlFor(post.mainImage).width(600).height(400).url()}
-                  alt={post.title}
+                  alt={post.mainImage.alt || `Featured image for article: ${post.title} - International relocation guidance`}
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
+                  width="600"
+                  height="400"
                 />
               </div>
             )}
@@ -224,8 +226,9 @@ function getCategoryIcon(categoryTitle) {
               <a 
                 href={`/articles/${post.slug?.current || '#'}`}
                 class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium"
+                aria-label={`Read full article: ${post.title}`}
               >
-                Read More
+                Read "{post.title.substring(0, 40)}{post.title.length > 40 ? '...' : ''}"
                 <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
@@ -287,19 +290,19 @@ function getCategoryIcon(categoryTitle) {
       <div class="grid md:grid-cols-4 gap-8 text-center">
         <div>
           <div class="text-4xl font-bold mb-2">50+</div>
-          <div class="text-blue-200">Countries Covered</div>
+          <div class="text-blue-100">Countries Covered</div>
         </div>
         <div>
           <div class="text-4xl font-bold mb-2">500+</div>
-          <div class="text-blue-200">Expert Articles</div>
+          <div class="text-blue-100">Expert Articles</div>
         </div>
         <div>
           <div class="text-4xl font-bold mb-2">100K+</div>
-          <div class="text-blue-200">Monthly Readers</div>
+          <div class="text-blue-100">Monthly Readers</div>
         </div>
         <div>
           <div class="text-4xl font-bold mb-2">24/7</div>
-          <div class="text-blue-200">Updated Content</div>
+          <div class="text-blue-100">Updated Content</div>
         </div>
       </div>
     </div>
