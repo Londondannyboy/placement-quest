@@ -211,7 +211,7 @@ function getCategoryIcon(categoryTitle) {
       </div>
       
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {latestPosts.map((post) => (
+        {latestPosts.map((post, index) => (
           <article class="bg-white rounded-xl shadow-soft hover:shadow-xl transition-all group">
             {post.mainImage && (
               <div class="aspect-video overflow-hidden rounded-t-xl">
@@ -225,7 +225,8 @@ function getCategoryIcon(categoryTitle) {
                     src={optimizedImageUrl(post.mainImage, 600, 400)}
                     alt={post.mainImage.alt || `Featured image for article: ${post.title} - International relocation guidance`}
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchpriority={index === 0 ? "high" : "auto"}
                     width="600"
                     height="400"
                   />
