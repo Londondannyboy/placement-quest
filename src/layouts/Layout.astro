@@ -26,6 +26,9 @@ const {
 } = Astro.props;
 
 const siteUrl = "https://relocation.quest";
+
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <!DOCTYPE html>
@@ -132,6 +135,10 @@ const siteUrl = "https://relocation.quest";
     </style>
   </head>
   <body class="antialiased bg-white text-gray-900">
-    <slot />
+    <Navigation />
+    <main>
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>
