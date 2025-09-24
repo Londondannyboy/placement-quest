@@ -24,23 +24,54 @@ const muxEnvKey = "26hi0t52rcm3pl738jugp7sp8";
 <div class="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-600 to-orange-500">
   <!-- Fallback gradient background (maintains current design) -->
   
-  <!-- Professional Mux Player for Optimal Performance -->
+  <!-- Maximum Performance Mux Player -->
   {desktopPlaybackId && (
     <div class="absolute inset-0">
+      <!-- Desktop: High Quality -->
       <mux-player
         playback-id={desktopPlaybackId}
-        metadata-video-title="Relocation Quest - Cyprus Professional Video"
+        metadata-video-title="Relocation Quest - Cyprus International Relocation"
         metadata-video-id={desktopPlaybackId}
+        metadata-viewer-user-id="hero-banner"
         env-key={muxEnvKey}
         autoplay
         muted
         loop
+        playback-engine="mse"
+        max-resolution="1080p"
+        min-resolution="720p"
         style="width: 100%; height: 100%; object-fit: cover;"
-        class="w-full h-full"
-        poster={`https://image.mux.com/${desktopPlaybackId}/thumbnail.webp?width=1920&height=1080&fit=crop&crop=smart`}
-        preload="metadata"
+        class="w-full h-full hidden md:block"
+        poster={`https://image.mux.com/${desktopPlaybackId}/thumbnail.webp?width=1920&height=1080&fit=crop&crop=smart&q=80`}
+        preload="none"
         controls="false"
         default-hidden-captions="true"
+        disable-cookies="true"
+        extra-source-params="redundant_streams=true"
+      >
+      </mux-player>
+      
+      <!-- Mobile: Optimized for Performance -->
+      <mux-player
+        playback-id={mobilePlaybackId}
+        metadata-video-title="Relocation Quest Mobile - Cyprus Relocation"
+        metadata-video-id={mobilePlaybackId}
+        metadata-viewer-user-id="hero-banner-mobile"
+        env-key={muxEnvKey}
+        autoplay
+        muted
+        loop
+        playback-engine="mse"
+        max-resolution="720p"
+        min-resolution="480p"
+        style="width: 100%; height: 100%; object-fit: cover;"
+        class="w-full h-full md:hidden"
+        poster={`https://image.mux.com/${mobilePlaybackId}/thumbnail.webp?width=750&height=1334&fit=crop&crop=smart&q=70`}
+        preload="none"
+        controls="false"
+        default-hidden-captions="true"
+        disable-cookies="true"
+        target-live-window="10"
       >
       </mux-player>
     </div>
@@ -67,105 +98,97 @@ const muxEnvKey = "26hi0t52rcm3pl738jugp7sp8";
     </div>
   </div>
   
-  <!-- Advanced Performance Optimization -->
+  <!-- Maximum Performance Optimization -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const videos = document.querySelectorAll('video[data-lazy]');
+      const players = document.querySelectorAll('mux-player');
       
-      // Check connection quality for mobile optimization
-      function getConnectionQuality() {
+      // Advanced performance optimization
+      function optimizePlayer(player) {
+        // Check connection quality for adaptive settings
         if ('connection' in navigator && 'effectiveType' in navigator.connection) {
           const conn = navigator.connection;
-          if (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g') {
-            return 'poor';
-          } else if (conn.effectiveType === '3g') {
-            return 'moderate';  
-          } else {
-            return 'good';
-          }
+          const isMobile = player.classList.contains('md:hidden');
+          
+          // Adaptive buffer settings based on connection
+          player.addEventListener('loadstart', () => {
+            if (player._hls) {
+              switch (conn.effectiveType) {
+                case 'slow-2g':
+                case '2g':
+                  player._hls.config.maxBufferLength = 10;
+                  if (isMobile) {
+                    player.setAttribute('max-resolution', '360p');
+                  }
+                  break;
+                case '3g':
+                  player._hls.config.maxBufferLength = 20;
+                  break;
+                default:
+                  player._hls.config.maxBufferLength = 30;
+              }
+            }
+          });
         }
-        return 'unknown';
+        
+        // Performance monitoring
+        player.addEventListener('loadeddata', () => {
+          console.log('Mux Player loaded:', player.getAttribute('metadata-video-title'));
+        });
+        
+        // Error handling
+        player.addEventListener('error', (e) => {
+          console.error('Mux Player error:', e.detail);
+        });
       }
       
-      function loadVideo(video) {
-        const isMobile = video.hasAttribute('data-mobile');
-        const connectionQuality = getConnectionQuality();
-        
-        // Skip video loading on poor mobile connections to preserve performance
-        if (isMobile && connectionQuality === 'poor') {
-          console.log('Skipping video load on poor mobile connection');
-          return;
-        }
-        
-        const src = video.getAttribute('data-src') || video.getAttribute('data-src-mobile');
-        if (src) {
-          // Create HLS source
-          const hlsSource = document.createElement('source');
-          hlsSource.src = src;
-          hlsSource.type = 'application/vnd.apple.mpegurl';
-          
-          // Create MP4 fallback
-          const mp4Source = document.createElement('source');
-          mp4Source.src = src.replace('.m3u8', '/medium.mp4');
-          mp4Source.type = 'video/mp4';
-          
-          video.appendChild(hlsSource);
-          video.appendChild(mp4Source);
-          
-          // Start loading and autoplay
-          video.load();
-          
-          // Add delay for mobile to ensure other critical resources load first
-          const delay = isMobile ? 2000 : 500;
-          setTimeout(() => {
-            video.play().catch(() => {
-              console.log('Video autoplay blocked, user interaction required');
-            });
-          }, delay);
-          
-          video.setAttribute('data-loaded', 'true');
-        }
-      }
-      
-      // Use Intersection Observer for performance
+      // Advanced Intersection Observer for lazy loading
       if ('IntersectionObserver' in window) {
-        const videoObserver = new IntersectionObserver((entries) => {
+        const playerObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              const video = entry.target;
-              loadVideo(video);
-              videoObserver.unobserve(video);
+              const player = entry.target;
+              
+              // Initialize player only when visible
+              optimizePlayer(player);
+              
+              // Start loading after a small delay for critical path optimization
+              setTimeout(() => {
+                if (player.hasAttribute('autoplay')) {
+                  player.play().catch(() => {
+                    console.log('Autoplay blocked, user interaction required');
+                  });
+                }
+              }, player.classList.contains('md:hidden') ? 1000 : 300);
+              
+              playerObserver.unobserve(player);
             }
           });
         }, {
-          rootMargin: '50px' // Start loading slightly before entering viewport
+          rootMargin: '100px',
+          threshold: 0.1
         });
         
-        videos.forEach(video => {
-          videoObserver.observe(video);
+        players.forEach(player => {
+          playerObserver.observe(player);
         });
-      } else {
-        // Fallback for older browsers - load after a delay
-        setTimeout(() => {
-          videos.forEach(loadVideo);
-        }, 1000);
       }
       
-      // Handle reduced motion preference
+      // Respect reduced motion and battery optimization
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        videos.forEach(video => {
-          video.pause();
-          video.style.display = 'none';
+        players.forEach(player => {
+          player.removeAttribute('autoplay');
+          player.style.display = 'none';
         });
       }
       
-      // Pause videos when not visible (battery optimization)
+      // Page visibility optimization for battery life
       document.addEventListener('visibilitychange', function() {
-        videos.forEach(video => {
+        players.forEach(player => {
           if (document.visibilityState === 'hidden') {
-            video.pause();
-          } else if (video.getAttribute('data-loaded')) {
-            video.play().catch(() => {});
+            player.pause();
+          } else if (player.hasAttribute('autoplay')) {
+            setTimeout(() => player.play().catch(() => {}), 500);
           }
         });
       });
