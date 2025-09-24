@@ -1,0 +1,162 @@
+---
+// Simple, lightweight GDPR Cookie Consent
+// No external dependencies, fully compliant
+---
+
+<div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-gray-200 shadow-lg z-50 transform translate-y-full transition-transform duration-300" style="display: none;">
+  <div class="container mx-auto px-4 py-4">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div class="flex-1">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-2xl">🍪</span>
+          <h3 class="font-semibold text-gray-900">Privacy & Cookies</h3>
+        </div>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          We use cookies to enhance your international relocation experience, analyze site usage, and provide relevant content about visa programs and tax optimization. 
+          <a href="/privacy-policy" class="text-blue-600 hover:text-blue-700 underline" target="_blank">Privacy Policy</a> • 
+          <a href="/terms-of-service" class="text-blue-600 hover:text-blue-700 underline" target="_blank">Terms</a>
+        </p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2 min-w-0 sm:min-w-[300px]">
+        <button 
+          id="accept-essential" 
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200"
+        >
+          Essential Only
+        </button>
+        <button 
+          id="accept-all" 
+          class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg transition-all duration-200"
+        >
+          Accept All
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // GDPR Cookie Consent - Lightweight Implementation
+  class CookieConsent {
+    constructor() {
+      this.consentKey = 'relocation-quest-consent';
+      this.init();
+    }
+
+    init() {
+      // Check if consent already given
+      if (this.hasConsent()) {
+        return;
+      }
+
+      // Show consent banner after page load
+      this.showBanner();
+      this.bindEvents();
+    }
+
+    hasConsent() {
+      return localStorage.getItem(this.consentKey) !== null;
+    }
+
+    showBanner() {
+      const banner = document.getElementById('cookie-consent');
+      if (banner) {
+        banner.style.display = 'block';
+        // Trigger slide up animation
+        setTimeout(() => {
+          banner.classList.remove('translate-y-full');
+        }, 100);
+      }
+    }
+
+    hideBanner() {
+      const banner = document.getElementById('cookie-consent');
+      if (banner) {
+        banner.classList.add('translate-y-full');
+        setTimeout(() => {
+          banner.style.display = 'none';
+        }, 300);
+      }
+    }
+
+    setConsent(level) {
+      const consent = {
+        timestamp: new Date().toISOString(),
+        level: level, // 'essential' or 'all'
+        version: '1.0'
+      };
+      
+      localStorage.setItem(this.consentKey, JSON.stringify(consent));
+      
+      // Trigger analytics initialization if full consent given
+      if (level === 'all') {
+        this.initializeAnalytics();
+      }
+      
+      this.hideBanner();
+    }
+
+    initializeAnalytics() {
+      // Initialize analytics only after consent
+      // This ensures GDPR compliance
+      console.log('Analytics consent granted - initializing tracking');
+      
+      // Example: Initialize Google Analytics, Mux Analytics, etc.
+      // Only after explicit user consent
+    }
+
+    bindEvents() {
+      document.getElementById('accept-essential')?.addEventListener('click', () => {
+        this.setConsent('essential');
+      });
+
+      document.getElementById('accept-all')?.addEventListener('click', () => {
+        this.setConsent('all');
+      });
+
+      // Auto-hide on scroll (after 10 seconds)
+      setTimeout(() => {
+        let scrollTimer;
+        window.addEventListener('scroll', () => {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(() => {
+            if (!this.hasConsent()) {
+              this.setConsent('essential'); // Default to essential
+            }
+          }, 3000);
+        });
+      }, 10000);
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new CookieConsent();
+    });
+  } else {
+    new CookieConsent();
+  }
+</script>
+
+<style>
+  /* Ensure banner stays above other fixed elements */
+  #cookie-consent {
+    z-index: 9999;
+  }
+  
+  /* Smooth backdrop blur */
+  @supports (backdrop-filter: blur(8px)) {
+    #cookie-consent {
+      backdrop-filter: blur(8px);
+    }
+  }
+  
+  /* Mobile optimization */
+  @media (max-width: 640px) {
+    #cookie-consent .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+</style>
