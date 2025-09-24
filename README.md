@@ -20,7 +20,9 @@ Modern content platform for international relocation information, built with Ast
 - **Frontend Framework**: Astro 5.0
 - **UI Library**: React 18
 - **CMS**: Sanity Studio v3
-- **Styling**: Tailwind CSS with AstroWind design system
+- **Video Platform**: Mux Player v2 with advanced optimizations
+- **Styling**: Tailwind CSS with clean design system
+- **Analytics**: Mux Data (video performance)
 - **Deployment**: Vercel (auto-deploy on push to main)
 - **Domain**: relocation.quest
 
@@ -61,11 +63,15 @@ Modern content platform for international relocation information, built with Ast
 
 ## 🔑 Environment Variables
 
-Required in `.env`:
+Required in Vercel (configured):
 - `PUBLIC_SANITY_PROJECT_ID=bc08ijz6`
 - `PUBLIC_SANITY_DATASET=production`
 - `PUBLIC_SANITY_API_VERSION=2025-01-01`
 - `SANITY_API_TOKEN=<optional-for-preview>`
+- `MUX_TOKEN_ID=<configured>` - Mux API token for video uploads
+- `MUX_TOKEN_SECRET=<configured>` - Mux API secret
+- `PUBLIC_MUX_ENV_KEY=26hi0t52rcm3pl738jugp7sp8` - Mux environment key
+- `VERCEL_AI_GATEWAY_API_KEY=<configured>` - AI Gateway integration
 
 ## 🚀 Deployment
 
@@ -83,11 +89,18 @@ Use this if GitHub webhook fails to trigger.
 
 ## 📝 Content Management
 
-Access Sanity Studio at [https://relocation.quest/studio](https://relocation.quest/studio) to:
+### Sanity Studio
+Access at [https://relocation.quest/studio](https://relocation.quest/studio) to:
 - Create and edit articles
 - Manage categories and tags
 - Upload images
 - Configure site content
+
+### Video Management
+- **Professional Video Hero**: Cyprus video live at homepage
+- **Video Components**: VideoHero.astro and VideoThumbnail.astro
+- **Mux Integration**: Advanced video optimization and analytics
+- **Performance**: Connection-aware quality and mobile optimization
 
 ## 🛠️ Development Workflow
 
