@@ -31,8 +31,9 @@ const category = await sanityClient.fetch(`
   }
 `, { slug });
 
+// Get posts in this category using the correct query
 const posts = await sanityClient.fetch(`
-  *[_type == "post" && references($categoryId)] | order(publishedAt desc) {
+  *[_type == "post" && category._ref == $categoryId] | order(publishedAt desc) {
     _id,
     title,
     slug,
