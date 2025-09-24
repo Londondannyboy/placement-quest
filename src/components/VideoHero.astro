@@ -10,8 +10,8 @@ export interface Props {
 }
 
 const {
-  desktopPlaybackId = "ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM", // Your Cyprus video (confirmed public)
-  mobilePlaybackId = "ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM", // Same video, Mux will optimize for mobile
+  desktopPlaybackId = "ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM", // Your Cyprus video (high-res desktop)
+  mobilePlaybackId = "lKoMAX9eQ1aNdFc6squdJgBlkhBMUDjuq43tf00jZpik", // Your dedicated low-res mobile asset
   title = "Your Journey to Global Living Starts Here",
   subtitle = "Expert guidance on international relocation, visa applications, tax optimization, and building your dream life abroad.",
   ctaText = "Read Latest Articles",
@@ -51,27 +51,28 @@ const muxEnvKey = "26hi0t52rcm3pl738jugp7sp8";
       >
       </mux-player>
       
-      <!-- Mobile: Optimized for Performance -->
+      <!-- Mobile: Ultra-Optimized Low-Res Asset -->
       <mux-player
         playback-id={mobilePlaybackId}
-        metadata-video-title="Relocation Quest Mobile - Cyprus Relocation"
+        metadata-video-title="Relocation Quest Mobile - Cyprus Low-Res"
         metadata-video-id={mobilePlaybackId}
-        metadata-viewer-user-id="hero-banner-mobile"
+        metadata-viewer-user-id="hero-banner-mobile-optimized"
         env-key={muxEnvKey}
         autoplay
         muted
         loop
         playback-engine="mse"
-        max-resolution="720p"
-        min-resolution="480p"
+        max-resolution="480p"
+        min-resolution="360p"
         style="width: 100%; height: 100%; object-fit: cover;"
         class="w-full h-full md:hidden"
-        poster={`https://image.mux.com/${mobilePlaybackId}/thumbnail.webp?width=750&height=1334&fit=crop&crop=smart&q=70`}
+        poster={`https://image.mux.com/${mobilePlaybackId}/thumbnail.webp?width=750&height=1334&fit=crop&crop=smart&q=60`}
         preload="none"
         controls="false"
         default-hidden-captions="true"
         disable-cookies="true"
-        target-live-window="10"
+        target-live-window="5"
+        start-time="0"
       >
       </mux-player>
     </div>
@@ -105,27 +106,32 @@ const muxEnvKey = "26hi0t52rcm3pl738jugp7sp8";
       
       // Advanced performance optimization
       function optimizePlayer(player) {
-        // Check connection quality for adaptive settings
+        // Ultra-aggressive mobile optimization
         if ('connection' in navigator && 'effectiveType' in navigator.connection) {
           const conn = navigator.connection;
           const isMobile = player.classList.contains('md:hidden');
+          
+          // Skip video entirely on very slow mobile connections
+          if (isMobile && (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g')) {
+            player.style.display = 'none';
+            return;
+          }
           
           // Adaptive buffer settings based on connection
           player.addEventListener('loadstart', () => {
             if (player._hls) {
               switch (conn.effectiveType) {
-                case 'slow-2g':
-                case '2g':
-                  player._hls.config.maxBufferLength = 10;
+                case '3g':
+                  player._hls.config.maxBufferLength = 8; // Reduced for mobile
                   if (isMobile) {
                     player.setAttribute('max-resolution', '360p');
                   }
                   break;
-                case '3g':
-                  player._hls.config.maxBufferLength = 20;
+                case '4g':
+                  player._hls.config.maxBufferLength = isMobile ? 12 : 25;
                   break;
                 default:
-                  player._hls.config.maxBufferLength = 30;
+                  player._hls.config.maxBufferLength = isMobile ? 15 : 30;
               }
             }
           });
