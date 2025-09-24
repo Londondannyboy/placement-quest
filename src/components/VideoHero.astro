@@ -107,15 +107,32 @@ const muxEnvKey = "26hi0t52rcm3pl738jugp7sp8";
       // Advanced performance optimization
       function optimizePlayer(player) {
         // Ultra-aggressive mobile optimization
+        const isMobile = player.classList.contains('md:hidden');
+        
+        // Check battery and connection for mobile optimization
+        if (isMobile) {
+          // Skip video on low battery
+          if ('getBattery' in navigator) {
+            navigator.getBattery().then(battery => {
+              if (battery.level < 0.2 || !battery.charging) {
+                player.style.display = 'none';
+                return;
+              }
+            });
+          }
+          
+          // Skip video on very slow connections
+          if ('connection' in navigator && 'effectiveType' in navigator.connection) {
+            const conn = navigator.connection;
+            if (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g') {
+              player.style.display = 'none';
+              return;
+            }
+          }
+        }
+        
         if ('connection' in navigator && 'effectiveType' in navigator.connection) {
           const conn = navigator.connection;
-          const isMobile = player.classList.contains('md:hidden');
-          
-          // Skip video entirely on very slow mobile connections
-          if (isMobile && (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g')) {
-            player.style.display = 'none';
-            return;
-          }
           
           // Adaptive buffer settings based on connection
           player.addEventListener('loadstart', () => {
@@ -158,21 +175,22 @@ const muxEnvKey = "26hi0t52rcm3pl738jugp7sp8";
               // Initialize player only when visible
               optimizePlayer(player);
               
-              // Start loading after a small delay for critical path optimization
+              // Ultra-aggressive delay for mobile performance, moderate for desktop
+              const delay = player.classList.contains('md:hidden') ? 5000 : 1000;
               setTimeout(() => {
                 if (player.hasAttribute('autoplay')) {
                   player.play().catch(() => {
                     console.log('Autoplay blocked, user interaction required');
                   });
                 }
-              }, player.classList.contains('md:hidden') ? 1000 : 300);
+              }, delay);
               
               playerObserver.unobserve(player);
             }
           });
         }, {
-          rootMargin: '100px',
-          threshold: 0.1
+          rootMargin: '200px',
+          threshold: 0.05
         });
         
         players.forEach(player => {

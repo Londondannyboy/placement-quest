@@ -75,16 +75,20 @@ import Footer from '../components/Footer.astro';
     <meta name="revisit-after" content="7 days" />
     <meta name="theme-color" content="#1E40AF" />
     
-    <!-- Preconnect to external domains -->
+    <!-- Preconnect to external domains for faster resource loading -->
     <link rel="preconnect" href="https://cdn.sanity.io" />
+    <link rel="preconnect" href="https://stream.mux.com" />
+    <link rel="preconnect" href="https://image.mux.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://litix.io" />
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     
-    <!-- Mux Player for Professional Video Performance -->
-    <script src="https://cdn.jsdelivr.net/npm/@mux/mux-player@2" defer></script>
+    <!-- Mux Player for Professional Video Performance - Async Loading -->
+    <script src="https://cdn.jsdelivr.net/npm/@mux/mux-player@2" async defer></script>
     
     <style>
       /* Critical CSS - Above the fold styles */
