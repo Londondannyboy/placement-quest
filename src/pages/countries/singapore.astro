@@ -1,0 +1,197 @@
+---
+export const prerender = true;
+
+import Layout from '../../layouts/Layout.astro';
+import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from '@sanity/image-url';
+
+const builder = imageUrlBuilder(sanityClient);
+
+function urlFor(source) {
+  return builder.image(source);
+}
+
+// Fetch Singapore-related articles from Sanity
+const singaporeArticles = await sanityClient.fetch(`*[_type == "post" && (
+  lower(title) match "*singapore*" || 
+  lower(excerpt) match "*singapore*" ||
+  lower(title) match "*gip*" ||
+  lower(excerpt) match "*gip*" ||
+  category->title match "*Singapore*"
+)] | order(publishedAt desc) {
+  _id,
+  title,
+  slug,
+  excerpt,
+  mainImage,
+  publishedAt,
+  category->{title, slug}
+}`);
+
+// Get featured Singapore article
+const featuredArticle = singaporeArticles[0];
+---
+
+<Layout title="Singapore - Relocation Guide | GIP Program, Asian Business Hub & Territorial Tax">
+  <!-- Hero Section -->
+  <section class="relative min-h-[60vh] bg-gradient-to-br from-red-600 to-pink-500 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">Singapore</h1>
+      <p class="text-xl md:text-2xl mb-8">Asian Business Hub, GIP Program & Territorial Tax System</p>
+      <div class="flex flex-wrap justify-center gap-4 text-sm">
+        <span class="bg-white/20 px-4 py-2 rounded-full">Asian Business Hub</span>
+        <span class="bg-white/20 px-4 py-2 rounded-full">Territorial Tax System</span>
+        <span class="bg-white/20 px-4 py-2 rounded-full">GIP Program</span>
+        <span class="bg-white/20 px-4 py-2 rounded-full">Strategic Location</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Stats -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-4 gap-8 text-center">
+        <div class="p-6">
+          <div class="text-3xl font-bold text-red-600 mb-2">S$2.5M+</div>
+          <div class="text-gray-600">Min. Investment</div>
+        </div>
+        <div class="p-6">
+          <div class="text-3xl font-bold text-red-600 mb-2">2 Years</div>
+          <div class="text-gray-600">PR Track</div>
+        </div>
+        <div class="p-6">
+          <div class="text-3xl font-bold text-red-600 mb-2">0-22%</div>
+          <div class="text-gray-600">Tax Rate</div>
+        </div>
+        <div class="p-6">
+          <div class="text-3xl font-bold text-red-600 mb-2">190+</div>
+          <div class="text-gray-600">Visa-free Countries</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Article Section -->
+  {featuredArticle && (
+    <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold mb-4">Featured Singapore Guide</h2>
+        </div>
+        
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          {featuredArticle.mainImage && (
+            <div class="aspect-video overflow-hidden">
+              <img
+                src={urlFor(featuredArticle.mainImage).width(1200).height(600).url()}
+                alt={featuredArticle.title}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          )}
+          <div class="p-8">
+            <div class="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+              {featuredArticle.category && (
+                <span class="text-primary-600 font-medium">{featuredArticle.category.title}</span>
+              )}
+              <span>{new Date(featuredArticle.publishedAt).toLocaleDateString()}</span>
+            </div>
+            <h3 class="text-3xl font-bold mb-4">{featuredArticle.title}</h3>
+            <p class="text-lg text-gray-600 mb-6">{featuredArticle.excerpt}</p>
+            <a 
+              href={`/articles/${featuredArticle.slug?.current}`}
+              class="inline-flex items-center px-6 py-3 bg-gradient-primary text-white rounded-lg hover:shadow-lg transition-all"
+            >
+              Read Full Guide
+              <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- All Singapore Articles -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">All Singapore Articles</h2>
+        <p class="text-xl text-gray-600">Comprehensive guides to relocating to Singapore</p>
+      </div>
+
+      {singaporeArticles.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {singaporeArticles.map((article) => (
+            <article class="bg-white rounded-xl shadow-soft hover:shadow-xl transition-all group">
+              {article.mainImage && (
+                <div class="aspect-video overflow-hidden rounded-t-xl">
+                  <img
+                    src={urlFor(article.mainImage).width(600).height(400).url()}
+                    alt={article.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              <div class="p-6">
+                {article.category && (
+                  <span class="text-sm text-primary-600 font-medium">
+                    {article.category.title}
+                  </span>
+                )}
+                <h3 class="text-xl font-bold mt-2 mb-3 group-hover:text-primary-600 transition-colors">
+                  <a href={`/articles/${article.slug?.current || '#'}`}>
+                    {article.title}
+                  </a>
+                </h3>
+                <p class="text-gray-600 line-clamp-3 mb-4">
+                  {article.excerpt}
+                </p>
+                <a 
+                  href={`/articles/${article.slug?.current || '#'}`}
+                  class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium"
+                >
+                  Read More
+                  <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <div class="text-gray-500 mb-4">
+            <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2">More Singapore Content Coming Soon</h3>
+          <p class="text-gray-600 mb-6">We're working on comprehensive guides about Singapore relocation, visas, and living.</p>
+          <a href="/articles" class="inline-flex items-center px-6 py-3 bg-gradient-primary text-white rounded-lg hover:shadow-lg transition-all">
+            Browse All Articles
+            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-16 bg-gradient-to-r from-red-600 to-pink-500 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-4xl font-bold mb-4">Ready to Move to Singapore?</h2>
+      <p class="text-xl mb-8 text-red-100">Get expert guidance on Singapore's GIP program and relocation process</p>
+      <a href="/articles" class="inline-block bg-white text-red-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+        Explore All Guides
+      </a>
+    </div>
+  </section>
+</Layout>

@@ -39,7 +39,10 @@ const article = await client.fetch(
     author-> {
       name,
       slug
-    }
+    },
+    seoTitle,
+    metaDescription,
+    focusKeyword
   }
 `,
   { slug }
@@ -50,7 +53,16 @@ if (!article) {
 }
 ---
 
-<Layout title={`${article.title} - Relocation Quest`}>
+<Layout 
+  title={article.seoTitle || `${article.title} - Relocation Quest`}
+  description={article.metaDescription || article.excerpt || `Read our comprehensive guide: ${article.title}. Expert insights on international relocation and global living.`}
+  keywords={article.focusKeyword ? `${article.focusKeyword}, relocation, international living, visa, tax optimization` : "relocation, international living, visa, tax optimization"}
+  image={article.mainImage ? urlFor(article.mainImage).width(1200).height(630).url() : "/og-image.jpg"}
+  imageAlt={article.mainImage?.alt || article.title}
+  author={article.author?.name || "Relocation Quest"}
+  publishedTime={article.publishedAt}
+  type="article"
+>
   <main class="min-h-screen bg-gradient-to-b from-white to-gray-50">
     <div class="container mx-auto px-6 py-12">
       <nav class="flex justify-center gap-6 mb-12">

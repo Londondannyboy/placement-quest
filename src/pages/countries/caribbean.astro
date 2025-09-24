@@ -1,0 +1,209 @@
+---
+export const prerender = true;
+
+import Layout from '../../layouts/Layout.astro';
+import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from '@sanity/image-url';
+
+const builder = imageUrlBuilder(sanityClient);
+
+function urlFor(source) {
+  return builder.image(source);
+}
+
+// Fetch Caribbean-related articles from Sanity
+const caribbeanArticles = await sanityClient.fetch(`*[_type == "post" && (
+  lower(title) match "*caribbean*" || 
+  lower(excerpt) match "*caribbean*" ||
+  lower(title) match "*dominica*" ||
+  lower(title) match "*antigua*" ||
+  lower(title) match "*barbuda*" ||
+  lower(title) match "*grenada*" ||
+  lower(title) match "*st lucia*" ||
+  lower(title) match "*kitts*" ||
+  lower(title) match "*nevis*" ||
+  lower(excerpt) match "*dominica*" ||
+  lower(excerpt) match "*antigua*" ||
+  lower(excerpt) match "*barbuda*" ||
+  lower(excerpt) match "*grenada*" ||
+  lower(excerpt) match "*st lucia*" ||
+  lower(excerpt) match "*kitts*" ||
+  lower(excerpt) match "*nevis*" ||
+  category->title match "*Caribbean*"
+)] | order(publishedAt desc) {
+  _id,
+  title,
+  slug,
+  excerpt,
+  mainImage,
+  publishedAt,
+  category->{title, slug}
+}`);
+
+// Get featured Caribbean article
+const featuredArticle = caribbeanArticles[0];
+---
+
+<Layout title="Caribbean - Relocation Guide | Citizenship by Investment, Tax Havens & Fast Processing">
+  <!-- Hero Section -->
+  <section class="relative min-h-[60vh] bg-gradient-to-br from-teal-500 to-cyan-400 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">Caribbean</h1>
+      <p class="text-xl md:text-2xl mb-8">Citizenship by Investment, Tax Havens & Fast Processing</p>
+      <div class="flex flex-wrap justify-center gap-4 text-sm">
+        <span class="bg-white/20 px-4 py-2 rounded-full">Citizenship by Investment</span>
+        <span class="bg-white/20 px-4 py-2 rounded-full">Tax Havens</span>
+        <span class="bg-white/20 px-4 py-2 rounded-full">Fast Processing</span>
+        <span class="bg-white/20 px-4 py-2 rounded-full">Paradise Living</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Stats -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-4 gap-8 text-center">
+        <div class="p-6">
+          <div class="text-3xl font-bold text-teal-600 mb-2">$100K+</div>
+          <div class="text-gray-600">Min. Investment</div>
+        </div>
+        <div class="p-6">
+          <div class="text-3xl font-bold text-teal-600 mb-2">3-6 Months</div>
+          <div class="text-gray-600">Processing Time</div>
+        </div>
+        <div class="p-6">
+          <div class="text-3xl font-bold text-teal-600 mb-2">0%</div>
+          <div class="text-gray-600">Income Tax</div>
+        </div>
+        <div class="p-6">
+          <div class="text-3xl font-bold text-teal-600 mb-2">140+</div>
+          <div class="text-gray-600">Visa-free Countries</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Article Section -->
+  {featuredArticle && (
+    <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold mb-4">Featured Caribbean Guide</h2>
+        </div>
+        
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          {featuredArticle.mainImage && (
+            <div class="aspect-video overflow-hidden">
+              <img
+                src={urlFor(featuredArticle.mainImage).width(1200).height(600).url()}
+                alt={featuredArticle.title}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          )}
+          <div class="p-8">
+            <div class="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+              {featuredArticle.category && (
+                <span class="text-primary-600 font-medium">{featuredArticle.category.title}</span>
+              )}
+              <span>{new Date(featuredArticle.publishedAt).toLocaleDateString()}</span>
+            </div>
+            <h3 class="text-3xl font-bold mb-4">{featuredArticle.title}</h3>
+            <p class="text-lg text-gray-600 mb-6">{featuredArticle.excerpt}</p>
+            <a 
+              href={`/articles/${featuredArticle.slug?.current}`}
+              class="inline-flex items-center px-6 py-3 bg-gradient-primary text-white rounded-lg hover:shadow-lg transition-all"
+            >
+              Read Full Guide
+              <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- All Caribbean Articles -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">All Caribbean Articles</h2>
+        <p class="text-xl text-gray-600">Comprehensive guides to Caribbean citizenship and relocation</p>
+      </div>
+
+      {caribbeanArticles.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {caribbeanArticles.map((article) => (
+            <article class="bg-white rounded-xl shadow-soft hover:shadow-xl transition-all group">
+              {article.mainImage && (
+                <div class="aspect-video overflow-hidden rounded-t-xl">
+                  <img
+                    src={urlFor(article.mainImage).width(600).height(400).url()}
+                    alt={article.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              <div class="p-6">
+                {article.category && (
+                  <span class="text-sm text-primary-600 font-medium">
+                    {article.category.title}
+                  </span>
+                )}
+                <h3 class="text-xl font-bold mt-2 mb-3 group-hover:text-primary-600 transition-colors">
+                  <a href={`/articles/${article.slug?.current || '#'}`}>
+                    {article.title}
+                  </a>
+                </h3>
+                <p class="text-gray-600 line-clamp-3 mb-4">
+                  {article.excerpt}
+                </p>
+                <a 
+                  href={`/articles/${article.slug?.current || '#'}`}
+                  class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium"
+                >
+                  Read More
+                  <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <div class="text-gray-500 mb-4">
+            <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2">More Caribbean Content Coming Soon</h3>
+          <p class="text-gray-600 mb-6">We're working on comprehensive guides about Caribbean citizenship programs and relocation.</p>
+          <a href="/articles" class="inline-flex items-center px-6 py-3 bg-gradient-primary text-white rounded-lg hover:shadow-lg transition-all">
+            Browse All Articles
+            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-16 bg-gradient-to-r from-teal-500 to-cyan-400 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-4xl font-bold mb-4">Ready to Explore Caribbean Citizenship?</h2>
+      <p class="text-xl mb-8 text-teal-100">Get expert guidance on Caribbean citizenship by investment programs</p>
+      <a href="/articles" class="inline-block bg-white text-teal-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+        Explore All Guides
+      </a>
+    </div>
+  </section>
+</Layout>

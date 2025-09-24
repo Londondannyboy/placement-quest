@@ -1,0 +1,187 @@
+---
+export const prerender = true;
+
+import Layout from '../../layouts/Layout.astro';
+import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from '@sanity/image-url';
+
+const builder = imageUrlBuilder(sanityClient);
+
+function urlFor(source) {
+  return builder.image(source);
+}
+
+// Fetch Cyprus-related articles from Sanity
+const cyprusArticles = await sanityClient.fetch(`*[_type == "post" && (
+  lower(title) match "*cyprus*" || 
+  lower(excerpt) match "*cyprus*" ||
+  category->title match "*Cyprus*"
+)] | order(publishedAt desc) {
+  _id,
+  title,
+  slug,
+  excerpt,
+  mainImage,
+  publishedAt,
+  category->{title, slug}
+}`);
+
+// Get featured Cyprus article
+const featuredArticle = cyprusArticles[0];
+---
+
+<Layout 
+  title="Cyprus Relocation Guide 2024 | Golden Visa, Residency & Non-Dom Tax Benefits"
+  description="Complete Cyprus relocation guide: Golden Visa programs, EU residency pathways, non-dom tax benefits for 17 years, investment requirements from €300K. English-speaking Mediterranean paradise."
+  keywords="Cyprus relocation, Cyprus Golden Visa, Cyprus residency, Cyprus non-dom tax, Cyprus investment, EU passport Cyprus, Cyprus living guide"
+  image="/images/cyprus-hero.jpg"
+  imageAlt="Cyprus Golden Visa and Residency Guide - Mediterranean Paradise"
+  type="website"
+>
+  <!-- Hero Section -->
+  <section class="relative min-h-[60vh] bg-gradient-to-br from-blue-600 to-orange-500 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">Cyprus</h1>
+      <p class="text-xl md:text-2xl mb-8">EU Residency, Non-Dom Tax Benefits & Mediterranean Lifestyle</p>
+      <div class="flex flex-wrap justify-center gap-4 text-sm">
+        <span class="bg-white/20 px-4 py-2 rounded-full">EU Passport Program</span>
+        <span class="bg-white/20 px-4 py-2 rounded-full">Non-Dom Tax Status</span>
+        <span class="bg-white/20 px-4 py-2 rounded-full">English Speaking</span>
+        <span class="bg-white/20 px-4 py-2 rounded-full">Mediterranean Climate</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Stats -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-4 gap-8 text-center">
+        <div class="p-6">
+          <div class="text-3xl font-bold text-blue-600 mb-2">€300K+</div>
+          <div class="text-gray-600">Investment Required</div>
+        </div>
+        <div class="p-6">
+          <div class="text-3xl font-bold text-blue-600 mb-2">2-3 Months</div>
+          <div class="text-gray-600">Processing Time</div>
+        </div>
+        <div class="p-6">
+          <div class="text-3xl font-bold text-blue-600 mb-2">17 Years</div>
+          <div class="text-gray-600">Non-Dom Tax Benefits</div>
+        </div>
+        <div class="p-6">
+          <div class="text-3xl font-bold text-blue-600 mb-2">EU Access</div>
+          <div class="text-gray-600">27 Countries</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Article -->
+  {featuredArticle && (
+    <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold mb-4">Featured Cyprus Guide</h2>
+        </div>
+        
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto">
+          {featuredArticle.mainImage && (
+            <div class="aspect-video overflow-hidden">
+              <img
+                src={urlFor(featuredArticle.mainImage).width(800).height(450).url()}
+                alt={featuredArticle.title}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          )}
+          <div class="p-8">
+            <h3 class="text-2xl font-bold mb-4">{featuredArticle.title}</h3>
+            <p class="text-gray-600 mb-6 text-lg">{featuredArticle.excerpt}</p>
+            <a 
+              href={`/articles/${featuredArticle.slug?.current}`}
+              class="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+            >
+              Read Complete Guide
+              <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- All Cyprus Articles -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">All Cyprus Guides</h2>
+        <p class="text-xl text-gray-600">Comprehensive resources for your Cyprus relocation journey</p>
+      </div>
+
+      {cyprusArticles.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {cyprusArticles.map((article) => (
+            <article class="bg-white rounded-xl shadow-soft hover:shadow-xl transition-all group">
+              {article.mainImage && (
+                <div class="aspect-video overflow-hidden rounded-t-xl">
+                  <img
+                    src={urlFor(article.mainImage).width(400).height(225).url()}
+                    alt={article.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              <div class="p-6">
+                {article.category && (
+                  <span class="text-sm text-blue-600 font-medium">
+                    {article.category.title}
+                  </span>
+                )}
+                <h3 class="text-xl font-bold mt-2 mb-3 group-hover:text-blue-600 transition-colors">
+                  <a href={`/articles/${article.slug?.current}`}>
+                    {article.title}
+                  </a>
+                </h3>
+                <p class="text-gray-600 line-clamp-3 mb-4">
+                  {article.excerpt}
+                </p>
+                <a 
+                  href={`/articles/${article.slug?.current}`}
+                  class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  Read More
+                  <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-gray-600 text-lg">Cyprus guides will be added soon. Check back for comprehensive relocation information.</p>
+          <a href="/articles" class="inline-block mt-4 text-blue-600 hover:text-blue-700 font-medium">
+            Browse All Articles →
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-16 bg-gradient-to-r from-blue-600 to-orange-500 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-4xl font-bold mb-4">Ready to Explore Cyprus?</h2>
+      <p class="text-xl mb-8 text-blue-100">Get expert guidance on Cyprus residency and investment opportunities</p>
+      <a href="/articles" class="inline-block bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+        Browse All Cyprus Articles
+      </a>
+    </div>
+  </section>
+</Layout>

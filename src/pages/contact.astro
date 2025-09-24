@@ -1,0 +1,155 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact Relocation Quest - Get Expert Relocation Guidance">
+  <!-- Hero Section -->
+  <section class="relative min-h-[60vh] bg-gradient-to-br from-blue-600 to-orange-500 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">Contact Us</h1>
+      <p class="text-xl md:text-2xl mb-8">Get expert guidance for your international relocation journey</p>
+    </div>
+  </section>
+
+  <!-- Contact Options Section -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">How Can We Help You?</h2>
+        <p class="text-xl text-gray-600">Choose the best way to get the information you need</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Browse Articles -->
+        <div class="bg-gray-50 rounded-xl p-8 text-center">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Self-Service</h3>
+          <p class="text-gray-600 mb-6">Browse our comprehensive library of articles, guides, and resources to find answers to your questions.</p>
+          <a href="/articles" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            Browse Articles
+            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Search by Category -->
+        <div class="bg-gray-50 rounded-xl p-8 text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Browse by Topic</h3>
+          <p class="text-gray-600 mb-6">Explore specific topics like golden visas, tax optimization, or digital nomad visas to find targeted information.</p>
+          <a href="/categories" class="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+            View Categories
+            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Country Guides -->
+        <div class="bg-gray-50 rounded-xl p-8 text-center">
+          <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l2.293 2.293A1 1 0 0018 16V6a1 1 0 00-.293-.707z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Country Guides</h3>
+          <p class="text-gray-600 mb-6">Get detailed information about specific countries including visa programs, requirements, and living guides.</p>
+          <div class="space-y-2">
+            <a href="/countries/cyprus" class="block text-orange-600 hover:text-orange-700 font-medium">Cyprus →</a>
+            <a href="/countries/portugal" class="block text-orange-600 hover:text-orange-700 font-medium">Portugal →</a>
+            <a href="/countries/dubai" class="block text-orange-600 hover:text-orange-700 font-medium">Dubai →</a>
+            <a href="/countries/malta" class="block text-orange-600 hover:text-orange-700 font-medium">Malta →</a>
+            <a href="/countries/singapore" class="block text-orange-600 hover:text-orange-700 font-medium">Singapore →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+        <p class="text-xl text-gray-600">Quick answers to common questions</p>
+      </div>
+      
+      <div class="space-y-8">
+        <div class="bg-white rounded-lg p-6 shadow-sm">
+          <h3 class="text-xl font-bold mb-3">How accurate is your information?</h3>
+          <p class="text-gray-600">All our content is thoroughly researched using official government sources, legal documents, and regularly updated to reflect current requirements and changes in immigration laws.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg p-6 shadow-sm">
+          <h3 class="text-xl font-bold mb-3">Do you provide personalized consultation?</h3>
+          <p class="text-gray-600">Currently, we focus on providing comprehensive written guides and resources. For personalized advice, we recommend consulting with qualified immigration lawyers or advisors in your target country.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg p-6 shadow-sm">
+          <h3 class="text-xl font-bold mb-3">How often is content updated?</h3>
+          <p class="text-gray-600">We continuously monitor immigration law changes and update our content regularly. New articles are published weekly, and existing content is reviewed and updated as needed.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg p-6 shadow-sm">
+          <h3 class="text-xl font-bold mb-3">Can I suggest topics for future articles?</h3>
+          <p class="text-gray-600">We welcome suggestions! While we don't have a formal submission process yet, you can expect us to continue expanding our coverage of international relocation topics based on user interest and current trends.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Important Notice Section -->
+  <section class="py-16 bg-blue-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="bg-white rounded-xl p-8 shadow-lg border-l-4 border-blue-600">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0">
+            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-3 text-blue-900">Important Disclaimer</h3>
+            <p class="text-blue-800 leading-relaxed">
+              The information provided on Relocation Quest is for educational and informational purposes only. 
+              Immigration laws and investment requirements change frequently and vary by individual circumstances. 
+              Always consult with qualified legal and financial professionals before making any relocation or investment decisions. 
+              We are not liable for any decisions made based on the information provided on this website.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-16 bg-gradient-to-r from-blue-600 to-orange-500 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-4xl font-bold mb-4">Ready to Explore Your Options?</h2>
+      <p class="text-xl mb-8 text-blue-100">Start your international relocation research with our comprehensive guides</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/articles" class="inline-flex items-center px-8 py-4 bg-white text-blue-600 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+          Browse All Articles
+          <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+        <a href="/about" class="inline-flex items-center px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all">
+          Learn About Us
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
