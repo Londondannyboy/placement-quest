@@ -1,0 +1,224 @@
+---
+// VideoHero component with Mux integration and performance optimization
+export interface Props {
+  desktopPlaybackId?: string;
+  mobilePlaybackId?: string;
+  title?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+const {
+  desktopPlaybackId = "bfvEL900RnlydVg00wTXsAUgm3g8mQ00MmPyTEOEFr01Ao", // Professional demo video
+  mobilePlaybackId = "vEwbJF7lD4O24YHi0028Mf9g01fHqRQI6gCN00NjX2OBY", // Mobile optimized demo
+  title = "Your Journey to Global Living Starts Here",
+  subtitle = "Expert guidance on international relocation, visa applications, tax optimization, and building your dream life abroad.",
+  ctaText = "Read Latest Articles",
+  ctaLink = "/articles"
+} = Astro.props;
+
+const muxEnvKey = "26hi0t52rcm3pl738jugp7sp8";
+---
+
+<div class="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-600 to-orange-500">
+  <!-- Fallback gradient background (maintains current design) -->
+  
+  <!-- Desktop Video with Performance Optimization -->
+  {desktopPlaybackId && (
+    <div class="hidden md:block absolute inset-0">
+      <video
+        class="w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+        muted
+        loop
+        playsinline
+        poster={`https://image.mux.com/${desktopPlaybackId}/thumbnail.webp?width=1920&height=1080&fit=crop&crop=smart`}
+        preload="none"
+        data-src={`https://stream.mux.com/${desktopPlaybackId}.m3u8`}
+        data-lazy="true"
+        onloadeddata="this.style.opacity='1'"
+      >
+        <!-- Sources will be added by JavaScript when in viewport -->
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  )}
+  
+  <!-- Mobile Video with Aggressive Performance Optimization -->
+  {mobilePlaybackId && (
+    <div class="md:hidden absolute inset-0">
+      <video
+        class="w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+        muted
+        loop
+        playsinline
+        poster={`https://image.mux.com/${mobilePlaybackId}/thumbnail.webp?width=1080&height=1920&fit=crop&crop=smart`}
+        preload="none"
+        data-src-mobile={`https://stream.mux.com/${mobilePlaybackId}.m3u8`}
+        data-lazy="true"
+        data-mobile="true"
+        onloadeddata="this.style.opacity='1'"
+      >
+        <!-- Sources will be added by JavaScript based on connection speed -->
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  )}
+  
+  <!-- Dark overlay for text readability -->
+  <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+  
+  <!-- Content Overlay -->
+  <div class="relative z-10 flex items-center justify-center min-h-screen">
+    <div class="text-center text-white max-w-4xl px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight">
+        {title}
+      </h1>
+      <p class="text-lg sm:text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
+        {subtitle}
+      </p>
+      <a 
+        href={ctaLink}
+        class="inline-block bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
+      >
+        {ctaText}
+      </a>
+    </div>
+  </div>
+  
+  <!-- Advanced Performance Optimization -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const videos = document.querySelectorAll('video[data-lazy]');
+      
+      // Check connection quality for mobile optimization
+      function getConnectionQuality() {
+        if ('connection' in navigator && 'effectiveType' in navigator.connection) {
+          const conn = navigator.connection;
+          if (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g') {
+            return 'poor';
+          } else if (conn.effectiveType === '3g') {
+            return 'moderate';  
+          } else {
+            return 'good';
+          }
+        }
+        return 'unknown';
+      }
+      
+      function loadVideo(video) {
+        const isMobile = video.hasAttribute('data-mobile');
+        const connectionQuality = getConnectionQuality();
+        
+        // Skip video loading on poor mobile connections to preserve performance
+        if (isMobile && connectionQuality === 'poor') {
+          console.log('Skipping video load on poor mobile connection');
+          return;
+        }
+        
+        const src = video.getAttribute('data-src') || video.getAttribute('data-src-mobile');
+        if (src) {
+          // Create HLS source
+          const hlsSource = document.createElement('source');
+          hlsSource.src = src;
+          hlsSource.type = 'application/vnd.apple.mpegurl';
+          
+          // Create MP4 fallback
+          const mp4Source = document.createElement('source');
+          mp4Source.src = src.replace('.m3u8', '/medium.mp4');
+          mp4Source.type = 'video/mp4';
+          
+          video.appendChild(hlsSource);
+          video.appendChild(mp4Source);
+          
+          // Start loading and autoplay
+          video.load();
+          
+          // Add delay for mobile to ensure other critical resources load first
+          const delay = isMobile ? 2000 : 500;
+          setTimeout(() => {
+            video.play().catch(() => {
+              console.log('Video autoplay blocked, user interaction required');
+            });
+          }, delay);
+          
+          video.setAttribute('data-loaded', 'true');
+        }
+      }
+      
+      // Use Intersection Observer for performance
+      if ('IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const video = entry.target;
+              loadVideo(video);
+              videoObserver.unobserve(video);
+            }
+          });
+        }, {
+          rootMargin: '50px' // Start loading slightly before entering viewport
+        });
+        
+        videos.forEach(video => {
+          videoObserver.observe(video);
+        });
+      } else {
+        // Fallback for older browsers - load after a delay
+        setTimeout(() => {
+          videos.forEach(loadVideo);
+        }, 1000);
+      }
+      
+      // Handle reduced motion preference
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        videos.forEach(video => {
+          video.pause();
+          video.style.display = 'none';
+        });
+      }
+      
+      // Pause videos when not visible (battery optimization)
+      document.addEventListener('visibilitychange', function() {
+        videos.forEach(video => {
+          if (document.visibilityState === 'hidden') {
+            video.pause();
+          } else if (video.getAttribute('data-loaded')) {
+            video.play().catch(() => {});
+          }
+        });
+      });
+    });
+  </script>
+</div>
+
+<style>
+  /* Ensure video covers container properly */
+  video {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Smooth transitions for CTA button */
+  a {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Loading state for videos */
+  video:not([data-loaded]) {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  video[data-loaded] {
+    opacity: 1;
+  }
+  
+  /* Accessibility: Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    video {
+      display: none !important;
+    }
+  }
+</style>

@@ -2,6 +2,7 @@
 export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
+import VideoHero from '../components/VideoHero.astro';
 import { sanityClient } from 'sanity:client';
 import imageUrlBuilder from '@sanity/image-url';
 
@@ -118,16 +119,13 @@ function getCategoryIcon(categoryTitle) {
   imageAlt="Relocation Quest - Your Guide to Global Living and International Relocation"
   type="website"
 >
-  <!-- Hero component temporarily disabled for debugging -->
-  <div class="min-h-screen bg-gradient-to-br from-blue-600 to-orange-500 flex items-center justify-center">
-    <div class="text-center text-white">
-      <h1 class="text-6xl font-bold mb-4">Your Journey to Global Living Starts Here</h1>
-      <p class="text-xl mb-8">Expert guidance on international relocation, visa applications, tax optimization, and building your dream life abroad.</p>
-      <a href="/articles" class="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-        Read Latest Articles
-      </a>
-    </div>
-  </div>
+  <!-- Professional Video Hero Banner -->
+  <VideoHero 
+    title="Your Journey to Global Living Starts Here"
+    subtitle="Expert guidance on international relocation, visa applications, tax optimization, and building your dream life abroad."
+    ctaText="Read Latest Articles"
+    ctaLink="/articles"
+  />
 
   <!-- Features Section -->
   <section class="py-16 bg-white">
