@@ -4,6 +4,7 @@ export const prerender = true;
 import Layout from '../layouts/Layout.astro';
 import VideoHero from '../components/VideoHero.astro';
 import VideoThumbnail from '../components/VideoThumbnail.astro';
+import SimpleVideoThumb from '../components/SimpleVideoThumb.astro';
 import AnimatedSection from '../components/AnimatedSection.astro';
 import EnhancedButton from '../components/EnhancedButton.astro';
 import { sanityClient } from 'sanity:client';
@@ -494,14 +495,10 @@ function getCategoryIcon(categoryTitle) {
         <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
           <div class="flex items-center mb-4">
             <div class="w-full h-32 mr-3 flex items-center justify-center mb-4 rounded-lg overflow-hidden">
-              <!-- Portugal Video Thumbnail - Testing Original ID -->
-              <VideoThumbnail 
+              <!-- Portugal Video - Using SimpleVideoThumb like VideoHero -->
+              <SimpleVideoThumb 
                 playbackId="Z01R9CHNHPpHJU21OLIWoN02GZ2lOLi5fTWltOEKcuOQQ"
                 title="Portugal - Golden Visa Destination"
-                description="Premium relocation opportunities in Portugal"
-                size="large"
-                aspectRatio="16:9"
-                autoplay={true}
               />
             </div>
             <h3 class="text-2xl font-bold">Portugal</h3>
