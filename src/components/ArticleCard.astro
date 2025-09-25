@@ -4,11 +4,13 @@ export interface Props {
   excerpt?: string;
   slug: string;
   imageUrl?: string;
+  videoPlaybackId?: string;
+  videoPosterUrl?: string;
   date?: string;
   author?: string;
 }
 
-const { title, excerpt, slug, imageUrl, date, author } = Astro.props;
+const { title, excerpt, slug, imageUrl, videoPlaybackId, videoPosterUrl, date, author } = Astro.props;
 
 function formatDate(dateString: string) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -16,8 +18,37 @@ function formatDate(dateString: string) {
 }
 ---
 
+<!-- Load Mux Player if video thumbnail exists -->
+{videoPlaybackId && (
+  <script>
+    if (!window.customElements.get('mux-player')) {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/@mux/mux-player@2';
+      document.head.appendChild(script);
+    }
+  </script>
+)}
+
 <article class="group bg-white/95 backdrop-blur rounded-xl shadow-soft hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-  {imageUrl && (
+  {/* Video thumbnail takes priority over image */}
+  {videoPlaybackId ? (
+    <a href={`/articles/${slug}`} class="block relative overflow-hidden h-48">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+      <mux-player
+        playback-id={videoPlaybackId}
+        metadata-video-title={title}
+        env-key={import.meta.env.PUBLIC_MUX_ENV_KEY || "26hi0t52rcm3pl738jugp7sp8"}
+        muted
+        loop
+        preload="metadata"
+        poster={videoPosterUrl || imageUrl}
+        class="w-full h-48 object-cover"
+        onmouseenter="this.play()"
+        onmouseleave="this.pause()"
+        style="width: 100%; height: 192px; object-fit: cover;"
+      />
+    </a>
+  ) : imageUrl ? (
     <a href={`/articles/${slug}`} class="block relative overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
       <img 
@@ -27,9 +58,7 @@ function formatDate(dateString: string) {
         loading="lazy"
       />
     </a>
-  )}
-  
-  {!imageUrl && (
+  ) : (
     <div class="h-48 bg-gradient-to-br from-primary-500 to-secondary-500 relative overflow-hidden">
       <div class="absolute inset-0 bg-black/10"></div>
       <div class="absolute bottom-4 left-6 text-white">

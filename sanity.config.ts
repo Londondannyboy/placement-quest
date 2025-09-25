@@ -175,6 +175,44 @@ export default defineConfig({
             validation: (Rule) => Rule.required().error('Featured image is required for article promotion and SEO'),
           },
           {
+            name: 'thumbnailVideo',
+            title: 'Thumbnail Video (Optional)',
+            type: 'object',
+            description: '🎬 Add a video thumbnail to make this article stand out on the homepage and category pages. Short, engaging clips work best (5-15 seconds).',
+            fieldset: 'media',
+            fields: [
+              {
+                name: 'muxPlaybackId',
+                title: 'Mux Playback ID',
+                type: 'string',
+                description: 'Enter the Playback ID from Mux dashboard (e.g., ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM)',
+                validation: (Rule) => Rule.custom((value) => {
+                  if (!value) return true;
+                  if (value.length < 10 || value.length > 60) {
+                    return 'Invalid Mux Playback ID format';
+                  }
+                  return true;
+                }),
+              },
+              {
+                name: 'posterImage',
+                title: 'Poster Frame (Optional)',
+                type: 'image',
+                description: 'Static frame shown before video loads. If not set, will use main image.',
+                options: {
+                  hotspot: true,
+                },
+              },
+              {
+                name: 'autoplay',
+                title: 'Autoplay on Hover',
+                type: 'boolean',
+                description: 'Start playing when user hovers over the thumbnail',
+                initialValue: true,
+              }
+            ],
+          },
+          {
             name: 'seoTitle',
             title: 'SEO Title',
             type: 'string',

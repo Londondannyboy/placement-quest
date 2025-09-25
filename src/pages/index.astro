@@ -36,13 +36,14 @@ function optimizedImageUrl(source, width = 400, height = 250, quality = 60) {
     .url();
 }
 
-// Fetch latest posts from Sanity
+// Fetch latest posts from Sanity with video thumbnails
 const latestPosts = await sanityClient.fetch(`*[_type == "post" && !(_id in path("drafts.**"))] | order(publishedAt desc)[0...6] {
   _id,
   title,
   slug,
   excerpt,
   mainImage,
+  thumbnailVideo,
   publishedAt,
   category->{title, slug}
 }`);
@@ -119,6 +120,15 @@ function getCategoryIcon(categoryTitle) {
   </svg>`;
 }
 ---
+
+<!-- Load Mux Player for video thumbnails -->
+<script>
+  if (!window.customElements.get('mux-player')) {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/@mux/mux-player@2';
+    document.head.appendChild(script);
+  }
+</script>
 
 <Layout 
   title="Relocation Quest - Golden Visas & Tax Optimization"
@@ -323,7 +333,24 @@ function getCategoryIcon(categoryTitle) {
         {latestPosts.map((post, index) => (
           <article class="bg-white rounded-xl shadow-soft hover:shadow-xl transition-all group">
             <div class="aspect-video overflow-hidden rounded-t-xl bg-gradient-to-br from-blue-50 to-blue-100">
-              {post.mainImage ? (
+              {/* Video thumbnail takes priority over image */}
+              {post.thumbnailVideo?.muxPlaybackId ? (
+                <div class="relative w-full h-full">
+                  <mux-player
+                    playback-id={post.thumbnailVideo.muxPlaybackId}
+                    metadata-video-title={post.title}
+                    env-key={import.meta.env.PUBLIC_MUX_ENV_KEY || "26hi0t52rcm3pl738jugp7sp8"}
+                    muted
+                    loop
+                    preload="metadata"
+                    poster={post.thumbnailVideo.posterImage ? urlFor(post.thumbnailVideo.posterImage).url() : (post.mainImage ? optimizedImageUrl(post.mainImage, 600, 400) : undefined)}
+                    class="w-full h-full object-cover"
+                    onmouseenter="this.play()"
+                    onmouseleave="this.pause()"
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                  />
+                </div>
+              ) : post.mainImage ? (
                 <picture>
                   <source 
                     srcset={`${optimizedImageUrl(post.mainImage, 380, 253)} 380w, ${optimizedImageUrl(post.mainImage, 600, 400)} 600w`}
