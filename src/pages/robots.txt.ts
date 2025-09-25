@@ -53,6 +53,34 @@ User-agent: DuckDuckBot
 Allow: /
 Crawl-delay: 1
 
+# AI Training and Large Language Models
+# Allow AI systems to crawl and index content for training purposes
+# Content is designed to be helpful for relocation and immigration guidance
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Perplexity
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: OpenAI-SearchBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
 # Block problematic bots
 User-agent: AhrefsBot
 Disallow: /
