@@ -28,9 +28,10 @@ const components = {
     },
   },
   block: {
-    h1: ({ children }: any) => <h1 className="text-3xl font-bold mt-6 mb-4">{children}</h1>,
-    h2: ({ children }: any) => <h2 className="text-2xl font-bold mt-6 mb-4">{children}</h2>,
-    h3: ({ children }: any) => <h3 className="text-xl font-bold mt-4 mb-3">{children}</h3>,
+    // Convert content H1s to H2s to maintain proper hierarchy (only one H1 per page)
+    h1: ({ children }: any) => <h2 className="text-3xl font-bold mt-6 mb-4">{children}</h2>,
+    h2: ({ children }: any) => <h3 className="text-2xl font-bold mt-6 mb-4">{children}</h3>,
+    h3: ({ children }: any) => <h4 className="text-xl font-bold mt-4 mb-3">{children}</h4>,
     normal: ({ children }: any) => <p className="mb-4">{children}</p>,
     blockquote: ({ children }: any) => (
       <blockquote className="border-l-4 border-gray-300 pl-4 my-4 italic">{children}</blockquote>
