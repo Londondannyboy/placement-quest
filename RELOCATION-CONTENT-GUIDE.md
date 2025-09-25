@@ -36,6 +36,29 @@ Create the most **authoritative, accurate, and actionable** relocation content t
 ❌ **Avoid**: "You definitely should consider Portugal's amazing Golden Visa!"
 ✅ **Use**: "Portugal's Golden Visa requires a minimum €280,000 investment and offers a path to EU citizenship after 6 years."
 
+## 🎬 Video & Media Requirements
+
+### Mux Video Integration
+**CRITICAL**: Always use **Playback IDs**, not Asset IDs!
+- **Playback ID Format**: `ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM`
+- **Found in**: Mux Dashboard → Assets → Playback IDs section
+- **Stream URL**: `https://stream.mux.com/{playback-id}.m3u8`
+
+### Current Working Videos
+- Cyprus: `ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM`
+- Dubai: `5br2hylJ4F009vDLHrxWZ3C7UDTw5901GcXYBjSOWNV8k`
+- Portugal: `Oy1LRvO5eSoXGUTthBNS13r007WorSyGvf2YLh1keA5E`
+- Malta: `aeX9W002bzUWYKu3Ryln4hLVAplzOm7DfUKm3iZqGGz00`
+- Singapore: `dCBAYhMsKX7v00HaI1gHsW8tMI2HZDLlb01KJv5hGkpkI`
+- Caribbean: `021dUb7I5L2G9dDKBWup4efv9Sxh7ZNAtElSbYkN8C2k`
+
+### Hero Images (MANDATORY)
+**Every article MUST have a hero image**:
+- No article should be published without a main image
+- Use high-quality, relevant images for each destination
+- Properly set image alt text for SEO
+- Images stored in Sanity CMS
+
 ## 📚 Content Categories & Focus
 
 ### 1. Golden Visa Programs (High Priority)
@@ -210,6 +233,30 @@ Create the most **authoritative, accurate, and actionable** relocation content t
 
 ---
 
-**Last Updated**: December 25, 2024  
+## 🔧 Technical Requirements
+
+### Sanity Webhook Configuration
+For auto-deployment when content is updated in Sanity:
+1. **Webhook URL**: `https://relocation.quest/api/revalidate`
+2. **Environment Variables**:
+   - `SANITY_WEBHOOK_SECRET`: Set in Vercel
+   - `VERCEL_DEPLOY_HOOK_URL`: Your Vercel deploy hook
+3. **Trigger Events**: Create, Update, Delete
+4. **Filter**: `_type in ["post", "article", "category"]`
+
+### Benefits of Webhook Setup
+- ✅ Instant content updates without manual deployment
+- ✅ Image changes reflect immediately
+- ✅ Non-technical editors can publish directly
+- ✅ SEO-friendly with fresh content
+
+### Publishing Requirements
+**CRITICAL for all new content**:
+1. **Must have hero image** - No articles without main images
+2. **Must be published** - Don't leave in draft state
+3. **Must exclude drafts in queries** - Use `&& !(_id in path("drafts.**"))`
+4. **Force rebuild if needed** - Push to trigger fresh deployment
+
+**Last Updated**: September 25, 2025
 **Content Team Lead**: Relocation Quest Editorial  
 **Review Schedule**: Monthly content quality audits

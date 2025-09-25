@@ -16,6 +16,15 @@ This document provides instructions for Claude Desktop to systematically enhance
 - **AI Enhancement (20 pts)**: Enhancement tracking
 - **Currency/Freshness (15 pts)**: How recent the content is
 
+## ⚠️ CRITICAL REQUIREMENTS
+
+### Every Article MUST:
+1. **Have a hero image** - No exceptions, no blank images
+2. **Be published** - Not left in draft state
+3. **Have complete SEO metadata** - Title, description, keywords
+4. **Be categorized properly** - Assign to relevant category
+5. **Include quality metrics** - Track which APIs were used
+
 ## 📋 Enhancement Workflow
 
 ### Step 1: Update Sanity Schema

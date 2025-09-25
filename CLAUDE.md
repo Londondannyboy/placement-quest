@@ -29,14 +29,16 @@ This unified naming eliminates confusion across all platforms.
 - **LinkUp/Tavily**: Contextual search, real-time web data access
 - **Pipeline**: Automated research → fact-checking → citation-rich content generation
 
-### Video Infrastructure
+### Video Infrastructure (FIXED - Use Playback IDs!)
 All country destinations now feature professional video thumbnails:
-- **Cyprus**: ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM
-- **Portugal**: Z01R9CHNHPpHJU21OLIWoN02GZ2lOLi5fTWltOEKcuOQQ  
-- **Malta**: rC7EUyqkkODi01yLvxd7GDsjQpcjcrO7gV00IsBRN4Es4
-- **Dubai**: 6L02MpxKnUJVvHzC3M00n01ZoYH1XMrl01Kv6Zhi8O6ffY8
-- **Singapore**: Lq02MyaOxqH9o1Y7NEvQ3Z02w00pNl8kgfpHIkW8SmjrTw
-- **Caribbean**: bW029UWH4uUuLmWQMCoDD99JYMsKiY6Z4i500lZ600VBEU
+- **Cyprus**: `ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM`
+- **Dubai**: `5br2hylJ4F009vDLHrxWZ3C7UDTw5901GcXYBjSOWNV8k`
+- **Portugal**: `Oy1LRvO5eSoXGUTthBNS13r007WorSyGvf2YLh1keA5E`
+- **Malta**: `aeX9W002bzUWYKu3Ryln4hLVAplzOm7DfUKm3iZqGGz00`
+- **Singapore**: `dCBAYhMsKX7v00HaI1gHsW8tMI2HZDLlb01KJv5hGkpkI`
+- **Caribbean**: `021dUb7I5L2G9dDKBWup4efv9Sxh7ZNAtElSbYkN8C2k`
+
+**CRITICAL**: Use Playback IDs from Mux, not Asset IDs!
 
 ## Project Structure
 ```
@@ -252,7 +254,7 @@ The project has fully operational automated content publishing:
 - Category reorganization (topic-based, not geographic)
 - All SEO audit recommendations implemented
 
-## Current Project State (September 2025)
+## Current Project State (September 2025) - FULLY OPERATIONAL ✅
 
 ### ✅ **Production Ready & Operational**
 - **Live Site**: https://relocation.quest (fully functional)
