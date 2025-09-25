@@ -6,6 +6,7 @@ import VideoHero from '../components/VideoHero.astro';
 import VideoThumbnail from '../components/VideoThumbnail.astro';
 import SimpleVideoThumb from '../components/SimpleVideoThumb.astro';
 import IframeVideoThumb from '../components/IframeVideoThumb.astro';
+import MuxGifThumb from '../components/MuxGifThumb.astro';
 import AnimatedSection from '../components/AnimatedSection.astro';
 import EnhancedButton from '../components/EnhancedButton.astro';
 import { sanityClient } from 'sanity:client';
@@ -496,10 +497,12 @@ function getCategoryIcon(categoryTitle) {
         <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
           <div class="flex items-center mb-4">
             <div class="w-full h-32 mr-3 flex items-center justify-center mb-4 rounded-lg overflow-hidden">
-              <!-- Portugal Video - Using Cyprus ID temporarily -->
-              <SimpleVideoThumb 
-                playbackId="ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM"
-                title="Portugal - Golden Visa Destination"
+              <!-- Portugal - Testing animated GIF thumbnail -->
+              <MuxGifThumb 
+                playbackId="Z01R9CHNHPpHJU21OLIWoN02GZ2lOLi5fTWltOEKcuOQQ"
+                title="Portugal - Golden Visa"
+                width={320}
+                height={180}
               />
             </div>
             <h3 class="text-2xl font-bold">Portugal</h3>
@@ -510,14 +513,12 @@ function getCategoryIcon(categoryTitle) {
         <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
           <div class="flex items-center mb-4">
             <div class="w-full h-32 mr-3 flex items-center justify-center mb-4 rounded-lg overflow-hidden">
-              <!-- Dubai Video - Using Cyprus (only working video) -->
-              <VideoThumbnail 
-                playbackId="ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM"
-                title="Dubai - Business Hub Destination"
-                description="Premium business and lifestyle opportunities in Dubai"
-                size="large"
-                aspectRatio="16:9"
-                autoplay={true}
+              <!-- Dubai - Testing animated GIF thumbnail -->
+              <MuxGifThumb 
+                playbackId="6L02MpxKnUJVvHzC3M00n01ZoYH1XMrl01Kv6Zhi8O6ffY8"
+                title="Dubai - Business Hub"
+                width={320}
+                height={180}
               />
             </div>
             <h3 class="text-2xl font-bold">Dubai</h3>
