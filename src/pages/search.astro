@@ -25,7 +25,7 @@ function optimizedImageUrl(source, width = 400, height = 250, quality = 80) {
 }
 
 // Get all posts for client-side search
-const allPosts = await sanityClient.fetch(`*[_type == "post"] {
+const allPosts = await sanityClient.fetch(`*[_type == "post" && !(_id in path("drafts.**"))] {
   _id,
   title,
   slug,
