@@ -54,11 +54,20 @@ Required environment variables:
 - `VERCEL_AI_GATEWAY_API_KEY` - AI Gateway integration
 - `CRON_SECRET` - Authentication for automated jobs
 
-## Deployment
-- **Production**: https://relocation.quest
-- **Sanity Studio**: https://relocation.quest/studio
+## Deployment & Live Sites
+- **Production**: [relocation.quest](https://relocation.quest)
+- **Sanity Studio**: [relocation.quest/studio](https://relocation.quest/studio)
 - **Auto-deploy**: Pushes to main branch trigger Vercel deployment
 - **Cron Jobs**: Automated content publishing every 6 hours
+
+## Development Commands
+```bash
+npm install          # Install dependencies
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+git push origin main # Deploy to production
+```
 
 ## Content Management
 
