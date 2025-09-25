@@ -67,15 +67,6 @@ async function autoCategorizeArticles() {
       } else if (title.includes('saint kitts') || title.includes('caribbean')) {
         categoryId = CATEGORY_MAP['Saint Kitts'];
         categoryName = 'Saint Kitts';
-      } else if (title.includes('jabai')) {
-        // Special case for Jabai articles
-        if (title.includes('tax')) {
-          categoryId = CATEGORY_MAP['Tax & Finance'];
-          categoryName = 'Tax & Finance';
-        } else {
-          categoryId = CATEGORY_MAP['Golden Visa'];
-          categoryName = 'Golden Visa';
-        }
       } else if (title.includes('golden visa') || (title.includes('visa') && !title.includes('nomad'))) {
         categoryId = CATEGORY_MAP['Golden Visa'];
         categoryName = 'Golden Visa';
