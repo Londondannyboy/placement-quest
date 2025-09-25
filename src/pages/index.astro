@@ -1,705 +1,365 @@
 ---
-// Dynamic rendering for video playback on mobile
-// export const prerender = true; // Disabled to fix mobile video
-
 import Layout from '../layouts/Layout.astro';
-import VideoHero from '../components/VideoHero.astro';
-import VideoThumbnail from '../components/VideoThumbnail.astro';
-import SimpleVideoThumb from '../components/SimpleVideoThumb.astro';
-import IframeVideoThumb from '../components/IframeVideoThumb.astro';
-import MuxGifThumb from '../components/MuxGifThumb.astro';
-import MuxStaticThumb from '../components/MuxStaticThumb.astro';
 import AnimatedSection from '../components/AnimatedSection.astro';
 import EnhancedButton from '../components/EnhancedButton.astro';
-import { sanityClient } from 'sanity:client';
-import imageUrlBuilder from '@sanity/image-url';
 
-const builder = imageUrlBuilder(sanityClient);
-
-function urlFor(source) {
-  return builder.image(source);
-}
-
-// Optimized image helper for better performance - reduced quality for faster loading
-function optimizedImageUrl(source, width = 400, height = 250, quality = 60) {
-  if (!source) return null;
-  
-  return builder
-    .image(source)
-    .width(width)
-    .height(height)
-    .quality(quality)
-    .format('webp')
-    .fit('crop')
-    .crop('center')
-    .auto('format')
-    .url();
-}
-
-// Fetch latest posts from Sanity with video thumbnails
-const latestPosts = await sanityClient.fetch(`*[_type == "post" && !(_id in path("drafts.**"))] | order(publishedAt desc)[0...6] {
-  _id,
-  title,
-  slug,
-  excerpt,
-  mainImage,
-  thumbnailVideo,
-  publishedAt,
-  category->{title, slug}
-}`);
-
-// Fetch categories (force fresh data)
-const categories = await sanityClient.fetch(`*[_type == "category"] | order(title asc) {
-  title,
-  slug,
-  description,
-  _id,
-  _updatedAt
-}`);
-
-// Fetch featured posts
-const featuredPosts = await sanityClient.fetch(`*[_type == "post" && featured == true && !(_id in path("drafts.**"))] | order(publishedAt desc)[0...3] {
-  _id,
-  title,
-  slug,
-  excerpt,
-  mainImage,
-  category->{title}
-}`);
-
-// Function to get category icon based on category name
-function getCategoryIcon(categoryTitle) {
-  const title = categoryTitle.toLowerCase();
-  
-  if (title.includes('visa') || title.includes('immigration')) {
-    return `<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-      <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-    </svg>`;
-  }
-  if (title.includes('tax') || title.includes('finance')) {
-    return `<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M8 5a1 1 0 100 2v6h1V7a1 1 0 001-1V6a1 1 0 00-1-1zm2 13a1 1 0 100-2v-6H9v6a1 1 0 001 1z"/>
-      <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd"/>
-    </svg>`;
-  }
-  if (title.includes('nomad') || title.includes('remote') || title.includes('digital')) {
-    return `<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-      <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd" />
-    </svg>`;
-  }
-  if (title.includes('business') || title.includes('company')) {
-    return `<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-      <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
-    </svg>`;
-  }
-  if (title.includes('banking')) {
-    return `<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
-      <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
-    </svg>`;
-  }
-  if (title.includes('lifestyle') || title.includes('culture')) {
-    return `<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-      <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-    </svg>`;
-  }
-  if (title.includes('property') || title.includes('real estate')) {
-    return `<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
-    </svg>`;
-  }
-  if (title.includes('education')) {
-    return `<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.75.524z"/>
-    </svg>`;
-  }
-  
-  // Default icon for uncategorized
-  return `<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
-  </svg>`;
-}
+// SEO optimized for placement agent keywords
+const seoTitle = "Top Private Equity Placement Agents 2025 | Quest Placement Services";
+const seoDescription = "Comprehensive directory of top placement agents for private equity fundraising. Compare fees, track records, and services from Campbell Lutyens, Park Hill, Evercore and more.";
 ---
 
-<!-- Load Mux Player for video thumbnails -->
-<script>
-  if (!window.customElements.get('mux-player')) {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@mux/mux-player@2';
-    document.head.appendChild(script);
-  }
-</script>
-
 <Layout 
-  title="Relocation Quest - Golden Visas & Tax Optimization"
-  description="Expert guidance on golden visas, international tax optimization, and global relocation for digital nomads and expatriates."
-  keywords="international relocation, golden visa, tax optimization, digital nomad visa, international living, expat guide, residency programs, citizenship by investment"
-  image="/images/relocation-quest-hero.jpg"
-  imageAlt="Relocation Quest - Your Guide to Global Living and International Relocation"
-  type="website"
+  title={seoTitle}
+  description={seoDescription}
+  keywords="top private equity placement agents, placement agents, quest placement agent, placement agent fees, private equity placement agent, list of placement agents"
 >
-  <!-- Load Mux Player for all video thumbnails -->
-  <script src="https://cdn.jsdelivr.net/npm/@mux/mux-player@2"></script>
-  <script>
-    // Wait for Mux Player to be ready
-    function waitForMuxPlayer() {
-      if (window.customElements.get('mux-player')) {
-        console.log('Mux Player is ready');
-      } else {
-        setTimeout(waitForMuxPlayer, 100);
-      }
-    }
-    waitForMuxPlayer();
-  </script>
-  <!-- Professional Video Hero Banner -->
-  <VideoHero 
-    title="Your Journey to Global Living Starts Here"
-    subtitle="Expert guidance on international relocation, visa applications, tax optimization, and building your dream life abroad."
-    ctaText="Read Latest Articles"
-    ctaLink="/articles"
-  />
-
-  <!-- Features Section -->
-  <section class="py-16 bg-white overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <AnimatedSection class="text-center mb-12">
-        <h2 class="text-4xl font-bold mb-4 text-gradient-primary">Why Choose Relocation Quest?</h2>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">Comprehensive resources and expert guidance for your international move</p>
+  <!-- Hero Section with Key Keywords -->
+  <section class="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-[80vh] flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="relative z-10 container mx-auto px-4 text-center text-white">
+      <AnimatedSection>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+          Top Private Equity Placement Agents<br/>
+          <span class="text-yellow-400">& Fund Placement Intelligence</span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-200">
+          The Bloomberg Terminal for PE placement agents. Access comprehensive profiles, 
+          fee structures, and real-time fundraising intelligence.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <EnhancedButton href="/placement-agents/" variant="primary">
+            Browse All Placement Agents
+          </EnhancedButton>
+          <EnhancedButton href="/top-private-equity-placement-agents/" variant="secondary">
+            View Top Rankings 2025
+          </EnhancedButton>
+        </div>
       </AnimatedSection>
-      
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <AnimatedSection delay={1} class="hover-lift">
-          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 rounded-full animate-float">
-              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Golden Visa Programs</h3>
-            <p class="text-gray-600">Navigate investment residency programs in Cyprus, Portugal, Malta, and more. Get expert guidance on requirements and benefits.</p>
-          </div>
-        </AnimatedSection>
-        <AnimatedSection delay={2} class="hover-lift">
-          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-green-500 to-green-600 rounded-full animate-float">
-              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M8 5a1 1 0 100 2v6h1V7a1 1 0 001-1V6a1 1 0 00-1-1zm2 13a1 1 0 100-2v-6H9v6a1 1 0 001 1z"/>
-                <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd"/>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Tax Optimization</h3>
-            <p class="text-gray-600">Understand international tax planning, non-dom status, and how to legally minimize your tax burden abroad.</p>
-          </div>
-        </AnimatedSection>
-        <AnimatedSection delay={3} class="hover-lift">
-          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-purple-500 to-purple-600 rounded-full animate-float">
-              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Digital Nomad Visas</h3>
-            <p class="text-gray-600">Discover countries offering remote work visas and learn how to work from paradise legally.</p>
-          </div>
-        </AnimatedSection>
-        <AnimatedSection delay={1} class="hover-lift">
-          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full animate-float">
-              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Company Formation</h3>
-            <p class="text-gray-600">Set up your business in tax-efficient jurisdictions with our comprehensive guides and partner network.</p>
-          </div>
-        </AnimatedSection>
-        <AnimatedSection delay={2} class="hover-lift">
-          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full animate-float">
-              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
-                <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Banking & Finance</h3>
-            <p class="text-gray-600">Open international bank accounts, understand FATCA/CRS requirements, and manage your wealth globally.</p>
-          </div>
-        </AnimatedSection>
-        <AnimatedSection delay={3} class="hover-lift">
-          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-rose-500 to-rose-600 rounded-full animate-float">
-              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Lifestyle & Culture</h3>
-            <p class="text-gray-600">From finding schools to understanding healthcare systems, we cover all aspects of expat life.</p>
-          </div>
-        </AnimatedSection>
+    </div>
+  </section>
+
+  <!-- Key Stats Section -->
+  <section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="text-center">
+          <div class="text-3xl font-bold text-blue-900">200+</div>
+          <div class="text-gray-600">Placement Agents</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-blue-900">$500B+</div>
+          <div class="text-gray-600">AUM Raised</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-blue-900">2-3%</div>
+          <div class="text-gray-600">Typical Fees</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-blue-900">Daily</div>
+          <div class="text-gray-600">Market Updates</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Professional Services Section -->
-  <section class="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-          Professional Services
+  <!-- Top Placement Agents Section (Target Keyword) -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <AnimatedSection>
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+          Top Private Equity Placement Agents
         </h2>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-          Expert guidance for your international relocation and business needs
+        <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+          Leading placement agents ranked by AUM raised, deal volume, and market presence
         </p>
-      </div>
-      
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <AnimatedSection class="hover-lift">
-          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300 hover:shadow-lg">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-amber-500 to-amber-600 rounded-full">
-              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Golden Visa Programs</h3>
-            <p class="text-gray-600 mb-4">Compare and apply for golden visa programs across Europe and beyond.</p>
-            <a href="/services/golden-visa" class="text-amber-600 hover:text-amber-700 font-semibold">Learn More →</a>
-          </div>
-        </AnimatedSection>
         
-        <AnimatedSection delay={1} class="hover-lift">
-          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300 hover:shadow-lg">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-purple-500 to-purple-600 rounded-full">
-              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Campbell Lutyens -->
+          <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+            <h3 class="text-xl font-bold mb-2">Campbell Lutyens</h3>
+            <div class="text-sm text-gray-600 mb-3">Global Leader</div>
+            <ul class="space-y-2 text-sm">
+              <li>• $488B+ total raised</li>
+              <li>• 14 global offices</li>
+              <li>• All asset classes</li>
+            </ul>
+            <a href="/placement-agents/campbell-lutyens/" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-semibold">
+              View Full Profile →
+            </a>
+          </div>
+
+          <!-- Park Hill Group -->
+          <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+            <h3 class="text-xl font-bold mb-2">Park Hill Group (PJT)</h3>
+            <div class="text-sm text-gray-600 mb-3">US Powerhouse</div>
+            <ul class="space-y-2 text-sm">
+              <li>• Blackstone heritage</li>
+              <li>• Large-cap focus</li>
+              <li>• Top US placement agent</li>
+            </ul>
+            <a href="/placement-agents/park-hill-group/" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-semibold">
+              View Full Profile →
+            </a>
+          </div>
+
+          <!-- Evercore -->
+          <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+            <h3 class="text-xl font-bold mb-2">Evercore</h3>
+            <div class="text-sm text-gray-600 mb-3">Bulge Bracket</div>
+            <ul class="space-y-2 text-sm">
+              <li>• Elite placement team</li>
+              <li>• Mega-fund specialist</li>
+              <li>• Global reach</li>
+            </ul>
+            <a href="/placement-agents/evercore/" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-semibold">
+              View Full Profile →
+            </a>
+          </div>
+
+          <!-- Lazard -->
+          <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+            <h3 class="text-xl font-bold mb-2">Lazard</h3>
+            <div class="text-sm text-gray-600 mb-3">European Strength</div>
+            <ul class="space-y-2 text-sm">
+              <li>• Cross-border expertise</li>
+              <li>• Comprehensive services</li>
+              <li>• Strong LP network</li>
+            </ul>
+            <a href="/placement-agents/lazard/" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-semibold">
+              View Full Profile →
+            </a>
+          </div>
+
+          <!-- Eaton Partners -->
+          <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+            <h3 class="text-xl font-bold mb-2">Eaton Partners (Stifel)</h3>
+            <div class="text-sm text-gray-600 mb-3">Middle Market Leader</div>
+            <ul class="space-y-2 text-sm">
+              <li>• 40+ year track record</li>
+              <li>• $140B+ raised</li>
+              <li>• Mid-market focus</li>
+            </ul>
+            <a href="/placement-agents/eaton-partners/" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-semibold">
+              View Full Profile →
+            </a>
+          </div>
+
+          <!-- MVision -->
+          <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+            <h3 class="text-xl font-bold mb-2">MVision</h3>
+            <div class="text-sm text-gray-600 mb-3">Independent Advisor</div>
+            <ul class="space-y-2 text-sm">
+              <li>• Emerging markets</li>
+              <li>• Boutique approach</li>
+              <li>• Specialized expertise</li>
+            </ul>
+            <a href="/placement-agents/mvision/" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-semibold">
+              View Full Profile →
+            </a>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <EnhancedButton href="/placement-agents/" variant="primary">
+            View All Placement Agents
+          </EnhancedButton>
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+
+  <!-- Placement Agent Fees Section (Target Keyword) -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <AnimatedSection>
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+          Private Equity Placement Agent Fees
+        </h2>
+        <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+          Understanding placement agent compensation structures and typical fee ranges
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div class="bg-white rounded-lg p-6 shadow-lg">
+            <h3 class="text-xl font-bold mb-4">Typical Fee Structures</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <span class="text-blue-600 mr-2">•</span>
+                <div>
+                  <strong>Success Fee:</strong> 1.5-3% of capital raised
+                </div>
+              </li>
+              <li class="flex items-start">
+                <span class="text-blue-600 mr-2">•</span>
+                <div>
+                  <strong>Retainer:</strong> $10-30K per month
+                </div>
+              </li>
+              <li class="flex items-start">
+                <span class="text-blue-600 mr-2">•</span>
+                <div>
+                  <strong>Tiered Structure:</strong> Lower % on larger amounts
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-white rounded-lg p-6 shadow-lg">
+            <h3 class="text-xl font-bold mb-4">Fee Factors</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <span class="text-blue-600 mr-2">•</span>
+                <div>Fund size and complexity</div>
+              </li>
+              <li class="flex items-start">
+                <span class="text-blue-600 mr-2">•</span>
+                <div>Geographic coverage required</div>
+              </li>
+              <li class="flex items-start">
+                <span class="text-blue-600 mr-2">•</span>
+                <div>Timeline and urgency</div>
+              </li>
+              <li class="flex items-start">
+                <span class="text-blue-600 mr-2">•</span>
+                <div>Agent's track record</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="text-center mt-8">
+          <EnhancedButton href="/placement-agent-fees/" variant="secondary">
+            Detailed Fee Analysis →
+          </EnhancedButton>
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+
+  <!-- Quest Placement Agent Section (Brand + Keyword) -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <AnimatedSection>
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+          Quest - Your Placement Agent Intelligence Platform
+        </h2>
+        <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+          Quest provides comprehensive placement agent research, rankings, and real-time fundraising intelligence
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Tax Residency</h3>
-            <p class="text-gray-600 mb-4">Optimize your tax position with expert international tax planning.</p>
-            <a href="/services/tax-residency" class="text-purple-600 hover:text-purple-700 font-semibold">Learn More →</a>
+            <h3 class="text-lg font-semibold mb-2">Agent Rankings</h3>
+            <p class="text-gray-600">Data-driven rankings of placement agents by performance</p>
           </div>
-        </AnimatedSection>
-        
-        <AnimatedSection delay={2} class="hover-lift">
-          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300 hover:shadow-lg">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 rounded-full">
-              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Non-Dom Status</h3>
-            <p class="text-gray-600 mb-4">Navigate UK and Cyprus Non-Dom tax planning opportunities.</p>
-            <a href="/services/non-dom-status" class="text-blue-600 hover:text-blue-700 font-semibold">Learn More →</a>
-          </div>
-        </AnimatedSection>
-        
-        <AnimatedSection delay={3} class="hover-lift">
-          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300 hover:shadow-lg">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-green-500 to-green-600 rounded-full">
-              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Company Formation</h3>
-            <p class="text-gray-600 mb-4">Incorporate your business in tax-efficient international jurisdictions.</p>
-            <a href="/services/company-formation" class="text-green-600 hover:text-green-700 font-semibold">Learn More →</a>
-          </div>
-        </AnimatedSection>
-      </div>
-      
-      <div class="text-center mt-10">
-        <a href="/services" class="inline-flex items-center bg-gradient-to-r from-blue-600 to-orange-500 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-lg transition-all duration-300">
-          View All Services
-          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </section>
 
-  <!-- Latest Articles Section -->
-  <section class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-          Latest Relocation Insights
-        </h2>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-          Stay informed with our latest articles on visas, taxes, and international living
-        </p>
-      </div>
-      
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {latestPosts.map((post, index) => (
-          <article class="bg-white rounded-xl shadow-soft hover:shadow-xl transition-all group">
-            <div class="aspect-video overflow-hidden rounded-t-xl bg-gradient-to-br from-blue-50 to-blue-100">
-              {/* Video thumbnail takes priority over image */}
-              {post.thumbnailVideo?.muxPlaybackId ? (
-                <div class="relative w-full h-full">
-                  <mux-player
-                    playback-id={post.thumbnailVideo.muxPlaybackId}
-                    metadata-video-title={post.title}
-                    env-key={import.meta.env.PUBLIC_MUX_ENV_KEY || "26hi0t52rcm3pl738jugp7sp8"}
-                    muted
-                    loop
-                    preload="metadata"
-                    poster={post.thumbnailVideo.posterImage ? urlFor(post.thumbnailVideo.posterImage).url() : (post.mainImage ? optimizedImageUrl(post.mainImage, 600, 400) : undefined)}
-                    class="w-full h-full object-cover"
-                    onmouseenter="this.play()"
-                    onmouseleave="this.pause()"
-                    style="width: 100%; height: 100%; object-fit: cover;"
-                  />
-                </div>
-              ) : post.mainImage ? (
-                <picture>
-                  <source 
-                    srcset={`${optimizedImageUrl(post.mainImage, 380, 253)} 380w, ${optimizedImageUrl(post.mainImage, 600, 400)} 600w`}
-                    sizes="(max-width: 768px) 380px, 600px"
-                    type="image/webp"
-                  />
-                  <img
-                    src={optimizedImageUrl(post.mainImage, 600, 400)}
-                    alt={post.mainImage.alt || `Featured image for article: ${post.title} - International relocation guidance`}
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading={index === 0 ? "eager" : "lazy"}
-                    fetchpriority={index === 0 ? "high" : "auto"}
-                    width="600"
-                    height="400"
-                  />
-                </picture>
-              ) : (
-                <!-- Fallback for articles without images -->
-                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
-                  <div class="text-center p-6">
-                    <svg class="w-16 h-16 mx-auto text-blue-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                    <p class="text-blue-400 text-sm font-medium">{post.category?.title || 'Article'}</p>
-                  </div>
-                </div>
-              )}
+          <div class="text-center">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
             </div>
-            <div class="p-6">
-              <div class="flex items-center justify-between mb-2">
-                {post.category && (
-                  <span class="text-sm text-primary-600 font-medium">
-                    {post.category.title}
-                  </span>
-                )}
-                {post.publishedAt && (
-                  <time 
-                    datetime={post.publishedAt}
-                    class="text-sm text-gray-500"
-                  >
-                    {new Date(post.publishedAt).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
-                  </time>
-                )}
-              </div>
-              <h3 class="text-xl font-bold mb-3 group-hover:text-primary-600 transition-colors">
-                <a href={`/articles/${post.slug?.current || '#'}`}>
-                  {post.title}
-                </a>
-              </h3>
-              <p class="text-gray-600 line-clamp-3 mb-4">
-                {post.excerpt}
-              </p>
-              <a 
-                href={`/articles/${post.slug?.current || '#'}`}
-                class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium"
-                aria-label={`Read full article: ${post.title}`}
-              >
-                Read "{post.title.substring(0, 40)}{post.title.length > 40 ? '...' : ''}"
-                <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </a>
+            <h3 class="text-lg font-semibold mb-2">Fee Intelligence</h3>
+            <p class="text-gray-600">Comprehensive placement agent fee analysis and benchmarks</p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
             </div>
-          </article>
-        ))}
-      </div>
-      
-      <AnimatedSection class="text-center mt-12">
-        <EnhancedButton 
-          href="/articles" 
-          variant="primary" 
-          size="lg"
-          magnetic={true}
-          shimmer={true}
-          ariaLabel="View all relocation articles"
-        >
-          View All Articles
-          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        </EnhancedButton>
+            <h3 class="text-lg font-semibold mb-2">Market Insights</h3>
+            <p class="text-gray-600">Real-time fundraising trends and market intelligence</p>
+          </div>
+        </div>
       </AnimatedSection>
     </div>
   </section>
 
-  <!-- Categories Grid -->
-  <section class="py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold mb-4">Explore by Category</h2>
-        <p class="text-xl text-gray-600">Find exactly what you need for your relocation journey</p>
-      </div>
-      
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {categories.slice(0, 8).map((category) => (
-          <a 
-            href={`/categories/${category.slug?.current || '#'}`}
-            class="group p-6 bg-white rounded-xl shadow-soft hover:shadow-xl transition-all hover:-translate-y-1"
-          >
-            <div class="w-12 h-12 mb-4 group-hover:scale-110 transition-transform flex items-center justify-center text-orange-600" set:html={getCategoryIcon(category.title)}>
-            </div>
-            <h3 class="text-lg font-bold mb-2 group-hover:text-primary-600 transition-colors">
-              {category.title}
-            </h3>
-            <p class="text-gray-600 text-sm">
-              {category.description || "Explore articles in this category"}
-            </p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats Section -->
-  <section class="py-16 bg-blue-600 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold mb-4">Trusted by Global Citizens</h2>
-      </div>
-      
-      <div class="grid md:grid-cols-4 gap-8 text-center">
-        <div>
-          <div class="text-4xl font-bold mb-2">50+</div>
-          <div class="text-white">Countries Covered</div>
-        </div>
-        <div>
-          <div class="text-4xl font-bold mb-2">500+</div>
-          <div class="text-white">Expert Articles</div>
-        </div>
-        <div>
-          <div class="text-4xl font-bold mb-2">100K+</div>
-          <div class="text-white">Monthly Readers</div>
-        </div>
-        <div>
-          <div class="text-4xl font-bold mb-2">24/7</div>
-          <div class="text-white">Updated Content</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Popular Destinations Section -->
-  <section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold mb-4">Popular Destinations</h2>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">Discover the best countries for your international move</p>
-      </div>
-      
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
-          <div class="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-            <!-- Cyprus Video Thumbnail with overlay -->
-            <VideoThumbnail 
-              playbackId="ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM"
-              title="Cyprus - Professional Relocation Destination"
-              description="Premium relocation opportunities in Cyprus"
-              size="large"
-              aspectRatio="16:9"
-              autoplay={true}
-            />
-            <!-- Country name overlay -->
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-              <h3 class="text-2xl font-bold text-white">Cyprus</h3>
-            </div>
-          </div>
-          <p class="text-gray-600 mb-4">EU citizenship pathway, non-dom tax benefits, Mediterranean lifestyle, and English-speaking environment.</p>
-          <a href="/countries/cyprus" class="text-blue-600 hover:text-blue-700 font-medium">Explore Cyprus →</a>
-        </div>
-        <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
-          <div class="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-            <!-- Portugal Video Thumbnail with overlay -->
-            <VideoThumbnail 
-              playbackId="Oy1LRvO5eSoXGUTthBNS13r007WorSyGvf2YLh1keA5E"
-              title="Portugal - Golden Visa Destination"
-              description="Premium relocation opportunities in Portugal"
-              size="large"
-              aspectRatio="16:9"
-              autoplay={true}
-            />
-            <!-- Country name overlay -->
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-              <h3 class="text-2xl font-bold text-white">Portugal</h3>
-            </div>
-          </div>
-          <p class="text-gray-600 mb-4">Golden Visa program, NHR tax regime, affordable living, and excellent climate year-round.</p>
-          <a href="/countries/portugal" class="text-blue-600 hover:text-blue-700 font-medium">Explore Portugal →</a>
-        </div>
-        <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
-          <div class="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-            <!-- Dubai Video Thumbnail with overlay -->
-            <VideoThumbnail 
-              playbackId="5br2hylJ4F009vDLHrxWZ3C7UDTw5901GcXYBjSOWNV8k"
-              title="Dubai - Business Hub Destination"
-              description="Premium business and lifestyle opportunities in Dubai"
-              size="large"
-              aspectRatio="16:9"
-              autoplay={true}
-            />
-            <!-- Country name overlay -->
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-              <h3 class="text-2xl font-bold text-white">Dubai</h3>
-            </div>
-          </div>
-          <p class="text-gray-600 mb-4">Zero income tax, golden visa options, business hub, and world-class infrastructure.</p>
-          <a href="/countries/dubai" class="text-blue-600 hover:text-blue-700 font-medium">Explore Dubai →</a>
-        </div>
-        <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
-          <div class="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-            <!-- Malta Video Thumbnail with overlay -->
-            <VideoThumbnail 
-              playbackId="aeX9W002bzUWYKu3Ryln4hLVAplzOm7DfUKm3iZqGGz00"
-              title="Malta - EU Passport Program"
-              description="Premium EU residency and citizenship opportunities"
-              size="large"
-              aspectRatio="16:9"
-              autoplay={true}
-            />
-            <!-- Country name overlay -->
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-              <h3 class="text-2xl font-bold text-white">Malta</h3>
-            </div>
-          </div>
-          <p class="text-gray-600 mb-4">EU passport program, English-speaking, favorable tax system, and strategic location.</p>
-          <a href="/countries/malta" class="text-blue-600 hover:text-blue-700 font-medium">Explore Malta →</a>
-        </div>
-        <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
-          <div class="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-            <!-- Singapore Video Thumbnail with overlay -->
-            <VideoThumbnail 
-              playbackId="dCBAYhMsKX7v00HaI1gHsW8tMI2HZDLlb01KJv5hGkpkI"
-              title="Singapore - Asian Business Hub"
-              description="Premium business and lifestyle opportunities in Singapore"
-              size="large"
-              aspectRatio="16:9"
-              autoplay={true}
-            />
-            <!-- Country name overlay -->
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-              <h3 class="text-2xl font-bold text-white">Singapore</h3>
-            </div>
-          </div>
-          <p class="text-gray-600 mb-4">Asian business hub, territorial tax system, excellent education, and political stability.</p>
-          <a href="/countries/singapore" class="text-blue-600 hover:text-blue-700 font-medium">Explore Singapore →</a>
-        </div>
-        <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
-          <div class="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-            <!-- Caribbean Video Thumbnail with overlay -->
-            <VideoThumbnail 
-              playbackId="021dUb7I5L2G9dDKBWup4efv9Sxh7ZNAtElSbYkN8C2k"
-              title="Caribbean - Citizenship by Investment"
-              description="Premium citizenship and lifestyle opportunities in the Caribbean"
-              size="large"
-              aspectRatio="16:9"
-              autoplay={true}
-            />
-            <!-- Country name overlay -->
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-              <h3 class="text-2xl font-bold text-white">Caribbean</h3>
-            </div>
-          </div>
-          <p class="text-gray-600 mb-4">Citizenship by investment, tax havens, tropical paradise, and fast processing times.</p>
-          <a href="/countries/caribbean" class="text-blue-600 hover:text-blue-700 font-medium">Explore Caribbean →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ Section -->
+  <!-- List of Placement Agents Section -->
   <section class="py-16 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold mb-4">Frequently Asked Questions</h2>
-        <p class="text-xl text-gray-600">Get answers to common relocation questions</p>
-        <div class="mt-4">
-          <a href="/resources/faq" class="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold">
-            View Complete FAQ
-            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-            </svg>
-          </a>
+    <div class="container mx-auto px-4">
+      <AnimatedSection>
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+          Complete List of Placement Agents
+        </h2>
+        <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+          Browse our comprehensive directory of private equity placement agents worldwide
+        </p>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+          <div class="bg-white p-4 rounded-lg">
+            <h3 class="font-semibold mb-2 text-blue-900">Global Leaders</h3>
+            <ul class="space-y-1 text-sm">
+              <li><a href="/placement-agents/campbell-lutyens/" class="text-gray-700 hover:text-blue-600">Campbell Lutyens</a></li>
+              <li><a href="/placement-agents/park-hill/" class="text-gray-700 hover:text-blue-600">Park Hill Group</a></li>
+              <li><a href="/placement-agents/evercore/" class="text-gray-700 hover:text-blue-600">Evercore</a></li>
+              <li><a href="/placement-agents/lazard/" class="text-gray-700 hover:text-blue-600">Lazard</a></li>
+            </ul>
+          </div>
+
+          <div class="bg-white p-4 rounded-lg">
+            <h3 class="font-semibold mb-2 text-blue-900">US Specialists</h3>
+            <ul class="space-y-1 text-sm">
+              <li><a href="/placement-agents/eaton-partners/" class="text-gray-700 hover:text-blue-600">Eaton Partners</a></li>
+              <li><a href="/placement-agents/triago/" class="text-gray-700 hover:text-blue-600">Triago</a></li>
+              <li><a href="/placement-agents/capstone/" class="text-gray-700 hover:text-blue-600">Capstone Partners</a></li>
+              <li><a href="/placement-agents/credit-suisse/" class="text-gray-700 hover:text-blue-600">Credit Suisse</a></li>
+            </ul>
+          </div>
+
+          <div class="bg-white p-4 rounded-lg">
+            <h3 class="font-semibold mb-2 text-blue-900">European Focus</h3>
+            <ul class="space-y-1 text-sm">
+              <li><a href="/placement-agents/mvision/" class="text-gray-700 hover:text-blue-600">MVision</a></li>
+              <li><a href="/placement-agents/rede-partners/" class="text-gray-700 hover:text-blue-600">Rede Partners</a></li>
+              <li><a href="/placement-agents/monument/" class="text-gray-700 hover:text-blue-600">Monument Group</a></li>
+              <li><a href="/placement-agents/sixpoint/" class="text-gray-700 hover:text-blue-600">Sixpoint Partners</a></li>
+            </ul>
+          </div>
+
+          <div class="bg-white p-4 rounded-lg">
+            <h3 class="font-semibold mb-2 text-blue-900">Boutique Firms</h3>
+            <ul class="space-y-1 text-sm">
+              <li><a href="/placement-agents/acanthus/" class="text-gray-700 hover:text-blue-600">Acanthus Advisors</a></li>
+              <li><a href="/placement-agents/first-avenue/" class="text-gray-700 hover:text-blue-600">First Avenue</a></li>
+              <li><a href="/placement-agents/greenhill/" class="text-gray-700 hover:text-blue-600">Greenhill Cogent</a></li>
+              <li><a href="/placement-agents/probitas/" class="text-gray-700 hover:text-blue-600">Probitas Partners</a></li>
+            </ul>
+          </div>
         </div>
-      </div>
-      
-      <div class="space-y-8">
-        <div class="bg-white rounded-lg p-6 shadow-sm">
-          <h3 class="text-xl font-bold mb-3">What is a Golden Visa?</h3>
-          <p class="text-gray-600">A Golden Visa is a residency-by-investment program that grants residency rights to individuals who make qualifying investments in a country, typically in real estate, government bonds, or business ventures. These programs often lead to permanent residency and citizenship. Learn more about specific programs at <a href="https://www.portugal.gov.pt" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Portugal's official government portal</a> or <a href="https://www.cyprusimmigration.gov.cy" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Cyprus Immigration Service</a>.</p>
+
+        <div class="text-center mt-12">
+          <EnhancedButton href="/list-of-placement-agents/" variant="primary">
+            View Complete Directory
+          </EnhancedButton>
         </div>
-        <div class="bg-white rounded-lg p-6 shadow-sm">
-          <h3 class="text-xl font-bold mb-3">How long does it take to get residency?</h3>
-          <p class="text-gray-600">Processing times vary by country and program. Golden Visa applications typically take 2-6 months, while standard residency permits can take 1-3 months. Citizenship through naturalization usually requires 5-10 years of residency.</p>
-        </div>
-        <div class="bg-white rounded-lg p-6 shadow-sm">
-          <h3 class="text-xl font-bold mb-3">What are the tax implications of relocating?</h3>
-          <p class="text-gray-600">Tax implications depend on your citizenship, tax residency status, and the country you're moving to. Many countries offer favorable tax regimes for new residents, including non-dom status, territorial taxation, or special expat tax programs. For official tax guidance, consult the <a href="https://www.irs.gov/individuals/international-taxpayers" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">IRS International Taxpayers</a> page or <a href="https://www.oecd.org/tax/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">OECD Tax Database</a>.</p>
-        </div>
-        <div class="bg-white rounded-lg p-6 shadow-sm">
-          <h3 class="text-xl font-bold mb-3">Can I work remotely on a tourist visa?</h3>
-          <p class="text-gray-600">Generally no. Working remotely on a tourist visa is illegal in most countries. Instead, look for Digital Nomad Visas or remote work permits specifically designed for location-independent workers.</p>
-        </div>
-        <div class="bg-white rounded-lg p-6 shadow-sm">
-          <h3 class="text-xl font-bold mb-3">Which country is best for digital nomads?</h3>
-          <p class="text-gray-600">Popular digital nomad destinations include Portugal, Estonia, Dubai, Barbados, and Croatia. Each offers dedicated digital nomad visas with different requirements, costs, and benefits. The best choice depends on your budget, lifestyle preferences, and tax situation.</p>
-        </div>
-      </div>
+      </AnimatedSection>
     </div>
   </section>
 
-  <!-- Call to Action Section -->
-  <section class="py-16 bg-gradient-to-r from-blue-600 to-orange-500 text-white overflow-hidden">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+  <!-- CTA Section -->
+  <section class="py-16 bg-gradient-to-r from-blue-900 to-blue-700">
+    <div class="container mx-auto px-4 text-center">
       <AnimatedSection>
-        <h2 class="text-4xl font-bold mb-4">Ready to Start Your Relocation Journey?</h2>
-        <p class="text-xl mb-8 text-blue-100">Get expert guidance and comprehensive resources for your international move</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+          Find Your Ideal Placement Agent
+        </h2>
+        <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          Access comprehensive profiles, performance data, and contact information for top placement agents
+        </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <EnhancedButton 
-            href="/articles" 
-            variant="secondary"
-            size="lg"
-            magnetic={true}
-            class="bg-white text-blue-600 hover:bg-gray-50"
-            ariaLabel="Explore all relocation articles to start your journey"
-          >
-            Explore Articles
+          <EnhancedButton href="/placement-agents/" variant="white">
+            Browse All Agents
           </EnhancedButton>
-          <EnhancedButton 
-            href="/services" 
-            variant="secondary"
-            size="lg"
-            magnetic={true}
-            class="bg-white bg-opacity-20 text-white hover:bg-opacity-30 border border-white border-opacity-50"
-            ariaLabel="View our professional relocation services"
-          >
-            Our Services
-          </EnhancedButton>
-          <EnhancedButton 
-            href="/resources/guides" 
-            variant="secondary"
-            size="lg"
-            magnetic={true}
-            class="bg-white bg-opacity-20 text-white hover:bg-opacity-30 border border-white border-opacity-50"
-            ariaLabel="Access comprehensive relocation resources and guides"
-          >
-            Resources & Guides
+          <EnhancedButton href="/contact/" variant="outline-white">
+            Get Matched
           </EnhancedButton>
         </div>
       </AnimatedSection>
