@@ -18,10 +18,42 @@
 ## 🔍 Tavily Research API
 - **API Key**: `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` (from environment)
 
+## 🧠 Content Quality APIs (December 2024)
+
+### Firecrawl - Web Scraping & PDF Parsing
+- **API Key**: `fc-fcc00e00206d4c1db2653d3815a2b0b0`
+- **Documentation**: https://docs.firecrawl.dev/api-reference/introduction
+- **Use Cases**: Government site scraping, PDF document parsing, policy monitoring
+- **Pricing**: ~$50-200/month for regular monitoring
+
+### Critique Labs - Fact-Checking & Citations  
+- **API Key**: `4W8L4b9IY0xIzPBsFHRngwQ0M-9v9TcAysgauLqh6s4`
+- **Documentation**: https://docs.critique-labs.ai/api-reference/search
+- **Use Cases**: Autonomous fact-checking, inline citations, content verification
+- **Features**: Government source verification, confidence scoring
+
+### LinkUp - Advanced Contextual Search
+- **API Key**: [NEEDED - Not yet provided]
+- **Documentation**: https://docs.linkup.so/pages/documentation/api-reference/endpoint/post-search
+- **Use Cases**: Superior contextual search vs Tavily, real-time web indexing
+- **Comparison**: Test vs Tavily for relocation content research
+
 ## 🎬 Mux Video Platform
 - **Token ID**: Available in environment
 - **Token Secret**: Available in environment  
 - **Environment Key**: `26hi0t52rcm3pl738jugp7sp8` (PUBLIC_MUX_ENV_KEY)
+
+### Country Video Assets (Mux Playback IDs)
+- **Cyprus**: `ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM` ✅
+- **Portugal**: `Z01R9CHNHPpHJU21OLIWoN02GZ2lOLi5fTWltOEKcuOQQ` 
+- **Malta**: `rC7EUyqkkODi01yLvxd7GDsjQpcjcrO7gV00IsBRN4Es4`
+- **Dubai**: `6L02MpxKnUJVvHzC3M00n01ZoYH1XMrl01Kv6Zhi8O6ffY8`
+- **Singapore**: `Lq02MyaOxqH9o1Y7NEvQ3Z02w00pNl8kgfpHIkW8SmjrTw`
+- **Caribbean**: `bW029UWH4uUuLmWQMCoDD99JYMsKiY6Z4i500lZ600VBEU`
+
+### Banner/Hero Videos
+- **Desktop Hero**: `ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM` (Cyprus)
+- **Mobile Hero**: `lKoMAX9eQ1aNdFc6squdJgBlkhBMUDjuq43tf00jZpik` (Low-res)
 
 ## 🤖 AI Gateway
 - **API Key**: Available in Vercel environment variables
@@ -29,6 +61,12 @@
 
 ## 📧 Resend Email
 - **API Key**: Available in Vercel environment for transactional emails
+
+## 🔧 Automation & Cron Jobs
+- **CRON_SECRET**: Available in Vercel environment variables
+- **Publish Endpoint**: `/api/cron/publish-content` (every 6 hours)
+- **Daily Content**: `/api/cron/daily-content` (daily 9 AM UTC)
+- **Weekly Review**: `/api/cron/weekly-review` (Mondays 10 AM UTC)
 
 ## 🔧 Usage Instructions
 

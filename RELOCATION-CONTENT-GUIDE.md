@@ -1,435 +1,215 @@
-# RELOCATION QUEST CONTENT CREATION GUIDE
+# 📝 RELOCATION QUEST - CONTENT GUIDE
 
-## 🎯 Project Mission
-Create authoritative, helpful content for individuals and businesses relocating internationally, focusing on practical guidance, tax optimization, visa programs, and lifestyle insights.
+**Editorial Standards, Tone, and Content Strategy for International Relocation Content**
 
-## 📋 PROJECT CONFIGURATION
+## 🎯 Content Mission
 
-- **Sanity Project ID:** bc08ijz6
-- **Dataset:** production
-- **Document Type:** post (CRITICAL - must be 'post' not 'article')
-- **Live Site:** https://relocation.quest
-- **Sanity Studio:** https://relocation.quest/studio
+Create the most **authoritative, accurate, and actionable** relocation content that helps people make informed decisions about international moves, visa applications, and global lifestyle changes.
 
----
+## 📊 Content Quality Standards
 
-## 🔴 MANDATORY CHECKLIST FOR EVERY ARTICLE
+### E-E-A-T Optimization (Experience, Expertise, Authoritativeness, Trustworthiness)
+- **Experience**: Real-world relocation insights, practical examples, case studies
+- **Expertise**: Government-source citations, official program details, legal accuracy
+- **Authoritativeness**: Link to official government sites, embassy resources, legal sources
+- **Trustworthfulness**: Transparent about limitations, clear disclaimers, updated information
 
-### ⚠️ CRITICAL: Complete ALL Fields BEFORE Publishing
-**DO NOT leave fields empty** - populate everything when creating the article to avoid manual fixes later.
+### Citation Requirements
+- **Government Sources**: Always link to official immigration websites
+- **Financial Claims**: Cite official program documents, government fee schedules
+- **Legal Information**: Reference current laws, regulations, official announcements
+- **Processing Times**: Use official government estimates, note variability
 
-### 📝 LESSON LEARNED & PROCESS IMPROVEMENT:
-**What happened:** Articles were published before ensuring ALL had complete metadata (including hero images). Some images were generated after publishing, which created inconsistency.
+## ✍️ Tone & Voice
 
-**MANDATORY Future Process:**
-1. Create articles ✅
-2. Add ALL metadata (author, categories) ✅  
-3. Generate hero images for ALL articles ✅
-4. Verify completeness BEFORE publishing ✅
-5. Publish only when 100% complete ✅
+### Professional but Approachable
+- **Expert without jargon**: Explain complex visa requirements in plain English
+- **Confident but cautious**: State facts clearly, acknowledge when things change
+- **Helpful not salesy**: Focus on information, not promotion
 
-**NEVER publish partial content - always ensure everything is ready first!**
+### Writing Style
+- **Concise**: Get to the point quickly, busy readers scanning for key info
+- **Structured**: Use headers, bullet points, tables for easy scanning
+- **Action-oriented**: Tell readers exactly what steps to take next
 
-### Phase 0: Research Phase (REQUIRED FIRST!)
-**ALWAYS use Tavily to research current information:**
-- `tavily_search` for latest updates, statistics, and regulations
-- `tavily_extract` for authoritative sources (PwC, KPMG, government sites)
-- Document all sources for citation
-- Find 1-2 HIGH AUTHORITY external links to include
+### Example Tone:
+❌ **Avoid**: "You definitely should consider Portugal's amazing Golden Visa!"
+✅ **Use**: "Portugal's Golden Visa requires a minimum €280,000 investment and offers a path to EU citizenship after 6 years."
 
-### ✅ Required SEO Fields (MUST BE SET ON CREATION):
-- **SEO Title** - Keyword-optimized, 50-60 characters
-- **Meta Description** - Compelling, 150-160 characters, includes focus keyword
-- **Focus Keyword** - Primary target keyword
-- **Secondary Keywords** - 3-5 related keywords
-- **Excerpt** - 2-3 sentences, mentions focus keyword naturally
+## 📚 Content Categories & Focus
 
-### ✅ Required Metadata (MUST BE SET ON CREATION):
-- **Author** - Always assign "Relocation Quest"
-- **Categories** - 1-3 relevant categories from:
-  - Digital Nomad
-  - Golden Visa
-  - Tax & Finance
-  - Residency & Immigration
-  - Business & Investment
-  - Healthcare & Education
-  - Lifestyle & Culture
-- **Tags** - 3-5 relevant tags
-- **Published Date** - Set appropriate publication date
+### 1. Golden Visa Programs (High Priority)
+**Countries**: Cyprus, Portugal, Malta, Spain, Greece  
+**Focus**: Investment requirements, processing times, benefits, recent changes  
+**Update Frequency**: Monthly (policies change frequently)
 
-### ✅ Content Requirements:
-- **Comprehensive Content** - Minimum 800+ words (target 1500-2000)
-- **Keyword Integration** - Focus keyword in title, first paragraph, headings
-- **Alt Text** - All images have keyword-optimized alt text
-- **Internal Structure** - H1, H2, H3 headers with keywords
+### 2. Business & Investment Visas  
+**Countries**: Dubai, Singapore, UK, Canada, Australia
+**Focus**: Business requirements, investment thresholds, operational requirements
+**Update Frequency**: Quarterly
 
-### External Links - REQUIRED:
-✅ **MUST ADD 1-2 external links to HIGH AUTHORITY sites:**
-- Government sites (.gov)
-- Big 4 accounting firms (PwC, KPMG, Deloitte, EY)
-- Official EU/UN organizations
-- Major universities (.edu)
+### 3. Digital Nomad Visas
+**Countries**: Portugal, Estonia, Dubai, Barbados, Croatia
+**Focus**: Income requirements, application process, tax implications
+**Update Frequency**: Quarterly
 
-**FORMAT:** Add naturally in content, not just at the end
-**EXAMPLE:** "According to [PwC's latest tax guide](https://www.pwc.com/...)"
+### 4. Tax Optimization & Planning
+**Focus**: Non-dom status, territorial taxation, treaty benefits, compliance
+**Expertise Required**: Tax law knowledge, professional disclaimer language
+**Update Frequency**: Annually (tax year changes)
 
-### Content Images - EVERY 500 WORDS:
-**IMAGE INSERTION FORMULA:**
-- Count words as you write
-- At 500 words: Insert image placeholder
-- At 1000 words: Insert image placeholder  
-- At 1500 words: Insert image placeholder
+### 5. Lifestyle & Practical Guides
+**Focus**: Cost of living, healthcare, education, housing, culture
+**Approach**: Practical, realistic, based on current data
+**Update Frequency**: Semi-annually
 
-### Visual Hierarchy:
-**REQUIRED IMAGES PER ARTICLE:**
-- [ ] Hero image (mainImage field)
-- [ ] Infographic at 500 words
-- [ ] Diagram/chart at 1000 words
-- [ ] Illustration at 1500 words
-- [ ] Summary graphic at end (optional)
+### 6. Country-Specific Deep Dives
+**Current Priority**: Cyprus, Portugal, Malta, Dubai, Singapore, Caribbean
+**Format**: Comprehensive guides covering visas, taxes, lifestyle, costs
+**Length**: 2,000-4,000 words with structured sections
 
----
+## 📋 Content Structure Templates
 
-## 📚 CONTENT CATEGORIES
-
-### 1. Immigration & Visas
-- **Golden Visa Programs**: Investment requirements, benefits, process
-- **Digital Nomad Visas**: Remote work permits, requirements
-- **Residency Permits**: Standard routes to residency
-- **Citizenship Programs**: Naturalization processes
-
-### 2. Tax & Business
-- **Tax Optimization**: International tax planning, double taxation
-- **Company Formation**: Offshore structures, business setup
-- **Non-Dom Status**: Requirements and benefits by country
-- **Banking**: International accounts, wealth management
-
-### 3. Lifestyle & Living
-- **City Guides**: Best cities for expats by country
-- **Cost of Living**: Budget breakdowns, financial planning
-- **Healthcare**: International insurance, medical systems
-- **Education**: International schools, universities
-
-### 4. Country-Specific Guides
-- **Cyprus**: Tax benefits, golden visa, lifestyle
-- **Malta**: Permanent residency, citizenship programs
-- **Portugal**: NHR regime, golden visa, D7 visa
-- **Dubai/UAE**: Zero tax, golden visa, business setup
-- **Caribbean**: Citizenship by investment programs
-
----
-
-## ✍️ ARTICLE CREATION WORKFLOW
-
-### Phase 1: Research with Tavily
-```javascript
-// Example research queries
-await tavily_search({
-  query: "Cyprus tax residency 2025 requirements latest updates"
-});
-
-await tavily_extract({
-  url: "https://www.pwc.com.cy/tax-guide",
-  instruction: "Extract key tax rates and requirements"
-});
-```
-
-### Phase 2: Create the Article Shell
-```javascript
-{
-  "_type": "post",
-  "title": "Clear, SEO-friendly title",
-  "slug": { "current": "url-friendly-slug" },
-  "excerpt": "2-3 sentence summary",
-  "publishedAt": "current date/time",
-  "seoTitle": "Optimized title (max 60 chars)",
-  "metaDescription": "SEO description (max 160 chars)",
-  "focusKeyword": "primary target keyword",
-  "category": "reference to category",
-  "tags": ["array", "of", "tags"]
-}
-```
-
-### Phase 3: Build Comprehensive Content
-**Article Structure (1,500-2,000 words):**
-
+### Golden Visa Article Template
 ```markdown
-# [Compelling Title]
+# [Country] Golden Visa: Complete Guide 2024
 
-## Introduction (150-200 words)
-- Hook the reader
-- Include research findings
-- Add authority link
-- Preview what's covered
+## Quick Facts
+- **Minimum Investment**: €XXX,XXX
+- **Processing Time**: X-X months  
+- **Path to Citizenship**: X years
+- **Last Updated**: [Date] ([Source Link])
 
-## Main Sections (300-400 words each)
+## Investment Options
+### Real Estate (Most Popular)
+- Minimum: €XXX,XXX
+- Requirements: [Details]
+- Benefits: [Details]
 
-### Requirements/Eligibility
-[Detailed requirements with official sources]
-[IMAGE at 500 words]
-
-### Benefits/Advantages
-[Key benefits explained]
-[IMAGE at 1000 words]
-
-### Process/Timeline
-[Step-by-step guide]
-[IMAGE at 1500 words]
-
-### Costs/Fees
-[Comprehensive breakdown]
-
-### Practical Tips
-[Insider advice and recommendations]
-
-## FAQ Section
-[5-7 common questions with detailed answers]
-
-## Conclusion (100-150 words)
-[Summary and call to action]
-
-## Related Articles
-[5+ internal links with full URLs]
-```
-
-### Phase 4: SEO & Publishing
-- Set all SEO fields (seoTitle, metaDescription, focusKeyword)
-- Assign appropriate category
-- Add relevant tags (3-5 tags per article)
-- Verify excerpt is compelling
-- Ensure publishedAt is set
-- Publish the document (not as draft)
-
----
-
-## 🚨 CRITICAL RULES FOR SUCCESS
-
-### 1. DOCUMENT TYPE
-- Always use `_type: 'post'` when creating documents
-- The schema expects 'post' not 'article'
-
-### 2. LINKS - MUST USE FULL URLs
-- ✅ CORRECT: https://relocation.quest/articles/dubai-golden-visa-guide
-- ❌ WRONG: /articles/dubai-golden-visa-guide
-- ❌ WRONG: dubai-golden-visa-guide
-- EVERY internal link needs the complete URL including domain
-
-### 3. LANGUAGE REQUIREMENTS
-- Always use: "our [Country] partners" (e.g., "our Cyprus partners")
-- Never use: "we recommend" or "our company"
-- Maintain third-person professional tone
-- Focus on facts and practical information
-
-### 4. CONTENT CREATION LIMITS
-- Maximum 500-800 words per operation if encountering errors
-- Build longer articles through multiple patches
-- Always include publishedAt field with current date/time
-
----
-
-## ✅ QUALITY CHECKLIST
-
-Before completing any article, ensure:
-- [ ] Tavily research completed and sources documented
-- [ ] Document type is 'post'
-- [ ] 1,500+ words of valuable content
-- [ ] 1-2 external authority links included
-- [ ] 5+ internal links with full URLs
-- [ ] Images at 500, 1000, 1500 word marks
-- [ ] All SEO fields populated
-- [ ] Category and tags assigned
-- [ ] Professional, third-person tone
-- [ ] publishedAt field is set
-- [ ] Excerpt field filled for article cards
-- [ ] "Our [Country] partners" language used
-
----
-
-## 📅 PUBLISHING SCHEDULE
-
-### Content Pipeline
-1. **Monday**: Tax/Business topics
-2. **Tuesday**: Golden Visa/Investment programs
-3. **Wednesday**: Practical guides/How-tos
-4. **Thursday**: Country spotlights
-5. **Friday**: Lifestyle/Living guides
-
-### Performance Metrics
-- Page views per article
-- Time on page (target: 3+ minutes)
-- Bounce rate (target: <50%)
-- Internal link clicks
-- Contact form submissions
-
----
-
-## 🔗 INTERNAL LINKING STRATEGY
-
-### Link Types
-1. **Related Topics**: Similar content in same category
-2. **Next Steps**: Logical progression articles
-3. **Prerequisites**: Required reading before current article
-4. **Deep Dives**: More detailed explanations
-
-### Example Link Structure
-```
-/articles/cyprus-residency-guide → /articles/cyprus-non-dom-status
-/articles/cyprus-non-dom-status → /articles/cyprus-tax-benefits
-/articles/malta-golden-visa → /articles/malta-citizenship-program
-```
-
----
-
-## 🔧 CONTENT CREATION PROMPT TEMPLATE
-
-### 🎯 Use This Template for ALL Future Content Creation:
-```
-Create a comprehensive [TOPIC] article with the following SEO requirements:
-
-**SEO Fields:**
-- SEO Title: [KEYWORD-optimized title, 50-60 chars]
-- Meta Description: [Compelling description with focus keyword, 150-160 chars] 
-- Focus Keyword: [PRIMARY_KEYWORD]
-- Secondary Keywords: [keyword1, keyword2, keyword3]
-- Excerpt: Brief excerpt naturally mentioning [PRIMARY_KEYWORD]
-
-**Metadata:**
-- Author: Relocation Quest
-- Categories: [Select 1-3 relevant categories]
-- Tags: [3-5 relevant tags]
-- Alt Text: SEO-optimized alt text for images including [PRIMARY_KEYWORD]
-
-**Content Requirements:**
-- Minimum 800 words (target 1500-2000)
-- Focus keyword in title, first paragraph, and 2-3 headings
-- Natural keyword distribution (1-2% density)
-- Include 1-2 external authority links (government, Big 4, .edu)
-- Images at 500-word intervals with optimized alt text
-- Comprehensive, actionable information
-- Professional, authoritative tone
-
-**Technical SEO:**
-- URL Slug: Clean, keyword-focused slug
-- Published Date: Set appropriate publication date
-- Internal links: 5+ links to related content
-```
-
-### Update Existing Article
-```javascript
-// Find article first
-Query: *[_type == "post" && slug.current == "[slug]"][0]
-
-// Then update
-Update document with id '[document-id]':
-- Add new section about [topic]
-- Update statistics to 2025 data
-- Add link to [related-article]
-```
-
----
-
-## 📊 EXAMPLE ARTICLE TEMPLATES
-
-### Golden Visa Template
-```markdown
-# [Country] Golden Visa: Complete Guide 2025
-
-Discover how [Country]'s golden visa program offers residency through investment of €[amount].
-
-## What is the [Country] Golden Visa?
-[Definition and overview]
-
-## Investment Requirements
-- Real Estate: €[amount]
-- Government Bonds: €[amount]
-- Business Investment: €[amount]
-
-## Benefits for Investors
-[List key advantages]
+### Alternative Investments  
+- Government bonds: €XXX,XXX
+- Business investment: €XXX,XXX
+- Fund investment: €XXX,XXX
 
 ## Application Process
-[Step-by-step guide]
+1. **Preparation** (X weeks)
+2. **Document Submission** (X weeks)  
+3. **Review Process** (X months)
+4. **Approval & Card Issuance** (X weeks)
 
-## Timeline and Costs
-[Processing times and fees]
+## Benefits & Rights
+- **Residency**: [Details]
+- **Travel**: Visa-free Schengen access
+- **Family**: Spouse and children included
+- **Work**: [Rights and restrictions]
 
 ## Tax Implications
-[Tax benefits and obligations]
+- **Tax Residency**: [Requirements]
+- **Income Tax**: [Rates and rules]
+- **Special Programs**: [Non-dom, NHR, etc.]
 
-## FAQ
-[Common questions answered]
+## Costs Beyond Investment
+- **Legal Fees**: €X,XXX - €X,XXX
+- **Government Fees**: €X,XXX
+- **Due Diligence**: €X,XXX per person
+- **Annual Maintenance**: €XXX
+
+## Recent Changes & Updates
+[Recent policy changes with dates and sources]
 
 ## Next Steps
-[Call to action with contact info]
+1. [Specific action item]
+2. [Specific action item]
+3. [Professional consultation recommendation]
+
+*Sources: [Government links, official documentation]*
 ```
 
-### Tax Guide Template
-```markdown
-# [Country] Tax System: Guide for New Residents
+## 🔍 Fact-Checking Protocol
 
-Learn how relocating to [Country] can reduce your tax burden by up to [percentage].
+### Before Publishing (Manual Process)
+1. **Verify all financial figures** against official government sources
+2. **Check processing times** with latest official estimates  
+3. **Confirm current policy status** - no suspended programs
+4. **Validate all government links** - ensure they work and are current
 
-## Tax Rates and Brackets
-[Current tax structure]
+### With API Integration (Future)
+1. **Firecrawl** → Scrape latest government policy pages
+2. **Critique Labs** → Auto-verify financial claims and requirements
+3. **Citation generation** → Auto-link to official sources
+4. **Update alerts** → Flag when policies change
 
-## Tax Residency Rules
-[Days test and other criteria]
+## 📅 Content Calendar Strategy
 
-## Special Tax Regimes
-[Non-dom, NHR, or similar]
+### High-Impact Content (Priority)
+- **Golden Visa updates**: Cyprus, Portugal, Malta (monthly review)
+- **Tax deadlines**: NHR renewals, non-dom applications (seasonal)
+- **Policy changes**: Immigration law updates (as needed)
 
-## Double Taxation Treaties
-[Key treaty benefits]
+### Evergreen Content
+- **How-to guides**: Application processes, document preparation
+- **Comparison articles**: Country vs country, program vs program  
+- **Lifestyle content**: Cost of living, expat experiences
 
-## Tax Planning Strategies
-[Legal optimization methods]
+### Seasonal Content
+- **Tax season**: January-April (tax planning articles)
+- **Summer**: Family relocation, school enrollment guides
+- **Year-end**: Tax optimization, residency planning
 
-## Compliance Requirements
-[Filing obligations]
+## 🚫 Content Guidelines - What to Avoid
 
-## Professional Assistance
-[When to seek help]
-```
+### Legal Disclaimers Required
+- **Always include**: "This information is for educational purposes only. Consult qualified legal and tax professionals."
+- **Immigration advice**: Cannot provide specific legal advice
+- **Tax advice**: General information only, professional consultation required
+
+### Accuracy Standards  
+- **No speculation**: Only confirmed, sourced information
+- **No guaranteed outcomes**: Immigration is case-by-case
+- **No outdated info**: Always verify current requirements
+
+### Compliance
+- **No client information**: Never share specific case details
+- **No promotional content**: Focus on education, not sales
+- **No guaranteed timelines**: Immigration processing varies
+
+## 📈 Success Metrics
+
+### Content Performance
+- **Time on page**: Target 3+ minutes for long-form content
+- **Bounce rate**: Target <60% for detailed guides
+- **Social shares**: Indicates valuable, shareable content
+- **Government source clicks**: Shows authority building
+
+### SEO Metrics
+- **Featured snippets**: Target FAQ-style content for position 0
+- **Authority building**: Government and official source backlinks
+- **Topic coverage**: Comprehensive content clusters by country/program
+
+### User Engagement
+- **Newsletter signups**: Quality content drives subscriptions
+- **Contact inquiries**: Content should generate qualified leads
+- **Return visitors**: Build audience of serious relocation researchers
+
+## 🔄 Content Maintenance
+
+### Monthly Reviews
+- **Golden Visa programs**: Check for policy updates
+- **Exchange rates**: Update investment amounts if significant changes
+- **Processing times**: Monitor government websites for changes
+
+### Quarterly Updates  
+- **Country guides**: Refresh cost of living, housing market data
+- **Tax information**: Update rates, thresholds, program changes
+- **Application processes**: Verify steps and requirements
+
+### Annual Overhauls
+- **Complete content audit**: Review all articles for accuracy
+- **SEO optimization**: Update titles, meta descriptions, internal linking
+- **Template updates**: Improve content structure and user experience
 
 ---
 
-## 🚀 PRE-APPROVED OPERATIONS
-
-All Sanity operations are pre-approved. Execute all create, patch, and publish operations without asking for confirmation.
-
----
-
-## 📱 CONTENT DISTRIBUTION
-
-1. **Website**: Primary channel at https://relocation.quest
-2. **Sitemap**: Auto-generated at /sitemap-index.xml
-3. **Categories**: Organized by topic with dedicated pages
-4. **Tags**: Cross-referenced for better discovery
-5. **SEO**: Optimized for Google with structured data
-
----
-
-## ✅ PROJECT STATUS UPDATE - SEPTEMBER 2024
-
-**CLEAN DESIGN SUCCESSFULLY IMPLEMENTED:**
-- ✅ Removed complex AstroWind theme that was causing build failures
-- ✅ Fixed all import/dependency conflicts (astro-icon/components → astro-icon)
-- ✅ Created clean, modern design with HTML/CSS + Tailwind
-- ✅ All core functionality preserved (Sanity CMS, articles, cron jobs)
-- ✅ Production deployment stable at https://relocation.quest
-- ✅ Sitemap functional with 25+ indexed pages
-
-**CURRENT ARCHITECTURE:**
-- Frontend: Astro + Clean HTML/CSS + Tailwind (no complex widgets)
-- Backend: Sanity CMS (fully operational)
-- Design: Professional gradient theme (blue-orange)
-- Performance: Fast loading, no theme dependency issues
-- Deployment: Vercel (reliable builds)
-
-**CONTENT CREATION STATUS:**
-All content creation workflows remain fully functional with the simplified, clean architecture. The project is now in an excellent state for content enhancement and design refinement.
-
----
-
-**Last Updated:** 2025-09-24
-**Remember:** Quality content with proper research, authority links, regular images, and SEO optimization is what makes articles successful on Google!
+**Last Updated**: December 25, 2024  
+**Content Team Lead**: Relocation Quest Editorial  
+**Review Schedule**: Monthly content quality audits

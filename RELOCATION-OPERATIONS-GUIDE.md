@@ -286,6 +286,137 @@ VERCEL_TOKEN="token" npx vercel env ls --token $VERCEL_TOKEN
 - **Case Studies**: Real relocation success stories
 - **Policy Updates**: Breaking news on immigration changes
 
+## 🚀 Deployment & CI/CD Operations
+
+### Automatic Deployment
+- **Trigger**: Push to `main` branch on GitHub
+- **Platform**: Vercel with automated CI/CD
+- **Build Time**: ~2-3 minutes average
+- **Domain**: https://relocation.quest (production)
+
+### Manual Deployment (When Needed)
+```bash
+# Force deployment with latest changes
+VERCEL_TOKEN=gAYaR1sjB2NTXl4oYQ4CrmeY npx vercel --prod --yes --token $VERCEL_TOKEN --force
+
+# Check deployment status
+VERCEL_TOKEN=gAYaR1sjB2NTXl4oYQ4CrmeY npx vercel ls --token $VERCEL_TOKEN
+
+# View deployment logs
+VERCEL_TOKEN=gAYaR1sjB2NTXl4oYQ4CrmeY npx vercel logs https://relocation.quest --token $VERCEL_TOKEN
+```
+
+### Environment Variables Management
+```bash
+# Add new environment variable
+VERCEL_TOKEN=gAYaR1sjB2NTXl4oYQ4CrmeY npx vercel env add VARIABLE_NAME production --token $VERCEL_TOKEN
+
+# List all environment variables  
+VERCEL_TOKEN=gAYaR1sjB2NTXl4oYQ4CrmeY npx vercel env ls --token $VERCEL_TOKEN
+
+# Remove environment variable
+VERCEL_TOKEN=gAYaR1sjB2NTXl4oYQ4CrmeY npx vercel env rm VARIABLE_NAME production --yes --token $VERCEL_TOKEN
+```
+
+## 🎬 Video Management (Mux Integration)
+
+### Video Asset Organization
+- **Country Videos**: All destinations have professional video thumbnails
+- **Hero Banner**: Cyprus video for desktop, mobile fallback image
+- **Aspect Ratios**: 16:9 for country thumbnails, optimized for web
+
+### Video Troubleshooting
+```html
+<!-- Test video IDs at: https://relocation.quest/test-video-ids.html -->
+<!-- This page tests all country videos with identical Mux configuration -->
+```
+
+### Video ID Reference
+```javascript
+// Working video configuration (from VideoHero.astro)
+const workingConfig = {
+  envKey: "26hi0t52rcm3pl738jugp7sp8",
+  settings: {
+    autoplay: true,
+    muted: true, 
+    loop: true,
+    maxResolution: "720p",
+    preload: "metadata",
+    controls: false,
+    disableCookies: true
+  }
+};
+```
+
+### Video Performance Monitoring
+- **Intersection Observer**: Videos pause when out of viewport (battery optimization)
+- **Error Handling**: Fallback to poster images on network failure
+- **Loading Strategy**: Lazy loading with performance optimization
+
+## 🔧 Webhook Configuration & Management
+
+### Sanity Webhooks (Optional Enhancement)
+Webhooks can be configured to trigger automatic updates when content changes in Sanity.
+
+#### Setup Process:
+1. **Create Webhook in Sanity Studio**:
+   ```
+   Project Settings → API → Webhooks → Add New
+   ```
+
+2. **Configure Endpoint**:
+   ```
+   URL: https://relocation.quest/api/webhooks/sanity
+   Secret: [Use SANITY_WEBHOOK_SECRET environment variable]
+   Triggers: Create, Update, Delete
+   Filter: _type == "post"
+   ```
+
+3. **Webhook Handler** (`/api/webhooks/sanity.ts`):
+   ```typescript
+   export const POST: APIRoute = async ({ request }) => {
+     const signature = request.headers.get('sanity-webhook-signature');
+     const secret = process.env.SANITY_WEBHOOK_SECRET;
+     
+     // Verify webhook authenticity
+     // Trigger cache invalidation
+     // Update search indexes
+     // Send notifications
+   };
+   ```
+
+#### Webhook Use Cases:
+- **Cache Invalidation**: Clear Vercel cache when content updates
+- **Search Index Updates**: Update search functionality with new content  
+- **Notification Systems**: Alert team of content changes
+- **Analytics Triggers**: Track content publishing patterns
+
+#### Security Considerations:
+- **Secret Validation**: Always verify webhook signatures
+- **Rate Limiting**: Prevent webhook abuse
+- **Error Handling**: Graceful failure for webhook processing
+- **Logging**: Track webhook events for debugging
+
+### Alternative: Polling-Based Updates
+Current system uses cron-based polling instead of webhooks for simplicity and reliability.
+
+## 🔍 Content Quality Automation (Planned)
+
+### API Integration Pipeline
+1. **Firecrawl**: Scrape government immigration sites for policy changes
+2. **Critique Labs**: Auto-fact-check financial claims and requirements  
+3. **LinkUp/Tavily**: Cross-reference with latest news and updates
+4. **Citation Generation**: Auto-link to official sources
+
+### Testing Framework
+```bash
+# Test content quality APIs
+node scripts/test-content-apis.js
+
+# Compare search API performance
+node scripts/compare-search-apis.js
+```
+
 ---
 
 ## 📋 Quick Reference
