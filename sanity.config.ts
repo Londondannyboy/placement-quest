@@ -2,9 +2,9 @@ import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 
 export default defineConfig({
-  name: 'relocation-quest',
-  title: 'Relocation Quest',
-  projectId: 'bc08ijz6',
+  name: 'placement-quest',
+  title: 'Placement Quest',
+  projectId: '7gr5b7wx',
   dataset: 'production',
   plugins: [structureTool()],
   schema: {
