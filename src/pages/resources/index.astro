@@ -1,0 +1,314 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import EnhancedSEO from '../../components/EnhancedSEO.astro';
+
+export const prerender = true;
+
+const title = "Relocation Resources - Guides, FAQ & Knowledge Base";
+const description = "Comprehensive resources for international relocation including guides, FAQ, knowledge base, and expert insights on golden visas, tax residency, and global living.";
+const canonicalUrl = "https://relocation.quest/resources";
+---
+
+<Layout title={title}>
+  <EnhancedSEO
+    title={title}
+    description={description}
+    canonicalUrl={canonicalUrl}
+    type="article"
+    keywords="relocation resources, international moving guides, visa FAQ, relocation knowledge base, expat resources"
+  />
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-green-600 to-blue-600 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+          Relocation Resources
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+          Everything you need to know about international relocation, visas, tax planning, and living abroad. Expert insights and practical guides.
+        </p>
+        <a 
+          href="/articles" 
+          class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors inline-block"
+        >
+          Browse All Articles
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resource Categories -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Resource Categories</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Find the information you need organized by topic
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- FAQ -->
+        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Frequently Asked Questions</h3>
+          <p class="text-gray-600 mb-4">
+            Get answers to the most common questions about relocation, golden visas, tax residency, and more.
+          </p>
+          <div class="mb-6">
+            <p class="text-sm text-gray-500 mb-2">Popular topics:</p>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• What is a Golden Visa?</li>
+              <li>• Investment requirements by country</li>
+              <li>• Tax residency benefits</li>
+              <li>• Application timelines</li>
+            </ul>
+          </div>
+          <a 
+            href="/resources/faq" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            View FAQ →
+          </a>
+        </div>
+
+        <!-- Country Guides -->
+        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Country Guides</h3>
+          <p class="text-gray-600 mb-4">
+            Comprehensive guides to popular relocation destinations with detailed information on visas, taxes, and living.
+          </p>
+          <div class="mb-6">
+            <p class="text-sm text-gray-500 mb-2">Popular destinations:</p>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• <a href="/countries/malta" class="hover:text-green-600">Malta</a> - EU residency, 15% tax rate</li>
+              <li>• <a href="/countries/portugal" class="hover:text-green-600">Portugal</a> - Golden Visa program</li>
+              <li>• <a href="/countries/cyprus" class="hover:text-green-600">Cyprus</a> - EU membership benefits</li>
+              <li>• <a href="/countries/dubai" class="hover:text-green-600">Dubai</a> - 0% personal income tax</li>
+            </ul>
+          </div>
+          <a 
+            href="/countries" 
+            class="text-green-600 hover:text-green-800 font-medium inline-flex items-center"
+          >
+            Explore Countries →
+          </a>
+        </div>
+
+        <!-- Tax Planning Guides -->
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Tax Planning Resources</h3>
+          <p class="text-gray-600 mb-4">
+            Expert insights on international tax planning, optimization strategies, and compliance requirements.
+          </p>
+          <div class="mb-6">
+            <p class="text-sm text-gray-500 mb-2">Key topics:</p>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Tax residency strategies</li>
+              <li>• Double taxation treaties</li>
+              <li>• Non-dom status benefits</li>
+              <li>• Compliance requirements</li>
+            </ul>
+          </div>
+          <a 
+            href="/services/tax-residency" 
+            class="text-purple-600 hover:text-purple-800 font-medium inline-flex items-center"
+          >
+            Tax Services →
+          </a>
+        </div>
+
+        <!-- Latest Articles -->
+        <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Latest Articles</h3>
+          <p class="text-gray-600 mb-4">
+            Stay updated with the latest news, insights, and developments in international relocation and visa programs.
+          </p>
+          <div class="mb-6">
+            <p class="text-sm text-gray-500 mb-2">Recent topics:</p>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• 2025 program updates</li>
+              <li>• Investment requirement changes</li>
+              <li>• New visa programs</li>
+              <li>• Policy developments</li>
+            </ul>
+          </div>
+          <a 
+            href="/articles" 
+            class="text-orange-600 hover:text-orange-800 font-medium inline-flex items-center"
+          >
+            Read Articles →
+          </a>
+        </div>
+
+        <!-- Investment Guides -->
+        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Investment Guides</h3>
+          <p class="text-gray-600 mb-4">
+            Understand investment requirements, options, and strategies for residency-by-investment programs.
+          </p>
+          <div class="mb-6">
+            <p class="text-sm text-gray-500 mb-2">Investment types:</p>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Real estate investments</li>
+              <li>• Government bonds</li>
+              <li>• Business investments</li>
+              <li>• Fund options</li>
+            </ul>
+          </div>
+          <a 
+            href="/articles" 
+            class="text-red-600 hover:text-red-800 font-medium inline-flex items-center"
+          >
+            Investment Articles →
+          </a>
+        </div>
+
+        <!-- Process Guides -->
+        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Process Guides</h3>
+          <p class="text-gray-600 mb-4">
+            Step-by-step guides to navigate application processes, document requirements, and timelines.
+          </p>
+          <div class="mb-6">
+            <p class="text-sm text-gray-500 mb-2">Key processes:</p>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Document preparation</li>
+              <li>• Application submission</li>
+              <li>• Due diligence process</li>
+              <li>• Approval and renewals</li>
+            </ul>
+          </div>
+          <a 
+            href="/articles" 
+            class="text-indigo-600 hover:text-indigo-800 font-medium inline-flex items-center"
+          >
+            Process Guides →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Links -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Quick Links</h2>
+        <p class="text-xl text-gray-600">Fast access to popular resources</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a 
+          href="/resources/faq" 
+          class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center border border-gray-200"
+        >
+          <h3 class="font-semibold mb-2">FAQ</h3>
+          <p class="text-sm text-gray-600">Common questions answered</p>
+        </a>
+        
+        <a 
+          href="/countries/malta" 
+          class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center border border-gray-200"
+        >
+          <h3 class="font-semibold mb-2">Malta Guide</h3>
+          <p class="text-sm text-gray-600">MPRP & 15% tax rate</p>
+        </a>
+        
+        <a 
+          href="/services/tax-residency" 
+          class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center border border-gray-200"
+        >
+          <h3 class="font-semibold mb-2">Tax Services</h3>
+          <p class="text-sm text-gray-600">Residency & optimization</p>
+        </a>
+        
+        <a 
+          href="/contact" 
+          class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center border border-gray-200"
+        >
+          <h3 class="font-semibold mb-2">Expert Help</h3>
+          <p class="text-sm text-gray-600">Schedule consultation</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Section -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">Looking for Something Specific?</h2>
+      <p class="text-xl text-gray-600 mb-8">
+        Use our search to find articles, guides, and resources on any relocation topic
+      </p>
+      <div class="max-w-xl mx-auto">
+        <a 
+          href="/search" 
+          class="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-3 text-left text-gray-500 hover:bg-gray-50 transition-colors flex items-center justify-between"
+        >
+          <span>Search relocation guides and articles...</span>
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="bg-gradient-to-r from-green-600 to-blue-600 text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold mb-4">
+        Need Personalized Guidance?
+      </h2>
+      <p class="text-xl mb-8">
+        Our resources provide general guidance, but every situation is unique. Get expert advice tailored to your specific needs.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a 
+          href="/contact" 
+          class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+        >
+          Schedule Consultation
+        </a>
+        <a 
+          href="/services" 
+          class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+        >
+          View Our Services
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

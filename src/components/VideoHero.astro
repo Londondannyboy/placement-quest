@@ -18,98 +18,56 @@ const {
   ctaLink = "/articles"
 } = Astro.props;
 
-const muxEnvKey = "26hi0t52rcm3pl738jugp7sp8";
-
-// Generate optimized poster URLs
-const desktopPoster = `https://image.mux.com/${desktopPlaybackId}/thumbnail.webp?width=1920&height=1080&fit=crop&crop=smart&q=75`;
-const mobilePoster = `https://image.mux.com/${desktopPlaybackId}/thumbnail.webp?width=750&height=1334&fit=crop&crop=smart&q=50`;
+// Cyprus hero background image
+const cyprusHeroImage = "https://images.unsplash.com/photo-1539650116574-75c0c6d4d6d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80";
 ---
 
-<!-- Preload LCP poster images for faster loading -->
-<link rel="preload" as="image" href={desktopPoster} media="(min-width: 768px)" fetchpriority="high" />
-<link rel="preload" as="image" href={mobilePoster} media="(max-width: 767px)" fetchpriority="high" />
+<!-- Preload hero background image for mobile LCP -->
+<link rel="preload" as="image" href={cyprusHeroImage} media="(max-width: 767px)" fetchpriority="high" />
 
-<!-- Ensure Mux Player loads properly for mobile -->
+<!-- Load Mux Player for desktop video -->
 <script>
-  // Load Mux Player with proper mobile support
-  function loadMuxPlayer() {
+  // Load Mux Player for desktop
+  if (window.innerWidth >= 768) {
     if (!window.customElements.get('mux-player')) {
       const script = document.createElement('script');
       script.src = 'https://cdn.jsdelivr.net/npm/@mux/mux-player@2';
-      script.onload = () => {
-        // Initialize video players after script loads
-        setTimeout(() => {
-          const players = document.querySelectorAll('mux-player');
-          players.forEach(player => {
-            // Ensure mobile-friendly autoplay
-            if (window.innerWidth < 768) {
-              player.setAttribute('autoplay', '');
-              player.setAttribute('muted', '');
-              player.setAttribute('playsinline', '');
-            }
-          });
-        }, 100);
-      };
       document.head.appendChild(script);
     }
   }
-  
-  // Load immediately for better mobile performance
-  loadMuxPlayer();
 </script>
 
 <div class="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-600 to-orange-500">
   <!-- Fallback gradient background (maintains current design) -->
   
-  <!-- Dual Video Setup for Mobile Bandwidth Optimization -->
-  {desktopPlaybackId && (
-    <div class="absolute inset-0">
-      <!-- Desktop: High Quality Video -->
-      <mux-player
-        playback-id={desktopPlaybackId}
-        metadata-video-title="Relocation Quest - Cyprus Desktop"
-        metadata-video-id={`${desktopPlaybackId}-desktop`}
-        metadata-viewer-user-id="hero-banner-desktop"
-        env-key={muxEnvKey}
-        autoplay
-        muted
-        loop
-        max-resolution="1080p"
-        min-resolution="720p"
-        style="width: 100%; height: 100%; object-fit: cover;"
-        class="w-full h-full hidden md:block"
-        poster={desktopPoster}
-        preload="metadata"
-        controls="false"
-        default-hidden-captions="true"
-        disable-cookies="true"
-      >
-      </mux-player>
-      
-      <!-- Mobile: Low-Resolution Video for Bandwidth Optimization -->
-      <mux-player
-        playback-id={desktopPlaybackId}
-        metadata-video-title="Relocation Quest - Cyprus Mobile"
-        metadata-video-id={`${desktopPlaybackId}-mobile`}
-        metadata-viewer-user-id="hero-banner-mobile"
-        env-key={muxEnvKey}
-        autoplay
-        muted
-        loop
-        playsinline
-        max-resolution="480p"
-        min-resolution="240p"
-        style="width: 100%; height: 100%; object-fit: cover;"
-        class="w-full h-full md:hidden"
-        poster={mobilePoster}
-        preload="metadata"
-        controls="false"
-        default-hidden-captions="true"
-        disable-cookies="true"
-      >
-      </mux-player>
-    </div>
-  )}
+  <!-- Desktop Video -->
+  <div class="absolute inset-0">
+    <mux-player
+      playback-id={desktopPlaybackId}
+      metadata-video-title="Relocation Quest - Cyprus Desktop"
+      metadata-video-id="cyprus-desktop-hero"
+      metadata-viewer-user-id="hero-banner-desktop"
+      env-key="26hi0t52rcm3pl738jugp7sp8"
+      autoplay
+      muted
+      loop
+      max-resolution="1080p"
+      style="width: 100%; height: 100%; object-fit: cover;"
+      class="w-full h-full hidden md:block"
+      preload="metadata"
+      controls="false"
+      default-hidden-captions="true"
+      disable-cookies="true"
+    >
+    </mux-player>
+  </div>
+
+  <!-- Mobile: Cyprus Background Image (fallback for network issues) -->
+  <div 
+    class="absolute inset-0 bg-cover bg-center bg-no-repeat md:hidden"
+    style={`background-image: url('${cyprusHeroImage}')`}
+  >
+  </div>
   
   <!-- Dark overlay for text readability -->
   <div class="absolute inset-0 bg-black bg-opacity-40"></div>
@@ -132,124 +90,13 @@ const mobilePoster = `https://image.mux.com/${desktopPlaybackId}/thumbnail.webp?
     </div>
   </div>
   
-  <!-- Maximum Performance Optimization -->
+  <!-- Simple image optimization for reduced motion -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const players = document.querySelectorAll('mux-player');
-      
-      // Advanced performance optimization
-      function optimizePlayer(player) {
-        // Ultra-aggressive mobile optimization
-        const isMobile = player.classList.contains('md:hidden');
-        
-        // Check battery and connection for mobile optimization
-        if (isMobile) {
-          // Skip video on low battery
-          if ('getBattery' in navigator) {
-            navigator.getBattery().then(battery => {
-              if (battery.level < 0.2 || !battery.charging) {
-                player.style.display = 'none';
-                return;
-              }
-            });
-          }
-          
-          // Skip video on very slow connections
-          if ('connection' in navigator && 'effectiveType' in navigator.connection) {
-            const conn = navigator.connection;
-            if (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g') {
-              player.style.display = 'none';
-              return;
-            }
-          }
-        }
-        
-        if ('connection' in navigator && 'effectiveType' in navigator.connection) {
-          const conn = navigator.connection;
-          
-          // Adaptive buffer settings based on connection
-          player.addEventListener('loadstart', () => {
-            if (player._hls) {
-              switch (conn.effectiveType) {
-                case '3g':
-                  player._hls.config.maxBufferLength = 8; // Reduced for mobile
-                  if (isMobile) {
-                    player.setAttribute('max-resolution', '360p');
-                  }
-                  break;
-                case '4g':
-                  player._hls.config.maxBufferLength = isMobile ? 12 : 25;
-                  break;
-                default:
-                  player._hls.config.maxBufferLength = isMobile ? 15 : 30;
-              }
-            }
-          });
-        }
-        
-        // Performance monitoring
-        player.addEventListener('loadeddata', () => {
-          console.log('Mux Player loaded:', player.getAttribute('metadata-video-title'));
-        });
-        
-        // Error handling
-        player.addEventListener('error', (e) => {
-          console.error('Mux Player error:', e.detail);
-        });
-      }
-      
-      // Advanced Intersection Observer for lazy loading
-      if ('IntersectionObserver' in window) {
-        const playerObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const player = entry.target;
-              
-              // Initialize player only when visible
-              optimizePlayer(player);
-              
-              // Ultra-aggressive delay for mobile performance, moderate for desktop
-              const delay = player.classList.contains('md:hidden') ? 5000 : 1000;
-              setTimeout(() => {
-                if (player.hasAttribute('autoplay')) {
-                  player.play().catch(() => {
-                    console.log('Autoplay blocked, user interaction required');
-                  });
-                }
-              }, delay);
-              
-              playerObserver.unobserve(player);
-            }
-          });
-        }, {
-          rootMargin: '200px',
-          threshold: 0.05
-        });
-        
-        players.forEach(player => {
-          playerObserver.observe(player);
-        });
-      }
-      
-      // Respect reduced motion and battery optimization
-      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        players.forEach(player => {
-          player.removeAttribute('autoplay');
-          player.style.display = 'none';
-        });
-      }
-      
-      // Page visibility optimization for battery life
-      document.addEventListener('visibilitychange', function() {
-        players.forEach(player => {
-          if (document.visibilityState === 'hidden') {
-            player.pause();
-          } else if (player.hasAttribute('autoplay')) {
-            setTimeout(() => player.play().catch(() => {}), 500);
-          }
-        });
-      });
-    });
+    // Respect reduced motion preference
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Image is already static, so nothing to disable
+      console.log('Reduced motion preference detected - using static hero image');
+    }
   </script>
 </div>
 

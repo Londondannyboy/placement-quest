@@ -37,6 +37,24 @@ import SearchBox from './SearchBox.astro';
           </a>
           <div class="relative group">
             <button class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+              Services
+              <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <div class="absolute left-0 mt-2 w-56 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div class="py-1">
+                <a href="/services" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium">All Services</a>
+                <div class="border-t border-gray-100 my-1"></div>
+                <a href="/services/golden-visa" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Golden Visa Programs</a>
+                <a href="/services/tax-residency" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Tax Residency</a>
+                <a href="/services/non-dom-status" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Non-Dom Status</a>
+                <a href="/services/company-formation" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Company Formation</a>
+              </div>
+            </div>
+          </div>
+          <div class="relative group">
+            <button class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
               Countries
               <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -50,6 +68,23 @@ import SearchBox from './SearchBox.astro';
                 <a href="/countries/malta" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Malta</a>
                 <a href="/countries/singapore" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Singapore</a>
                 <a href="/countries/caribbean" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Caribbean</a>
+              </div>
+            </div>
+          </div>
+          <div class="relative group">
+            <button class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+              Resources
+              <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <div class="absolute left-0 mt-2 w-52 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div class="py-1">
+                <a href="/resources" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium">All Resources</a>
+                <div class="border-t border-gray-100 my-1"></div>
+                <a href="/resources/guides" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Relocation Guides</a>
+                <a href="/resources/faq" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">FAQ</a>
+                <a href="/resources/knowledge-base" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Knowledge Base</a>
               </div>
             </div>
           </div>
@@ -102,6 +137,21 @@ import SearchBox from './SearchBox.astro';
         🔍 Search
       </a>
       <div class="space-y-1">
+        <button id="mobile-services-toggle" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 flex items-center justify-between" aria-expanded="false" aria-controls="mobile-services-submenu">
+          Services
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <div id="mobile-services-submenu" class="hidden pl-4 space-y-1">
+          <a href="/services" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-medium">All Services</a>
+          <a href="/services/golden-visa" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Golden Visa Programs</a>
+          <a href="/services/tax-residency" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Tax Residency</a>
+          <a href="/services/non-dom-status" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Non-Dom Status</a>
+          <a href="/services/company-formation" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Company Formation</a>
+        </div>
+      </div>
+      <div class="space-y-1">
         <button id="mobile-countries-toggle" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 flex items-center justify-between" aria-expanded="false" aria-controls="mobile-countries-submenu">
           Countries
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -115,6 +165,20 @@ import SearchBox from './SearchBox.astro';
           <a href="/countries/malta" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Malta</a>
           <a href="/countries/singapore" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Singapore</a>
           <a href="/countries/caribbean" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Caribbean</a>
+        </div>
+      </div>
+      <div class="space-y-1">
+        <button id="mobile-resources-toggle" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 flex items-center justify-between" aria-expanded="false" aria-controls="mobile-resources-submenu">
+          Resources
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <div id="mobile-resources-submenu" class="hidden pl-4 space-y-1">
+          <a href="/resources" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-medium">All Resources</a>
+          <a href="/resources/guides" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Relocation Guides</a>
+          <a href="/resources/faq" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">FAQ</a>
+          <a href="/resources/knowledge-base" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Knowledge Base</a>
         </div>
       </div>
       <a href="/categories" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">
@@ -135,8 +199,12 @@ import SearchBox from './SearchBox.astro';
   document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
+    const servicesToggle = document.getElementById('mobile-services-toggle');
+    const servicesSubmenu = document.getElementById('mobile-services-submenu');
     const countriesToggle = document.getElementById('mobile-countries-toggle');
     const countriesSubmenu = document.getElementById('mobile-countries-submenu');
+    const resourcesToggle = document.getElementById('mobile-resources-toggle');
+    const resourcesSubmenu = document.getElementById('mobile-resources-submenu');
 
     if (mobileMenuButton && mobileMenu) {
       mobileMenuButton.addEventListener('click', function() {
@@ -145,10 +213,24 @@ import SearchBox from './SearchBox.astro';
       });
     }
 
+    if (servicesToggle && servicesSubmenu) {
+      servicesToggle.addEventListener('click', function() {
+        const isHidden = servicesSubmenu.classList.toggle('hidden');
+        servicesToggle.setAttribute('aria-expanded', !isHidden);
+      });
+    }
+
     if (countriesToggle && countriesSubmenu) {
       countriesToggle.addEventListener('click', function() {
         const isHidden = countriesSubmenu.classList.toggle('hidden');
         countriesToggle.setAttribute('aria-expanded', !isHidden);
+      });
+    }
+
+    if (resourcesToggle && resourcesSubmenu) {
+      resourcesToggle.addEventListener('click', function() {
+        const isHidden = resourcesSubmenu.classList.toggle('hidden');
+        resourcesToggle.setAttribute('aria-expanded', !isHidden);
       });
     }
 

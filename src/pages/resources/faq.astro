@@ -1,0 +1,451 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import EnhancedSEO from '../../components/EnhancedSEO.astro';
+
+export const prerender = true;
+
+const title = "Frequently Asked Questions - International Relocation Guide";
+const description = "Get answers to common questions about international relocation, golden visas, tax residency, investment requirements, and citizenship by investment programs.";
+const canonicalUrl = "https://relocation.quest/resources/faq";
+---
+
+<Layout title={title}>
+  <EnhancedSEO
+    title={title}
+    description={description}
+    canonicalUrl={canonicalUrl}
+    type="article"
+    keywords="relocation FAQ, golden visa questions, tax residency FAQ, citizenship investment FAQ, visa requirements, relocation process"
+    structuredData={{
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a Golden Visa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A Golden Visa is a residency-by-investment program that allows individuals to obtain residency status in a country by making a qualifying investment, typically in real estate, government bonds, or business ventures."
+          }
+        },
+        {
+          "@type": "Question", 
+          "name": "How long does the application process take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Application timelines vary by country: Portugal (3-6 months), Malta (6-12 months), Cyprus (3-4 months), Dubai (2-3 months). Our experts help expedite the process wherever possible."
+          }
+        }
+      ]
+    }}
+  />
+
+  <!-- Breadcrumb Navigation -->
+  <div class="bg-gray-50 border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <nav class="flex" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-3">
+          <li class="inline-flex items-center">
+            <a href="/" class="text-gray-700 hover:text-blue-600">Home</a>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <a href="/resources" class="ml-1 text-gray-700 hover:text-blue-600 md:ml-2">Resources</a>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="ml-1 text-gray-500 md:ml-2">FAQ</span>
+            </div>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          Frequently Asked Questions
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+          Get expert answers to the most common questions about international relocation, golden visas, and tax residency programs.
+        </p>
+        <a 
+          href="/contact" 
+          class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors inline-block"
+        >
+          Ask Our Experts
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Table of Contents -->
+    <div class="bg-blue-50 rounded-lg p-6 mb-12">
+      <h2 class="text-xl font-semibold mb-4">Quick Navigation</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <ul class="space-y-2">
+          <li><a href="#general" class="text-blue-600 hover:text-blue-800">General Relocation</a></li>
+          <li><a href="#golden-visa" class="text-blue-600 hover:text-blue-800">Golden Visa Programs</a></li>
+          <li><a href="#tax-residency" class="text-blue-600 hover:text-blue-800">Tax Residency</a></li>
+          <li><a href="#investment" class="text-blue-600 hover:text-blue-800">Investment Requirements</a></li>
+        </ul>
+        <ul class="space-y-2">
+          <li><a href="#process" class="text-blue-600 hover:text-blue-800">Application Process</a></li>
+          <li><a href="#timeline" class="text-blue-600 hover:text-blue-800">Timelines</a></li>
+          <li><a href="#costs" class="text-blue-600 hover:text-blue-800">Costs & Fees</a></li>
+          <li><a href="#family" class="text-blue-600 hover:text-blue-800">Family Applications</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- General Relocation Questions -->
+    <section id="general" class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">General Relocation Questions</h2>
+      
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">What is international relocation?</h3>
+          <p class="text-gray-700">
+            International relocation refers to the process of moving your residence, business, or tax domicile from one country to another. This often involves obtaining residency status, establishing tax residency, and potentially pursuing citizenship in your new country.
+          </p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Why do people relocate internationally?</h3>
+          <p class="text-gray-700">
+            Common reasons include tax optimization, lifestyle improvements, business opportunities, political stability, better climate, education for children, healthcare access, and creating a Plan B for uncertain times.
+          </p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Which countries offer the best relocation opportunities?</h3>
+          <p class="text-gray-700 mb-3">
+            Popular destinations include:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 space-y-1">
+            <li><a href="/countries/malta" class="text-blue-600 hover:text-blue-800">Malta</a> - 15% tax rate, EU membership</li>
+            <li><a href="/countries/portugal" class="text-blue-600 hover:text-blue-800">Portugal</a> - Golden Visa, path to EU citizenship</li>
+            <li><a href="/countries/cyprus" class="text-blue-600 hover:text-blue-800">Cyprus</a> - EU membership, favorable tax regime</li>
+            <li><a href="/countries/dubai" class="text-blue-600 hover:text-blue-800">Dubai</a> - 0% personal income tax, business hub</li>
+            <li><a href="/countries/singapore" class="text-blue-600 hover:text-blue-800">Singapore</a> - Strategic location, stable governance</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Golden Visa Questions -->
+    <section id="golden-visa" class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Golden Visa Programs</h2>
+      
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">What is a Golden Visa?</h3>
+          <p class="text-gray-700">
+            A Golden Visa is a residency-by-investment program that allows individuals to obtain residency status in a country by making a qualifying investment. This typically involves investing in real estate, government bonds, or business ventures above a minimum threshold.
+          </p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">What are the minimum investment amounts?</h3>
+          <div class="text-gray-700">
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Portugal:</strong> €280,000+ (investment funds) to €500,000+ (real estate)</li>
+              <li><strong>Malta:</strong> €500,000+ (government contribution) plus real estate</li>
+              <li><strong>Cyprus:</strong> €300,000+ (real estate investment)</li>
+              <li><strong>Spain:</strong> €500,000+ (real estate investment)</li>
+              <li><strong>Dubai:</strong> AED 2 million+ ($500,000+) (real estate or business)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Do Golden Visas lead to citizenship?</h3>
+          <p class="text-gray-700">
+            Many Golden Visa programs can lead to citizenship, but requirements vary:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 mt-3 space-y-1">
+            <li><strong>Portugal:</strong> Path to citizenship in 5 years</li>
+            <li><strong>Malta:</strong> Citizenship available through separate program</li>
+            <li><strong>Cyprus:</strong> Path to citizenship in 7 years</li>
+            <li><strong>Spain:</strong> Path to citizenship in 10 years (5 for some nationalities)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tax Residency Questions -->
+    <section id="tax-residency" class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Tax Residency</h2>
+      
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">What is tax residency?</h3>
+          <p class="text-gray-700">
+            Tax residency determines which country has the right to tax your worldwide income. It's different from immigration residency and is typically based on factors like days spent in a country, center of vital interests, and habitual abode.
+          </p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibent text-gray-900 mb-3">How can I minimize my tax burden legally?</h3>
+          <p class="text-gray-700">
+            Through strategic tax residency planning, you can optimize your global tax position by:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 mt-3 space-y-1">
+            <li>Establishing residency in countries with favorable tax rates</li>
+            <li>Utilizing double taxation treaties</li>
+            <li>Structuring investments tax-efficiently</li>
+            <li>Taking advantage of non-dom regimes where available</li>
+          </ul>
+          <p class="text-gray-700 mt-3">
+            <strong>Note:</strong> Always consult with qualified tax advisors for your specific situation.
+          </p>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">What are the best countries for tax residency?</h3>
+          <p class="text-gray-700 mb-3">
+            Popular tax-friendly jurisdictions include:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 space-y-1">
+            <li><strong>UAE (Dubai):</strong> 0% personal income tax</li>
+            <li><strong>Malta:</strong> 15% effective rate for qualifying residents</li>
+            <li><strong>Cyprus:</strong> 12.5% corporate tax, non-dom benefits</li>
+            <li><strong>Portugal:</strong> NHR program with tax benefits</li>
+            <li><strong>Singapore:</strong> Territorial tax system with exemptions</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Investment Requirements -->
+    <section id="investment" class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Investment Requirements</h2>
+      
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">What types of investments qualify?</h3>
+          <p class="text-gray-700 mb-3">
+            Qualifying investments typically include:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 space-y-1">
+            <li><strong>Real Estate:</strong> Residential or commercial property</li>
+            <li><strong>Government Bonds:</strong> Sovereign or approved bonds</li>
+            <li><strong>Investment Funds:</strong> Approved investment vehicles</li>
+            <li><strong>Business Investment:</strong> Job creation or capital investment</li>
+            <li><strong>Bank Deposits:</strong> Fixed deposits with approved banks</li>
+          </ul>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Can I get financing for the investment?</h3>
+          <p class="text-gray-700">
+            Most programs require the investment to be made with personal funds, not borrowed money. However, some countries allow partial financing:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 mt-3 space-y-1">
+            <li><strong>Cyprus:</strong> Up to 70% financing allowed for real estate</li>
+            <li><strong>Portugal:</strong> Generally requires own funds</li>
+            <li><strong>Malta:</strong> Own funds required for contributions</li>
+          </ul>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Do I need to maintain the investment?</h3>
+          <p class="text-gray-700">
+            Most programs require maintaining the investment for a minimum period:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 mt-3 space-y-1">
+            <li><strong>Portugal:</strong> 5 years minimum</li>
+            <li><strong>Cyprus:</strong> 3 years minimum</li>
+            <li><strong>Malta:</strong> 5 years for government contribution</li>
+            <li><strong>Spain:</strong> Must maintain until citizenship (if desired)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Application Process -->
+    <section id="process" class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Application Process</h2>
+      
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">What documents are required?</h3>
+          <p class="text-gray-700 mb-3">
+            Standard documents typically include:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 space-y-1">
+            <li>Valid passport and copies</li>
+            <li>Clean criminal record certificates</li>
+            <li>Proof of funds and source of funds</li>
+            <li>Health insurance coverage</li>
+            <li>Birth and marriage certificates</li>
+            <li>Educational qualifications</li>
+            <li>Professional references</li>
+          </ul>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Do I need to visit the country during the application?</h3>
+          <p class="text-gray-700">
+            Requirements vary by country:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 mt-3 space-y-1">
+            <li><strong>Portugal:</strong> Initial visit required, minimal stay thereafter</li>
+            <li><strong>Malta:</strong> Visit required for application submission</li>
+            <li><strong>Cyprus:</strong> Visit required for application and biometrics</li>
+            <li><strong>Dubai:</strong> Visit required for Emirates ID and medical</li>
+          </ul>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Can I include my family in the application?</h3>
+          <p class="text-gray-700">
+            Most programs allow family inclusion:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 mt-3 space-y-1">
+            <li><strong>Spouse:</strong> Included in all major programs</li>
+            <li><strong>Children:</strong> Usually up to age 18-26 (varies by country)</li>
+            <li><strong>Parents:</strong> Some programs allow dependent parents</li>
+            <li><strong>Additional fees:</strong> Apply for each family member</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline Questions -->
+    <section id="timeline" class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Timelines</h2>
+      
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">How long does the application process take?</h3>
+          <p class="text-gray-700 mb-3">
+            Processing times vary by country and complexity:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 space-y-1">
+            <li><strong>Portugal:</strong> 3-6 months for initial approval</li>
+            <li><strong>Malta:</strong> 6-12 months for full processing</li>
+            <li><strong>Cyprus:</strong> 3-4 months for approval</li>
+            <li><strong>Dubai:</strong> 2-3 months for Golden Visa</li>
+            <li><strong>Singapore:</strong> 4-6 months for investor schemes</li>
+          </ul>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">What can delay the application?</h3>
+          <p class="text-gray-700 mb-3">
+            Common delays include:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 space-y-1">
+            <li>Incomplete or incorrect documentation</li>
+            <li>Issues with source of funds verification</li>
+            <li>Criminal record or due diligence complications</li>
+            <li>Changes in government regulations</li>
+            <li>High application volumes during peak periods</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Costs & Fees -->
+    <section id="costs" class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Costs & Fees</h2>
+      
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">What are the total costs involved?</h3>
+          <p class="text-gray-700 mb-3">
+            Total costs include investment plus fees:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 space-y-1">
+            <li><strong>Investment amount:</strong> €280,000 - €500,000+</li>
+            <li><strong>Government fees:</strong> €5,000 - €20,000</li>
+            <li><strong>Legal fees:</strong> €10,000 - €30,000</li>
+            <li><strong>Due diligence fees:</strong> €5,000 - €15,000</li>
+            <li><strong>Other costs:</strong> Translation, apostille, travel</li>
+          </ul>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Are there ongoing costs?</h3>
+          <p class="text-gray-700 mb-3">
+            Yes, ongoing costs may include:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 space-y-1">
+            <li><strong>Residence permit renewals:</strong> €500 - €2,000</li>
+            <li><strong>Minimum stay costs:</strong> Accommodation, utilities</li>
+            <li><strong>Tax compliance:</strong> Accounting and filing costs</li>
+            <li><strong>Investment maintenance:</strong> Property taxes, management fees</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Family Applications -->
+    <section id="family" class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Family Applications</h2>
+      
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Can my spouse work with the residency permit?</h3>
+          <p class="text-gray-700">
+            Most residency permits allow spouses to work:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 mt-3 space-y-1">
+            <li><strong>EU countries:</strong> Full work rights within the EU</li>
+            <li><strong>Dubai:</strong> Spouse can obtain work visa</li>
+            <li><strong>Singapore:</strong> Dependent pass with work eligibility</li>
+          </ul>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">What about education for children?</h3>
+          <p class="text-gray-700">
+            Most countries offer excellent educational opportunities:
+          </p>
+          <ul class="list-disc pl-6 text-gray-700 mt-3 space-y-1">
+            <li><strong>EU countries:</strong> Access to public and private schools</li>
+            <li><strong>International schools:</strong> Available in all major destinations</li>
+            <li><strong>University access:</strong> EU residency provides preferential rates</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="bg-blue-600 rounded-lg text-white p-8 text-center">
+      <h2 class="text-3xl font-bold mb-4">
+        Still Have Questions?
+      </h2>
+      <p class="text-xl mb-8">
+        Our relocation experts are here to help with personalized answers to your specific situation.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a 
+          href="/contact" 
+          class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+        >
+          Contact Our Experts
+        </a>
+        <a 
+          href="/services/tax-residency" 
+          class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+        >
+          View Our Services
+        </a>
+      </div>
+    </section>
+
+  </main>
+</Layout>

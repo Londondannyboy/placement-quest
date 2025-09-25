@@ -203,10 +203,10 @@ export default defineConfig({
             name: 'category',
             title: 'Primary Category',
             type: 'reference',
-            description: 'Main category for this article. Choose the most relevant geographical location or primary topic.',
+            description: 'Main category for this article. Choose the most relevant topic.',
             fieldset: 'taxonomy',
             to: [{ type: 'category' }],
-            validation: (Rule) => Rule.required().error('Category is required for content organization and navigation'),
+            validation: (Rule) => Rule.required().error('Category is required for content organization'),
           },
           {
             name: 'tags',

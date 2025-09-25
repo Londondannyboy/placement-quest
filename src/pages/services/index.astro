@@ -1,0 +1,279 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import EnhancedSEO from '../../components/EnhancedSEO.astro';
+
+export const prerender = true;
+
+const title = "Professional Relocation Services - Expert International Moving Support";
+const description = "Comprehensive relocation services for international moves. Expert guidance on visas, tax residency, legal requirements, and complete relocation planning for global destinations.";
+const canonicalUrl = "https://relocation.quest/services";
+---
+
+<Layout title={title}>
+  <EnhancedSEO
+    title={title}
+    description={description}
+    canonicalUrl={canonicalUrl}
+    type="article"
+    keywords="relocation services, international moving, visa services, tax residency, golden visa consultant, relocation advisor"
+  />
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+          Professional Relocation Services
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+          Expert guidance for your international relocation journey. From visa applications to tax optimization, we provide comprehensive support for your global move.
+        </p>
+        <a 
+          href="/contact" 
+          class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors inline-block"
+        >
+          Get Expert Consultation
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Services</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Comprehensive support for every aspect of your international relocation
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Tax Residency Services -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Tax Residency Planning</h3>
+          <p class="text-gray-600 mb-4">
+            Strategic tax residency planning to minimize your global tax burden while achieving your relocation goals.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• EU tax residency programs</li>
+            <li>• Tax optimization strategies</li>
+            <li>• Compliance guidance</li>
+            <li>• Expert advisors</li>
+          </ul>
+          <a 
+            href="/services/tax-residency" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Learn More →
+          </a>
+        </div>
+
+        <!-- Golden Visa Services -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Golden Visa Programs</h3>
+          <p class="text-gray-600 mb-4">
+            Complete assistance with golden visa applications across multiple EU countries and strategic locations.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• Malta MPRP program</li>
+            <li>• Portugal Golden Visa</li>
+            <li>• Cyprus investment program</li>
+            <li>• Dubai Golden Visa</li>
+          </ul>
+          <a 
+            href="/countries/malta" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Explore Programs →
+          </a>
+        </div>
+
+        <!-- Legal & Documentation -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Legal & Documentation</h3>
+          <p class="text-gray-600 mb-4">
+            Expert assistance with all legal requirements, documentation, and compliance for your international move.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• Document preparation</li>
+            <li>• Legal compliance</li>
+            <li>• Apostille services</li>
+            <li>• Due diligence support</li>
+          </ul>
+          <a 
+            href="/contact" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Get Support →
+          </a>
+        </div>
+
+        <!-- Investment Advisory -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Investment Advisory</h3>
+          <p class="text-gray-600 mb-4">
+            Strategic investment guidance for residency programs, including real estate and alternative investment options.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• Real estate investments</li>
+            <li>• Government bonds</li>
+            <li>• Business investments</li>
+            <li>• Fund options</li>
+          </ul>
+          <a 
+            href="/contact" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Consult Experts →
+          </a>
+        </div>
+
+        <!-- Relocation Planning -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Relocation Planning</h3>
+          <p class="text-gray-600 mb-4">
+            Comprehensive relocation planning services covering every aspect of your international move.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• Country selection guidance</li>
+            <li>• Cost analysis</li>
+            <li>• Timeline planning</li>
+            <li>• Integration support</li>
+          </ul>
+          <a 
+            href="/countries" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Explore Countries →
+          </a>
+        </div>
+
+        <!-- Ongoing Support -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 12h0m0 0v0m0 0h0m0 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Ongoing Support</h3>
+          <p class="text-gray-600 mb-4">
+            Continued assistance after your move, including compliance, renewals, and optimization opportunities.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• Residency renewals</li>
+            <li>• Tax compliance</li>
+            <li>• Citizenship applications</li>
+            <li>• Ongoing optimization</li>
+          </ul>
+          <a 
+            href="/contact" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Learn More →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Why Choose Our Services</h2>
+        <p class="text-xl text-gray-600">Expertise and experience you can trust</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Expert Knowledge</h3>
+          <p class="text-gray-600">
+            Deep expertise in international tax law, immigration regulations, and investment requirements across multiple jurisdictions.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Fast Processing</h3>
+          <p class="text-gray-600">
+            Streamlined processes and established relationships with government agencies to expedite your applications.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100-4m0 4v2m0-6V4"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Personalized Service</h3>
+          <p class="text-gray-600">
+            Tailored solutions based on your specific circumstances, goals, and preferences. No one-size-fits-all approaches.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="bg-blue-600 text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold mb-4">
+        Ready to Start Your Relocation Journey?
+      </h2>
+      <p class="text-xl mb-8">
+        Schedule a consultation with our experts and discover the best path for your international relocation goals.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a 
+          href="/contact" 
+          class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+        >
+          Schedule Consultation
+        </a>
+        <a 
+          href="/resources/faq" 
+          class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+        >
+          View FAQ
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
