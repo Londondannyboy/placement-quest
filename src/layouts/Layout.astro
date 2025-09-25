@@ -136,8 +136,8 @@ import CookieConsent from '../components/CookieConsent.astro';
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     
-    <!-- Mux Player for Professional Video Performance - Async Loading -->
-    <script src="https://cdn.jsdelivr.net/npm/@mux/mux-player@2" async defer></script>
+    <!-- Mux Player - Load only when video component is present -->
+    <!-- Removed global loading - will be loaded conditionally by VideoHero -->
     
     <style>
       /* Critical CSS - Above the fold styles */

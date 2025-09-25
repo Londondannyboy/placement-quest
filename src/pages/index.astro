@@ -14,8 +14,8 @@ function urlFor(source) {
   return builder.image(source);
 }
 
-// Optimized image helper for better performance
-function optimizedImageUrl(source, width = 400, height = 250, quality = 80) {
+// Optimized image helper for better performance - reduced quality for faster loading
+function optimizedImageUrl(source, width = 400, height = 250, quality = 60) {
   if (!source) return null;
   
   return builder
