@@ -16,27 +16,56 @@ const canonicalUrl = "https://relocation.quest/resources/faq";
     canonicalUrl={canonicalUrl}
     type="article"
     keywords="relocation FAQ, golden visa questions, tax residency FAQ, citizenship investment FAQ, visa requirements, relocation process"
-    structuredData={{
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is a Golden Visa?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "A Golden Visa is a residency-by-investment program that allows individuals to obtain residency status in a country by making a qualifying investment, typically in real estate, government bonds, or business ventures."
-          }
-        },
-        {
-          "@type": "Question", 
-          "name": "How long does the application process take?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Application timelines vary by country: Portugal (3-6 months), Malta (6-12 months), Cyprus (3-4 months), Dubai (2-3 months). Our experts help expedite the process wherever possible."
-          }
-        }
-      ]
-    }}
+    faq={[
+      {
+        question: "What is a Golden Visa?",
+        answer: "A Golden Visa is a residency-by-investment program that allows individuals to obtain residency status in a country by making a qualifying investment, typically in real estate, government bonds, or business ventures. These programs provide a pathway to EU residency and often citizenship."
+      },
+      {
+        question: "How long does the Golden Visa application process take?",
+        answer: "Application timelines vary by country: Portugal (3-6 months), Malta (6-12 months), Cyprus (3-4 months), Dubai (2-3 months). Our experts help expedite the process and ensure all documentation is properly prepared."
+      },
+      {
+        question: "What are the minimum investment requirements?",
+        answer: "Investment thresholds differ by country: Portugal (€280,000-€500,000), Cyprus (€300,000), Malta (€500,000-€600,000), Dubai (AED 2,000,000). Some programs offer multiple investment options including real estate, government bonds, or business investments."
+      },
+      {
+        question: "Can family members be included in the application?",
+        answer: "Yes, most Golden Visa programs allow you to include your spouse, dependent children (usually under 18-26), and sometimes dependent parents. Each program has specific eligibility criteria for family members that we help navigate."
+      },
+      {
+        question: "What are the tax benefits of relocating?",
+        answer: "Tax benefits vary by destination: Cyprus offers Non-Dom status (no tax on foreign income for 17 years), Portugal has the NHR program (tax benefits for 10 years), Malta offers favorable tax rates (15% effective rate), Dubai has zero personal income tax."
+      },
+      {
+        question: "Do I need to live in the country full-time?",
+        answer: "No, most Golden Visa programs have minimal residency requirements. Portugal requires just 7 days per year, Cyprus requires visiting twice per year, Malta requires 90 days annually. Dubai's Golden Visa has no minimum stay requirement."
+      },
+      {
+        question: "Can I work in the country with a Golden Visa?",
+        answer: "Yes, Golden Visa holders typically have the right to work, study, and conduct business in their host country. EU Golden Visas also provide access to work throughout the EU Schengen area."
+      },
+      {
+        question: "What documentation is required?",
+        answer: "Standard requirements include: clean criminal background check, proof of funds, health insurance, bank statements (6-12 months), certified translations, and apostilled documents. Each country has specific additional requirements."
+      },
+      {
+        question: "How much does the entire process cost?",
+        answer: "Total costs include: investment amount, government fees (€5,000-€40,000), legal fees (€10,000-€25,000), due diligence fees, translation costs, and ongoing maintenance fees. We provide detailed cost breakdowns for each program."
+      },
+      {
+        question: "What happens if my Golden Visa application is rejected?",
+        answer: "Rejection rates are very low (under 5%) when applications are properly prepared. If rejected, investment funds are returned, and we can help address rejection reasons for reapplication. We conduct thorough pre-screening to minimize risks."
+      },
+      {
+        question: "Can I eventually become a citizen?",
+        answer: "Most Golden Visa programs offer a pathway to citizenship: Portugal (5 years), Cyprus (5-7 years), Malta (1-3 years with higher investment). Each has specific requirements including language tests, residency days, and tax compliance."
+      },
+      {
+        question: "What is Non-Dom tax status?",
+        answer: "Non-Domiciled tax status allows you to pay tax only on income remitted to your country of residence. Cyprus offers this for 17 years, UK historically offered it (now limited), providing significant tax savings for international earners."
+      }
+    ]}
   />
 
   <!-- Breadcrumb Navigation -->

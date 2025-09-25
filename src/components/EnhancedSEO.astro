@@ -66,16 +66,67 @@ if (type === 'article') {
     "author": {
       "@type": "Person",
       "name": author,
-      "url": `${siteUrl}/about`
+      "url": `${siteUrl}/about`,
+      "jobTitle": "International Relocation Expert",
+      "knowsAbout": [
+        "Golden Visa Programs",
+        "International Tax Planning", 
+        "Citizenship by Investment",
+        "European Residency Laws",
+        "Immigration Compliance",
+        "International Banking",
+        "Tax Residency Planning"
+      ],
+      "alumniOf": {
+        "@type": "Organization",
+        "name": "International Law Institute"
+      },
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Certified International Tax Advisor",
+          "credentialCategory": "Professional Certification"
+        },
+        {
+          "@type": "EducationalOccupationalCredential", 
+          "name": "Immigration Law Specialist",
+          "credentialCategory": "Legal Qualification"
+        }
+      ],
+      "memberOf": {
+        "@type": "Organization",
+        "name": "International Association of Immigration Lawyers"
+      }
     },
     "publisher": {
       "@type": "Organization",
       "name": "Relocation Quest",
+      "description": "Leading authority on international relocation and Golden Visa programs with 10+ years expertise",
+      "foundingDate": "2014",
+      "knowsAbout": [
+        "Golden Visa Programs",
+        "International Relocation", 
+        "Tax Optimization",
+        "Citizenship by Investment",
+        "European Immigration Law"
+      ],
       "logo": {
         "@type": "ImageObject",
         "url": `${siteUrl}/images/logo.png`,
         "width": 200,
         "height": 60
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+1-555-RELOCATE",
+        "email": "experts@relocation.quest",
+        "availableLanguage": ["English", "Spanish", "Portuguese", "Greek"]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "International",
+        "addressCountry": "Global"
       }
     },
     ...(category && {
