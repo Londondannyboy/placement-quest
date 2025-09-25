@@ -3,6 +3,7 @@ export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
 import VideoHero from '../components/VideoHero.astro';
+import VideoThumbnail from '../components/VideoThumbnail.astro';
 import AnimatedSection from '../components/AnimatedSection.astro';
 import EnhancedButton from '../components/EnhancedButton.astro';
 import { sanityClient } from 'sanity:client';
@@ -437,14 +438,16 @@ function getCategoryIcon(categoryTitle) {
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
           <div class="flex items-center mb-4">
-            <div class="w-10 h-10 mr-3 flex items-center justify-center">
-              <!-- Cyprus flag colors: white, orange/copper stripes -->
-              <svg class="w-10 h-10" viewBox="0 0 40 30">
-                <rect width="40" height="30" fill="#ffffff"/>
-                <path d="M10 15 L20 8 L30 15 L25 20 L15 20 Z" fill="#D2691E"/>
-                <rect x="5" y="22" width="30" height="2" fill="#008000"/>
-                <rect x="5" y="25" width="30" height="2" fill="#008000"/>
-              </svg>
+            <div class="w-12 h-12 mr-3 flex items-center justify-center">
+              <!-- Cyprus Video Thumbnail - Modern Dynamic Visual -->
+              <VideoThumbnail 
+                playbackId="lKoMAX9eQ1aNdFc6squdJgBlkhBMUDjuq43tf00jZpik"
+                title="Cyprus - Mediterranean Paradise"
+                description="Stunning aerial views of Cyprus coastline"
+                size="small"
+                aspectRatio="1:1"
+                autoplay={true}
+              />
             </div>
             <h3 class="text-2xl font-bold">Cyprus</h3>
           </div>
