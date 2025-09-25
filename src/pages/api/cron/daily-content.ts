@@ -87,15 +87,26 @@ export const GET: APIRoute = async ({ request }) => {
         );
         
         if (!existing) {
+          // Create the article directly as published (not draft)
           const result = await sanityClient.create({
             _type: 'post',
             ...articleContent
           });
           
+          // Ensure it's published by patching if needed
+          await sanityClient
+            .patch(result._id)
+            .set({ 
+              publishedAt: new Date().toISOString(),
+              published: true 
+            })
+            .commit();
+          
           results.created.push({
             id: result._id,
             title: articleContent.title,
-            slug: articleContent.slug.current
+            slug: articleContent.slug.current,
+            published: true
           });
         }
       } catch (error) {

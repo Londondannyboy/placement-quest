@@ -17,13 +17,14 @@ export const GET: APIRoute = async ({ request }) => {
   }
 
   try {
-    // Query for unpublished drafts
-    const drafts = await sanityClient.fetch(
-      `*[_type == "post" && !defined(publishedAt) && _id match "drafts.*"][0...3]{
+    // Query for unpublished documents (both drafts and regular documents)
+    const unpublished = await sanityClient.fetch(
+      `*[_type == "post" && !defined(publishedAt)][0...3]{
         _id,
         title,
         slug,
-        body
+        body,
+        "isDraft": _id match "drafts.*"
       }`
     );
 
@@ -33,28 +34,39 @@ export const GET: APIRoute = async ({ request }) => {
       errors: []
     };
 
-    // Process each draft
-    for (const draft of drafts) {
+    // Process each unpublished document
+    for (const document of unpublished) {
       try {
-        // Remove drafts. prefix from ID
-        const documentId = draft._id.replace('drafts.', '');
+        let targetId;
+        
+        if (document.isDraft) {
+          // For draft documents, remove drafts. prefix from ID
+          targetId = document._id.replace('drafts.', '');
+        } else {
+          // For regular documents, use the ID as-is
+          targetId = document._id;
+        }
         
         // Publish the document
         await sanityClient
-          .patch(documentId)
-          .set({ publishedAt: new Date().toISOString() })
+          .patch(targetId)
+          .set({ 
+            publishedAt: new Date().toISOString(),
+            published: true 
+          })
           .commit();
 
         results.published.push({
-          id: documentId,
-          title: draft.title,
-          slug: draft.slug?.current
+          id: targetId,
+          title: document.title,
+          slug: document.slug?.current,
+          wasDraft: document.isDraft
         });
         results.processed++;
       } catch (error) {
         results.errors.push({
-          id: draft._id,
-          title: draft.title,
+          id: document._id,
+          title: document.title,
           error: error.message
         });
       }
