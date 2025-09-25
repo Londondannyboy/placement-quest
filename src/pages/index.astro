@@ -304,8 +304,8 @@ function getCategoryIcon(categoryTitle) {
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {latestPosts.map((post, index) => (
           <article class="bg-white rounded-xl shadow-soft hover:shadow-xl transition-all group">
-            {post.mainImage && (
-              <div class="aspect-video overflow-hidden rounded-t-xl">
+            <div class="aspect-video overflow-hidden rounded-t-xl bg-gradient-to-br from-blue-50 to-blue-100">
+              {post.mainImage ? (
                 <picture>
                   <source 
                     srcset={`${optimizedImageUrl(post.mainImage, 380, 253)} 380w, ${optimizedImageUrl(post.mainImage, 600, 400)} 600w`}
@@ -322,15 +322,39 @@ function getCategoryIcon(categoryTitle) {
                     height="400"
                   />
                 </picture>
-              </div>
-            )}
-            <div class="p-6">
-              {post.category && (
-                <span class="text-sm text-primary-600 font-medium">
-                  {post.category.title}
-                </span>
+              ) : (
+                <!-- Fallback for articles without images -->
+                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
+                  <div class="text-center p-6">
+                    <svg class="w-16 h-16 mx-auto text-blue-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <p class="text-blue-400 text-sm font-medium">{post.category?.title || 'Article'}</p>
+                  </div>
+                </div>
               )}
-              <h3 class="text-xl font-bold mt-2 mb-3 group-hover:text-primary-600 transition-colors">
+            </div>
+            <div class="p-6">
+              <div class="flex items-center justify-between mb-2">
+                {post.category && (
+                  <span class="text-sm text-primary-600 font-medium">
+                    {post.category.title}
+                  </span>
+                )}
+                {post.publishedAt && (
+                  <time 
+                    datetime={post.publishedAt}
+                    class="text-sm text-gray-500"
+                  >
+                    {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric'
+                    })}
+                  </time>
+                )}
+              </div>
+              <h3 class="text-xl font-bold mb-3 group-hover:text-primary-600 transition-colors">
                 <a href={`/articles/${post.slug?.current || '#'}`}>
                   {post.title}
                 </a>
