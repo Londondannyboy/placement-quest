@@ -1,4 +1,4 @@
-# 🚀 BATCH CONTENT ENHANCEMENT INSTRUCTIONS
+# 🚀 RELOCATION BATCH PROMPT - Content Enhancement Instructions
 
 ## Purpose
 This document provides instructions for Claude Desktop to systematically enhance content quality across the Relocation Quest website using the Content Quality Scoring System.
