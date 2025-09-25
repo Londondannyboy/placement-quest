@@ -45,29 +45,8 @@ async function autoCategorizeArticles() {
       let categoryId = null;
       let categoryName = '';
       
-      // Smart categorization logic
-      if (title.includes('cyprus')) {
-        categoryId = CATEGORY_MAP['Cyprus'];
-        categoryName = 'Cyprus';
-      } else if (title.includes('portugal')) {
-        categoryId = CATEGORY_MAP['Portugal'];
-        categoryName = 'Portugal';
-      } else if (title.includes('malta')) {
-        categoryId = CATEGORY_MAP['Malta'];
-        categoryName = 'Malta';
-      } else if (title.includes('dubai') || title.includes('uae')) {
-        categoryId = CATEGORY_MAP['Dubai/UAE'];
-        categoryName = 'Dubai/UAE';
-      } else if (title.includes('singapore')) {
-        categoryId = CATEGORY_MAP['Singapore'];
-        categoryName = 'Singapore';
-      } else if (title.includes('estonia')) {
-        categoryId = CATEGORY_MAP['Estonia'];
-        categoryName = 'Estonia';
-      } else if (title.includes('saint kitts') || title.includes('caribbean')) {
-        categoryId = CATEGORY_MAP['Saint Kitts'];
-        categoryName = 'Saint Kitts';
-      } else if (title.includes('golden visa') || (title.includes('visa') && !title.includes('nomad'))) {
+      // Smart categorization logic - focus on topics, not countries
+      if (title.includes('golden visa') || (title.includes('visa') && !title.includes('nomad'))) {
         categoryId = CATEGORY_MAP['Golden Visa'];
         categoryName = 'Golden Visa';
       } else if (title.includes('business') || title.includes('investment') || title.includes('company')) {
