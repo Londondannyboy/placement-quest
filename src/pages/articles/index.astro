@@ -2,7 +2,14 @@
 export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { client } from '../../lib/sanity';
+import imageUrlBuilder from '@sanity/image-url';
 import '../../styles/global.css';
+
+const builder = imageUrlBuilder(client);
+
+function urlFor(source) {
+  return builder.image(source);
+}
 
 const articles = await client.fetch(`
   *[_type == "post"] | order(publishedAt desc) {
@@ -11,13 +18,7 @@ const articles = await client.fetch(`
     slug,
     excerpt,
     publishedAt,
-    mainImage {
-      asset-> {
-        _id,
-        url
-      },
-      alt
-    },
+    mainImage,
     author-> {
       name,
       slug
@@ -51,9 +52,10 @@ const articles = await client.fetch(`
               <article class="bg-white rounded-lg shadow hover:shadow-lg transition">
                 {article.mainImage && (
                   <img
-                    src={article.mainImage.asset.url}
-                    alt={article.mainImage.alt || article.title}
+                    src={urlFor(article.mainImage).width(600).height(400).url()}
+                    alt={article.mainImage?.alt || article.title}
                     class="w-full h-48 object-cover rounded-t-lg"
+                    loading="lazy"
                   />
                 )}
                 <div class="p-6">

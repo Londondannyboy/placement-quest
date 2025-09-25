@@ -31,13 +31,7 @@ const article = await client.fetch(
     excerpt,
     body,
     publishedAt,
-    mainImage {
-      asset-> {
-        _id,
-        url
-      },
-      alt
-    },
+    mainImage,
     author-> {
       name,
       slug

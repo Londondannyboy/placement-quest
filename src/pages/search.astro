@@ -211,7 +211,7 @@ const categories = await sanityClient.fetch(`*[_type == "category"] {
         ${post.mainImage ? `
           <div class="aspect-video overflow-hidden">
             <img
-              src="${post.mainImage.asset ? builder.image(post.mainImage).width(400).height(225).quality(80).format('webp').fit('crop').crop('center').auto('format').url() : ''}"
+              src="${post.mainImage ? builder.image(post.mainImage).width(400).height(225).quality(80).format('webp').fit('crop').crop('center').auto('format').url() : ''}"
               alt="${post.title}"
               class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               loading="lazy"
