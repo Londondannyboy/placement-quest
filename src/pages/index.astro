@@ -124,12 +124,17 @@ function getCategoryIcon(categoryTitle) {
   type="website"
 >
   <!-- Load Mux Player for all video thumbnails -->
+  <script src="https://cdn.jsdelivr.net/npm/@mux/mux-player@2"></script>
   <script>
-    if (!window.customElements.get('mux-player')) {
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/@mux/mux-player@2';
-      document.head.appendChild(script);
+    // Wait for Mux Player to be ready
+    function waitForMuxPlayer() {
+      if (window.customElements.get('mux-player')) {
+        console.log('Mux Player is ready');
+      } else {
+        setTimeout(waitForMuxPlayer, 100);
+      }
     }
+    waitForMuxPlayer();
   </script>
   <!-- Professional Video Hero Banner -->
   <VideoHero 

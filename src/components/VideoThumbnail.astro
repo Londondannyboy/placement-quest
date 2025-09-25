@@ -18,7 +18,7 @@ const {
   autoplay = false
 } = Astro.props;
 
-const muxEnvKey = "26hi0t52rcm3pl738jugp7sp8";
+const muxEnvKey = import.meta.env.PUBLIC_MUX_ENV_KEY || "26hi0t52rcm3pl738jugp7sp8";
 
 // Debug: Log playback ID to check format
 console.log('VideoThumbnail playback ID:', playbackId);
@@ -40,15 +40,16 @@ const aspectClass = aspectRatio === '1:1' ? 'aspect-square' :
   <mux-player
     playback-id={playbackId}
     metadata-video-title={title}
+    metadata-video-id={`thumbnail-${playbackId}`}
     env-key={muxEnvKey}
+    autoplay={autoplay}
     muted
     loop={autoplay}
-    playback-engine="mse"
     max-resolution={config.maxRes}
     style="width: 100%; height: 100%; object-fit: cover;"
     class="w-full h-full"
     poster={`https://image.mux.com/${playbackId}/thumbnail.webp?width=${config.width}&height=${config.height}&fit=crop&crop=smart&q=75`}
-    preload="none"
+    preload="metadata"
     controls="false"
     default-hidden-captions="true"
     disable-cookies="true"
