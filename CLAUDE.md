@@ -75,6 +75,58 @@ Advanced content research and verification APIs:
 - `FIRECRAWL_API_KEY` - fc-fcc00e00206d4c1db2653d3815a2b0b0 (Web scraping, PDF parsing)
 - `CRITIQUE_LABS_API_KEY` - 4W8L4b9IY0xIzPBsFHRngwQ0M-9v9TcAysgauLqh6s4 (Fact-checking, citations)
 - `LINKUP_API_KEY` - (Advanced contextual search - API key needed)
+- `TAVILY_API_KEY` - (Web search for current data and research)
+
+## 🎯 Content Quality Scoring System (0-100)
+
+### Scoring Algorithm
+Content quality is measured on a 0-100 scale based on:
+
+**Content Depth (40 points max)**
+- 3000+ words: 40 points
+- 2000+ words: 35 points  
+- 1000+ words: 25 points
+- 500+ words: 15 points
+- 200+ words: 5 points
+
+**Research Quality (25 points max)**
+- Tavily research used: +20 points
+- 8+ external links: +5 points
+- 4+ external links: +3 points
+- 1+ external links: +1 point
+
+**AI Enhancement (20 points max)**
+- AI-enhanced content: +15 points
+- Multiple enhancements logged: +5 points
+
+**Currency/Freshness (15 points max)**
+- Less than 3 months old: +15 points
+- Less than 6 months old: +10 points
+- Less than 12 months old: +5 points
+
+### Content Enhancement Priority
+**High Priority (Score < 60):**
+- Use Tavily for current research
+- Expand to 2000+ words
+- Add 5+ authoritative external links
+- Update with 2025 data
+
+**Medium Priority (Score 60-79):**
+- Add targeted Tavily research
+- Enhance specific sections
+- Improve internal linking
+
+**Low Priority (Score 80+):**
+- Regular freshness updates
+- Monitor for accuracy
+- Expand based on user feedback
+
+### Enhancement Tracking
+When enhancing content, always document:
+1. Tools used (Tavily, Firecrawl, Critique Labs, etc.)
+2. Date of enhancement
+3. Specific improvements made
+4. New quality score after enhancement
 
 ## Deployment & Live Sites
 - **Production**: [relocation.quest](https://relocation.quest)
