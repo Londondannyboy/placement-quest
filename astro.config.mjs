@@ -9,11 +9,11 @@ import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://relocation.quest',
+  site: 'https://placement.quest',
   trailingSlash: 'always', // Fix canonical URL mismatch
   integrations: [
     sanity({
-      projectId: 'bc08ijz6',
+      projectId: 'bc08ijz6', // TODO: Create new Sanity project for placement-quest
       dataset: 'production',
       useCdn: false,
       studioBasePath: '/studio',
@@ -26,8 +26,8 @@ export default defineConfig({
         return true;
       },
       customPages: [
-        'https://relocation.quest/llms.txt',
-        'https://relocation.quest/ai.txt'
+        'https://placement.quest/llms.txt',
+        'https://placement.quest/ai.txt'
       ]
     }), // Generate sitemap with trailing slashes including AI files
     // icon(),
