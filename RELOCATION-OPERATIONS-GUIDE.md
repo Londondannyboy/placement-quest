@@ -43,6 +43,55 @@ All articles automatically receive:
 - No separate category pages for countries
 - Country-specific articles categorized by their primary topic
 
+## 🎬 Mux Video Integration
+
+### Video Hero Components
+The platform uses Mux Player v2 for professional video streaming with:
+- **Connection-aware quality** (2G→360p, 4G+→1080p)
+- **Mobile optimizations** (muted, autoplay, playsinline)
+- **Country-specific videos** with unique playback IDs
+
+### Country Video Playback IDs
+```javascript
+const countryVideos = {
+  cyprus: 'ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM',
+  dubai: '5br2hylJ4F009vDLHrxWZ3C7UDTw5901GcXYBjSOWNV8k',
+  portugal: 'Oy1LRvO5eSoXGUTthBNS13r007WorSyGvf2YLh1keA5E',
+  malta: 'aeX9W002bzUWYKu3Ryln4hLVAplzOm7DfUKm3iZqGGz00',
+  singapore: 'dCBAYhMsKX7v00HaI1gHsW8tMI2HZDLlb01KJv5hGkpkI',
+  caribbean: '021dUb7I5L2G9dDKBWup4efv9Sxh7ZNAtElSbYkN8C2k'
+}
+```
+
+### Article Video Implementation (Planned)
+To add videos to articles:
+
+1. **Sanity Schema Update** - Add heroVideo field:
+```javascript
+{
+  name: 'heroVideo',
+  title: 'Hero Video (Optional)',
+  type: 'object',
+  fields: [
+    {
+      name: 'muxPlaybackId',
+      title: 'Mux Playback ID',
+      type: 'string'
+    }
+  ]
+}
+```
+
+2. **Country-Specific Logic** - Auto-select video based on content:
+- Cyprus articles → Cyprus video
+- Dubai articles → Dubai video
+- Etc.
+
+3. **Video Requirements**
+- Always use Playback IDs (NOT Asset IDs)
+- Include muted, autoplay, playsinline for mobile
+- Provide fallback images for failed loads
+
 ## 🤖 Automated Content Publishing (Fully Operational)
 
 ### System Overview

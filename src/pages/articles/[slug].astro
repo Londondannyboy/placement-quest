@@ -1,5 +1,6 @@
 ---
-export const prerender = true;
+// Dynamic rendering for video support
+// export const prerender = true; // Disabled for video functionality
 
 import Layout from '../../layouts/Layout.astro';
 import { PortableText } from '../../components/PortableText';
@@ -49,6 +50,15 @@ if (!article) {
 }
 ---
 
+<!-- Load Mux Player for article videos -->
+<script>
+  if (!window.customElements.get('mux-player')) {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/@mux/mux-player@2';
+    document.head.appendChild(script);
+  }
+</script>
+
 <Layout 
   title={article.seoTitle || `${article.title} - Relocation Quest`}
   description={article.metaDescription || article.excerpt || `Read our comprehensive guide: ${article.title}. Expert insights on international relocation and global living.`}
@@ -79,13 +89,56 @@ if (!article) {
             )}
           </div>
           
-          {article.mainImage && (
-            <img
-              src={urlFor(article.mainImage).width(1200).height(600).url()}
-              alt={article.mainImage.alt || article.title}
-              class="w-full rounded-lg shadow-lg mb-8"
-            />
-          )}
+          {/* Country-specific video for articles */}
+          {(() => {
+            const countryVideos = {
+              cyprus: 'ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM',
+              dubai: '5br2hylJ4F009vDLHrxWZ3C7UDTw5901GcXYBjSOWNV8k',
+              portugal: 'Oy1LRvO5eSoXGUTthBNS13r007WorSyGvf2YLh1keA5E',
+              malta: 'aeX9W002bzUWYKu3Ryln4hLVAplzOm7DfUKm3iZqGGz00',
+              singapore: 'dCBAYhMsKX7v00HaI1gHsW8tMI2HZDLlb01KJv5hGkpkI',
+              caribbean: '021dUb7I5L2G9dDKBWup4efv9Sxh7ZNAtElSbYkN8C2k',
+              'saint kitts': '021dUb7I5L2G9dDKBWup4efv9Sxh7ZNAtElSbYkN8C2k', // Caribbean video
+              'saint-kitts': '021dUb7I5L2G9dDKBWup4efv9Sxh7ZNAtElSbYkN8C2k'  // Caribbean video
+            };
+            
+            const titleLower = article.title?.toLowerCase() || '';
+            const excerptLower = article.excerpt?.toLowerCase() || '';
+            
+            // Find matching country in title or excerpt
+            const matchedCountry = Object.keys(countryVideos).find(country => 
+              titleLower.includes(country) || excerptLower.includes(country)
+            );
+            
+            const playbackId = matchedCountry ? countryVideos[matchedCountry] : null;
+            
+            if (playbackId) {
+              return (
+                <div class="w-full rounded-lg shadow-lg mb-8 overflow-hidden">
+                  <mux-player
+                    playback-id={playbackId}
+                    metadata-video-title={article.title}
+                    env-key={import.meta.env.PUBLIC_MUX_ENV_KEY || "26hi0t52rcm3pl738jugp7sp8"}
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    controls="true"
+                    style="width: 100%; aspect-ratio: 16/9;"
+                  />
+                </div>
+              );
+            } else if (article.mainImage) {
+              return (
+                <img
+                  src={urlFor(article.mainImage).width(1200).height(600).url()}
+                  alt={article.mainImage.alt || article.title}
+                  class="w-full rounded-lg shadow-lg mb-8"
+                />
+              );
+            }
+            return null;
+          })()}
         </header>
         
         <div class="prose prose-lg max-w-none">
