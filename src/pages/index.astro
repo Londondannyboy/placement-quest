@@ -41,12 +41,13 @@ const latestPosts = await sanityClient.fetch(`*[_type == "post"] | order(publish
   category->{title, slug}
 }`);
 
-// Fetch categories
+// Fetch categories (force fresh data)
 const categories = await sanityClient.fetch(`*[_type == "category"] | order(title asc) {
   title,
   slug,
   description,
-  _id
+  _id,
+  _updatedAt
 }`);
 
 // Fetch featured posts
