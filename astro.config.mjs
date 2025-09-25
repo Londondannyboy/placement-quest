@@ -20,7 +20,16 @@ export default defineConfig({
     }),
     react(),
     tailwind(),
-    sitemap(), // Generate sitemap with trailing slashes
+    sitemap({
+      filter: (page) => {
+        // Include all pages in sitemap
+        return true;
+      },
+      customPages: [
+        'https://relocation.quest/llms.txt',
+        'https://relocation.quest/ai.txt'
+      ]
+    }), // Generate sitemap with trailing slashes including AI files
     // icon(),
   ],
   output: 'server',
