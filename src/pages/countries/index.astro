@@ -1,0 +1,188 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import EnhancedSEO from '../../components/EnhancedSEO.astro';
+
+export const prerender = true;
+
+const title = "Popular Relocation Destinations - Country Guides";
+const description = "Explore our comprehensive guides to the world's most popular relocation destinations including Cyprus, Portugal, Malta, Dubai, Singapore and the Caribbean.";
+const canonicalUrl = "https://relocation.quest/countries";
+---
+
+<Layout title={title}>
+  <EnhancedSEO
+    title={title}
+    description={description}
+    canonicalUrl={canonicalUrl}
+    type="article"
+    keywords="relocation destinations, country guides, international moving, expat countries, golden visa countries"
+  />
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          Popular Relocation Destinations
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+          Discover the world's most attractive destinations for international relocation, from European golden visa programs to global business hubs.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Countries Grid -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Cyprus -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">Cyprus</h3>
+          <p class="text-gray-600 mb-4">
+            EU member state offering Golden Visa programs, favorable tax regime, and Mediterranean lifestyle.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• €300,000+ real estate investment</li>
+            <li>• EU membership benefits</li>
+            <li>• English-speaking environment</li>
+            <li>• Strategic location</li>
+          </ul>
+          <a 
+            href="/countries/cyprus" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Learn More →
+          </a>
+        </div>
+
+        <!-- Portugal -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">Portugal</h3>
+          <p class="text-gray-600 mb-4">
+            Popular Golden Visa destination with path to EU citizenship and excellent quality of life.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• €280,000+ minimum investment</li>
+            <li>• Path to EU citizenship</li>
+            <li>• No minimum stay requirements</li>
+            <li>• Great climate and culture</li>
+          </ul>
+          <a 
+            href="/countries/portugal" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Learn More →
+          </a>
+        </div>
+
+        <!-- Malta -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">Malta</h3>
+          <p class="text-gray-600 mb-4">
+            Premium residence program with significant tax advantages and EU membership benefits.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• €500,000+ investment requirement</li>
+            <li>• 15% effective tax rate</li>
+            <li>• English-speaking country</li>
+            <li>• EU passport eligibility</li>
+          </ul>
+          <a 
+            href="/countries/malta" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Learn More →
+          </a>
+        </div>
+
+        <!-- Dubai -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">Dubai</h3>
+          <p class="text-gray-600 mb-4">
+            Global business hub with Golden Visa programs and zero personal income tax.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• $500,000+ investment options</li>
+            <li>• 0% personal income tax</li>
+            <li>• Strategic business location</li>
+            <li>• 10-year renewable visa</li>
+          </ul>
+          <a 
+            href="/countries/dubai" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Learn More →
+          </a>
+        </div>
+
+        <!-- Singapore -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">Singapore</h3>
+          <p class="text-gray-600 mb-4">
+            Leading Asian financial center with investor visa programs and excellent infrastructure.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• Multiple visa pathways</li>
+            <li>• Low tax environment</li>
+            <li>• Excellent education system</li>
+            <li>• Gateway to Asia</li>
+          </ul>
+          <a 
+            href="/countries/singapore" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Learn More →
+          </a>
+        </div>
+
+        <!-- Caribbean -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">Caribbean</h3>
+          <p class="text-gray-600 mb-4">
+            Citizenship by investment programs offering visa-free travel and tropical lifestyle.
+          </p>
+          <ul class="text-sm text-gray-500 mb-6 space-y-1">
+            <li>• Fast citizenship processing</li>
+            <li>• Visa-free travel benefits</li>
+            <li>• Tax optimization opportunities</li>
+            <li>• Beautiful tropical environment</li>
+          </ul>
+          <a 
+            href="/countries/caribbean" 
+            class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+          >
+            Learn More →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="bg-blue-600 text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold mb-4">
+        Ready to Explore Your Options?
+      </h2>
+      <p class="text-xl mb-8">
+        Get personalized advice on the best relocation destination for your specific needs and circumstances.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a 
+          href="/contact" 
+          class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+        >
+          Schedule Consultation
+        </a>
+        <a 
+          href="/services" 
+          class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+        >
+          View Services
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
