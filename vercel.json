@@ -27,16 +27,16 @@
       ]
     },
     {
-      "source": "/(.*\\.(jpg|jpeg|png|webp|avif|gif|svg|ico))$",
+      "source": "/(.*)\\.(jpg|jpeg|png|webp|avif|gif|svg|ico)",
       "headers": [
         {
           "key": "Cache-Control", 
-          "value": "public, max-age=86400, s-maxage=86400, stale-while-revalidate=3600"
+          "value": "public, max-age=86400, s-maxage=86400"
         }
       ]
     },
     {
-      "source": "/(.*\\.(css|js))$",
+      "source": "/(.*)\\.(css|js)",
       "headers": [
         {
           "key": "Cache-Control",
