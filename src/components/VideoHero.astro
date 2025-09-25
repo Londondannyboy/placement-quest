@@ -56,6 +56,8 @@ const cyprusHeroImage = "https://images.unsplash.com/photo-1539650116574-75c0c6d
       controls="false"
       default-hidden-captions="true"
       disable-cookies="true"
+      hide-duration
+      hide-live-button
     >
     </mux-player>
   </div>
@@ -78,6 +80,8 @@ const cyprusHeroImage = "https://images.unsplash.com/photo-1539650116574-75c0c6d
       controls="false"
       default-hidden-captions="true"
       disable-cookies="true"
+      hide-duration
+      hide-live-button
     >
     </mux-player>
   </div>
@@ -114,6 +118,19 @@ const cyprusHeroImage = "https://images.unsplash.com/photo-1539650116574-75c0c6d
 </div>
 
 <style>
+  /* Hide Mux player play button and control overlays */
+  mux-player::part(center-play-button),
+  mux-player::part(play-button),
+  mux-player::part(live-button),
+  mux-player::part(duration-display),
+  mux-player [slot="centered-chrome"],
+  mux-player button[aria-label*="play"],
+  mux-player button[aria-label*="Play"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+  
   /* Ensure video covers container properly */
   video {
     object-fit: cover;

@@ -140,6 +140,21 @@ import CookieConsent from '../components/CookieConsent.astro';
     <!-- Removed global loading - will be loaded conditionally by VideoHero -->
     
     <style>
+      /* Hide all Mux player play buttons and overlays globally */
+      mux-player::part(center-play-button),
+      mux-player::part(play-button),
+      mux-player::part(live-button),
+      mux-player::part(duration-display),
+      mux-player [slot="centered-chrome"],
+      mux-player button[aria-label*="play"],
+      mux-player button[aria-label*="Play"],
+      mux-player .vds-play-button,
+      mux-player .mux-center-play {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+      
       /* Critical CSS - Above the fold styles */
       .hero-section {
         background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 50%, #F97316 100%);
