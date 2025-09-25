@@ -1,140 +1,79 @@
 # CLAUDE AI ASSISTANT GUIDELINES
 
 ## Project Overview
-This is the Relocation Quest project - a content platform focused on international relocation, visas, tax optimization, and global lifestyle information.
+This is the Placement Quest project - The Bloomberg Terminal for Private Equity Placement Agents. A comprehensive intelligence platform focused on placement agents, fundraising, and private equity market intelligence.
 
-### 🎯 UNIFIED PROJECT NAMING
-**IMPORTANT**: All services now use the same project name:
-- **GitHub Repository**: `relocation-quest`
-- **Vercel Project**: `relocation-quest`
-- **Sanity Project**: `relocation-quest`
-- **Local Directory**: `/Users/dankeegan/relocation-quest`
+### 🎯 PROJECT IDENTITY
+- **Domain**: placement.quest (future: rainmakrr.com for gonzo version)
+- **Mission**: Comprehensive intelligence platform for PE placement agents
+- **Architecture**: Based on proven relocation-quest technical stack
+- **Content**: 100% focused on placement agents, fundraising, private equity
 
-This unified naming eliminates confusion across all platforms.
+### 🚨 IMPORTANT - PROJECT NAMING
+- **GitHub Repository**: `placement-quest`
+- **Vercel Project**: `placement-quest`
+- **Vercel Project ID**: `prj_UllhRcVjX22e9AjRAwlwKwYjBj0x`
+- **Sanity Project**: TO BE CREATED (new project needed)
+- **Local Directory**: `/Users/dankeegan/placement-quest-code`
 
-## Technical Stack
+## Technical Stack (Inherited from Relocation-Quest)
 ### Core Framework
 - **Frontend**: Astro 5.13.10 + React + TypeScript
-- **CMS**: Sanity Studio with enhanced schema
-- **Video**: Mux Player v2 with advanced optimizations
-- **Styling**: Tailwind CSS with custom animations
-- **Deployment**: Vercel with automated CI/CD
+- **CMS**: Sanity Studio (new project needed)
+- **Video**: Mux Player v2 (for agent profile videos)
+- **Styling**: Tailwind CSS (navy-gold theme)
+- **Deployment**: Vercel
 - **Database**: Sanity Cloud (production dataset)
-- **Analytics**: Mux Data integration
-- **Automation**: Vercel Cron Jobs for content publishing
+- **Automation**: Vercel Cron Jobs for news aggregation
 
-### Content Quality APIs (December 2024)
-- **Firecrawl**: Web scraping, PDF parsing, government site monitoring
-- **Critique Labs**: Autonomous fact-checking, inline citations, verification
-- **LinkUp/Tavily**: Contextual search, real-time web data access
-- **Pipeline**: Automated research → fact-checking → citation-rich content generation
+### Enhanced API Stack for Placement Intelligence
+- **Firecrawl**: SEC filings, Form ADVs, fund documents
+- **Critique Labs**: Verify AUM claims, deal sizes, fund performance
+- **Tavily**: Daily placement agent news searches
+- **LinkUp**: Deep contextual search for agent intel
+- **Apify**: LinkedIn scraping for team profiles
+- **Hume.ai**: Voice interface for agent matching (future)
+- **Mem0/Zep**: User preference memory (future)
 
-### Video Infrastructure (FIXED - Use Playback IDs!)
-All country destinations now feature professional video thumbnails:
-- **Cyprus**: `ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM`
-- **Dubai**: `5br2hylJ4F009vDLHrxWZ3C7UDTw5901GcXYBjSOWNV8k`
-- **Portugal**: `Oy1LRvO5eSoXGUTthBNS13r007WorSyGvf2YLh1keA5E`
-- **Malta**: `aeX9W002bzUWYKu3Ryln4hLVAplzOm7DfUKm3iZqGGz00`
-- **Singapore**: `dCBAYhMsKX7v00HaI1gHsW8tMI2HZDLlb01KJv5hGkpkI`
-- **Caribbean**: `021dUb7I5L2G9dDKBWup4efv9Sxh7ZNAtElSbYkN8C2k`
+## Content Structure
 
-**CRITICAL**: Use Playback IDs from Mux, not Asset IDs!
+### Primary Content Types
+1. **Placement Agent Profiles** (/placement-agents/[name]/)
+   - Campbell Lutyens, Park Hill, Evercore, etc.
+   - Comprehensive profiles with track records
+   - Team information from LinkedIn scraping
+   - Recent deals and news
 
-## Project Structure
-```
-/relocation-quest
-├── src/
-│   ├── pages/        # Astro pages + API routes
-│   ├── components/   # React/Astro components
-│   ├── layouts/      # Layout templates
-│   └── styles/       # Global styles
-├── public/           # Static assets
-├── sanity/           # Sanity schema (deprecated structure)
-├── scripts/          # Content management scripts
-└── dist/             # Build output
-```
+2. **List Pages** (SEO-focused)
+   - /top-private-equity-placement-agents/
+   - /placement-agents-list/
+   - /placement-agents/[city]/
+   - /placement-agent-fees/
 
-## Development Commands
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `git push origin main` - Deploy via Vercel
+3. **News & Insights**
+   - Daily aggregated PE news
+   - Deal announcements
+   - Agent rankings
+   - Market analysis
 
-## Environment Variables
-Required environment variables:
-- `PUBLIC_SANITY_PROJECT_ID` - bc08ijz6
-- `PUBLIC_SANITY_DATASET` - production
-- `PUBLIC_SANITY_API_VERSION` - 2024-01-01
-- `SANITY_API_TOKEN` - Read/write token for scripts
-- `MUX_TOKEN_ID` - Mux API token ID for video uploads
-- `MUX_TOKEN_SECRET` - Mux API secret key
-- `PUBLIC_MUX_ENV_KEY` - Mux environment key
-- `VERCEL_AI_GATEWAY_API_KEY` - AI Gateway integration
-- `CRON_SECRET` - Authentication for automated jobs
+4. **Interactive Features**
+   - Agent matching quiz
+   - Fee calculator
+   - Deal probability scoring
+   - 3D relationship visualizer
 
-## Content Quality API Credentials
-Advanced content research and verification APIs:
-- `FIRECRAWL_API_KEY` - fc-fcc00e00206d4c1db2653d3815a2b0b0 (Web scraping, PDF parsing)
-- `CRITIQUE_LABS_API_KEY` - 4W8L4b9IY0xIzPBsFHRngwQ0M-9v9TcAysgauLqh6s4 (Fact-checking, citations)
-- `LINKUP_API_KEY` - (Advanced contextual search - API key needed)
-- `TAVILY_API_KEY` - (Web search for current data and research)
+## Target Keywords (from GSC data)
 
-## 🎯 Content Quality Scoring System (0-100)
+### High Priority
+- "top private equity placement agents" (188 impressions)
+- "placement agents" (61 impressions)
+- "list of placement agents" (23 impressions)
+- "quest placement agent" (ranking well)
 
-### Scoring Algorithm
-Content quality is measured on a 0-100 scale based on:
-
-**Content Depth (40 points max)**
-- 3000+ words: 40 points
-- 2000+ words: 35 points  
-- 1000+ words: 25 points
-- 500+ words: 15 points
-- 200+ words: 5 points
-
-**Research Quality (25 points max)**
-- Tavily research used: +20 points
-- 8+ external links: +5 points
-- 4+ external links: +3 points
-- 1+ external links: +1 point
-
-**AI Enhancement (20 points max)**
-- AI-enhanced content: +15 points
-- Multiple enhancements logged: +5 points
-
-**Currency/Freshness (15 points max)**
-- Less than 3 months old: +15 points
-- Less than 6 months old: +10 points
-- Less than 12 months old: +5 points
-
-### Content Enhancement Priority
-**High Priority (Score < 60):**
-- Use Tavily for current research
-- Expand to 2000+ words
-- Add 5+ authoritative external links
-- Update with 2025 data
-
-**Medium Priority (Score 60-79):**
-- Add targeted Tavily research
-- Enhance specific sections
-- Improve internal linking
-
-**Low Priority (Score 80+):**
-- Regular freshness updates
-- Monitor for accuracy
-- Expand based on user feedback
-
-### Enhancement Tracking
-When enhancing content, always document:
-1. Tools used (Tavily, Firecrawl, Critique Labs, etc.)
-2. Date of enhancement
-3. Specific improvements made
-4. New quality score after enhancement
-
-## Deployment & Live Sites
-- **Production**: [relocation.quest](https://relocation.quest)
-- **Sanity Studio**: [relocation.quest/studio](https://relocation.quest/studio)
-- **Auto-deploy**: Pushes to main branch trigger Vercel deployment
-- **Cron Jobs**: Automated content publishing every 6 hours
+### Geographic
+- "placement agents london"
+- "placement agents new york"
+- "placement agents san antonio"
 
 ## Development Commands
 ```bash
@@ -145,176 +84,95 @@ npm run preview      # Preview production build
 git push origin main # Deploy to production
 ```
 
-## Content Management
+## Environment Variables Needed
+- `PUBLIC_SANITY_PROJECT_ID` - TO BE CREATED
+- `PUBLIC_SANITY_DATASET` - production
+- `PUBLIC_SANITY_API_VERSION` - 2024-01-01
+- `SANITY_API_TOKEN` - TO BE GENERATED
+- `MUX_TOKEN_ID` - For agent profile videos
+- `MUX_TOKEN_SECRET` - For video uploads
+- `PUBLIC_MUX_ENV_KEY` - Mux environment key
+- `VERCEL_AI_GATEWAY_API_KEY` - AI Gateway integration
+- `CRON_SECRET` - For automated news aggregation
 
-### Current Content State (September 2025)
-- **91+ articles** with complete SEO optimization
-- **14 categories** organized by topic (not geography)
-- **Enhanced Sanity schema** with comprehensive field descriptions
-- **Automated SEO generation** for all content
-- **100% categorized content** with proper organization
+## Content Research APIs
+- `FIRECRAWL_API_KEY` - fc-fcc00e00206d4c1db2653d3815a2b0b0
+- `CRITIQUE_LABS_API_KEY` - 4W8L4b9IY0xIzPBsFHRngwQ0M-9v9TcAysgauLqh6s4
+- `TAVILY_API_KEY` - TO BE OBTAINED
+- `LINKUP_API_KEY` - TO BE OBTAINED
 
-### Category Organization
-**Topical Categories (NOT Geographic):**
-- Golden Visa, Business & Investment, Digital Nomad
-- Tax & Finance, Healthcare & Education, Lifestyle & Culture
-- Residency & Immigration, and country-specific categories for active programs
+## Sanity Schema Structure (To Be Created)
 
-**Geographic Content:**
-- Countries featured in "Popular Destinations" homepage section
-- No separate category pages for countries
-- Country-specific content categorized by topic
+```javascript
+// Placement-specific schemas
+schemas/
+├── placementAgent.js    // Agent profiles
+├── fundDeal.js         // Fund closings
+├── lpInvestor.js       // LP profiles
+├── marketInsight.js    // Analysis
+├── agentRanking.js     // Rankings
+├── feeStructure.js     // Fee data
+└── newsArticle.js      // PE news
+```
 
-### SEO Optimization (Completed September 2025)
-- ✅ **Homepage SEO**: Title (47 chars), meta description (127 chars)
-- ✅ **Schema.org markup**: Organization, Website structured data  
-- ✅ **Image caching**: Vercel headers configured (24h cache)
-- ✅ **External links**: Strategic government/authority links added
-- ✅ **All articles**: Complete SEO titles, meta descriptions, focus keywords, tags
+## Current Development Status
 
-## Sanity CMS Integration
+### ✅ Completed
+- Project structure created
+- Homepage with placement agent content
+- Basic routing structure
+- Vercel deployment configured
+- Project ID recorded: prj_UllhRcVjX22e9AjRAwlwKwYjBj0x
 
-### Enhanced Schema (September 2025)
-- **Comprehensive field descriptions** for AI assistance
-- **Organized fieldsets**: Content, Media, SEO, Taxonomy, Publishing
-- **Enhanced validation** with helpful error messages
-- **Rich previews** with status information and visual indicators
+### 🔧 In Progress
+- Fixing deployment issues
+- Creating Sanity project for placement agents
+- Building additional pages
 
-### API Tokens Available
-- **Developer**: Full read/write access for content management
-- **Editor**: Content editing and publishing permissions
-- **Deploy**: Deployment operations and schema changes
+### 📋 TODO
+- Create Sanity project
+- Set up environment variables in Vercel
+- Build agent profile pages
+- Implement news aggregation
+- Set up Tavily API
+- Create fee calculator
+- Build agent matching quiz
 
-### Content Scripts (Located in `/scripts/`)
-- `auto-categorize-articles.js` - Intelligent article categorization
-- `auto-generate-seo-data.js` - Complete SEO metadata generation
-- `check-article-categories.js` - Category organization validation
-- `remove-country-categories.js` - Geographic vs topical cleanup
+## Success Metrics
 
-## 🤖 Automated Content Publishing (Operational)
+### Traffic Goals
+- Month 1: 5,000 visitors
+- Month 3: 20,000 visitors
+- Month 6: 50,000 visitors
 
-### Vercel Cron Jobs (Every 6 Hours)
-The project has fully operational automated content publishing:
+### Revenue Projections
+- Year 1: $600K-$1M
+- Year 2: $2-3M
 
-1. **Publish Content** - `/api/cron/publish-content`
-   - Schedule: Every 6 hours (00:00, 06:00, 12:00, 18:00 UTC)
-   - Publishes up to 3 draft articles per run
+## Quick Commands
 
-2. **Daily Content** - `/api/cron/daily-content`  
-   - Schedule: Daily at 9 AM UTC
-   - Creates 2-3 new articles from templates
-
-3. **Weekly Review** - `/api/cron/weekly-review`
-   - Schedule: Mondays at 10 AM UTC
-   - Generates content health reports and analytics
-
-### Monitoring & Control
-- All endpoints secured with `CRON_SECRET` authentication
-- Rate limiting: 3 articles max per run, 60s timeout
-- Manual triggering available for immediate publishing
-- Vercel dashboard monitoring at project functions page
-
-## Security & Best Practices
-- Never commit secrets or API keys to repository
-- Use environment variables for all sensitive data
-- CREDENTIALS.md excluded from git via .gitignore
-- Follow security best practices for Sanity operations
-- Validate all user inputs and external data
-
-## Testing & Quality
-- Build locally before pushing: `npm run build`
-- Test responsive design on mobile devices
-- Verify Sanity schema changes in Studio interface
-- Check TypeScript compilation for errors
-- Test cron endpoints manually when modifying
-
-## Phase Completion History
-
-### ✅ Phase 1: Foundation & Infrastructure (COMPLETED)
-**Project Successfully Built & Deployed - September 2024**
-- Clean design implementation with modern gradient theme
-- Complete page structure with working navigation (25+ pages)
-- Sanity CMS integration with optimized queries
-- Production deployment with reliable automation
-- All broken links fixed, unique icons implemented
-
-### ✅ Phase 2: Professional Video & Performance (COMPLETED)  
-**Professional Video System - September 2024**
-- Mux Player v2 integration with advanced optimizations
-- Cyprus video hero with cinematic overlay effects
-- Connection-aware quality streaming (2G→360p, 4G+→1080p)
-- Video thumbnail system for category pages
-- 99% mobile, 100% desktop PageSpeed scores maintained
-
-### ✅ Phase 3: Content & SEO Optimization (COMPLETED)
-**Comprehensive Content Management - September 2025**
-- 91+ articles with complete SEO optimization
-- Enhanced Sanity schema with AI-friendly descriptions
-- Automated SEO generation (100% completion rate)
-- Category reorganization (topic-based, not geographic)
-- All SEO audit recommendations implemented
-
-## Current Project State (September 2025) - FULLY OPERATIONAL ✅
-
-### ✅ **Production Ready & Operational**
-- **Live Site**: https://relocation.quest (fully functional)
-- **Content Management**: Sanity Studio with enhanced schema including video thumbnails
-- **Automation**: Cron jobs running every 6 hours
-- **SEO**: All critical issues resolved, optimal performance
-- **Categories**: Clean topical organization implemented
-- **Documentation**: Fully updated and comprehensive
-
-### ✅ **Video System Implementation**
-- **Mobile Video Playback**: Fixed and optimized for all devices
-- **Hero Video Sizing**: Responsive (60vh mobile, 80vh tablet, full desktop)
-- **Country Video Overlays**: Clean text overlays on video thumbnails
-- **Article Video Support**: Country-specific videos auto-display
-- **Video Thumbnails**: Curated video previews for featured articles
-- **Control Suppression**: No distracting play button overlays
-
-### ✅ **Clean Architecture**
-- **No technical debt** - all legacy code removed
-- **Unified naming** across all platforms and services  
-- **Enhanced schemas** with video support
-- **Automated systems** for content management and SEO
-- **Security best practices** implemented throughout
-- **Dynamic rendering** for video functionality
-
-### ✅ **Ready for Next Phase**
-The project is in excellent condition for future development:
-- Solid foundation with clean, maintainable code
-- Complete documentation including ideation roadmap
-- Professional video integration throughout
-- Enhanced mobile UX with optimized video experience
-- All major performance optimizations complete
-
-## Support & Troubleshooting
-
-### Common Issues Resolution
-- **Build failures**: Check TypeScript errors and import statements
-- **Sanity errors**: Verify API tokens and project configuration
-- **Vercel deployment**: Review build logs and environment variables
-- **Cron job issues**: Check authentication and rate limiting
-
-### Quick Commands
 ```bash
 # Development
 npm run dev
 
-# Production build test
-npm run build && npm run preview
+# Build for production
+npm run build
 
-# Deploy to production  
-git add . && git commit -m "Description" && git push origin main
+# Deploy to Vercel (with token)
+VERCEL_TOKEN=gAYaR1sjB2NTXl4oYQ4CrmeY npx vercel --prod --yes --token gAYaR1sjB2NTXl4oYQ4CrmeY
 
-# Check cron job logs
-VERCEL_TOKEN=gAYaR1sjB2NTXl4oYQ4CrmeY npx vercel logs https://relocation.quest --token $VERCEL_TOKEN
-
-# Test Sanity connection
-SANITY_API_TOKEN="token" node scripts/analyze-article-fields.js
+# Check deployment status
+VERCEL_TOKEN=gAYaR1sjB2NTXl4oYQ4CrmeY npx vercel ls --token gAYaR1sjB2NTXl4oYQ4CrmeY
 ```
 
+## Security & Best Practices
+- Never commit secrets or API keys to repository
+- Use environment variables for all sensitive data
+- Follow security best practices for Sanity operations
+- Validate all user inputs and external data
+
 ---
-**Last Updated**: September 25, 2025  
-**Project Status**: ✅ Production Ready & Fully Operational  
-**Next Phase**: Ready for advanced features or new requirements
+**Last Updated**: September 26, 2025
+**Project Status**: 🚧 Active Development
+**Priority**: Launch within 4 weeks
+**Vercel Project ID**: prj_UllhRcVjX22e9AjRAwlwKwYjBj0x
