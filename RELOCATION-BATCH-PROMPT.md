@@ -18,7 +18,59 @@ This document provides instructions for Claude Desktop to systematically enhance
 
 ## 📋 Enhancement Workflow
 
-### Step 1: Analyze Current Content
+### Step 1: Update Sanity Schema
+Add these fields to your post schema to track quality metrics:
+
+```javascript
+// Add to schemas/post.js in Sanity Studio
+{
+  name: 'qualityMetrics',
+  title: 'Content Quality Metrics',
+  type: 'object',
+  fields: [
+    {
+      name: 'qualityScore',
+      title: 'Quality Score (0-100)',
+      type: 'number',
+      validation: Rule => Rule.min(0).max(100)
+    },
+    {
+      name: 'wordCount',
+      title: 'Word Count',
+      type: 'number'
+    },
+    {
+      name: 'lastEnhanced',
+      title: 'Last Enhanced Date',
+      type: 'datetime'
+    },
+    {
+      name: 'toolsUsed',
+      title: 'Enhancement Tools Used',
+      type: 'array',
+      of: [{type: 'string'}],
+      options: {
+        list: [
+          {title: 'Tavily Search', value: 'tavily'},
+          {title: 'Firecrawl', value: 'firecrawl'},
+          {title: 'Critique Labs', value: 'critique'},
+          {title: 'LinkUp', value: 'linkup'},
+          {title: 'AI Enhancement', value: 'ai'},
+          {title: 'Manual Research', value: 'manual'}
+        ]
+      }
+    },
+    {
+      name: 'enhancementNotes',
+      title: 'Enhancement Notes',
+      type: 'text',
+      description: 'What was improved in this enhancement'
+    }
+  ]
+}
+```
+
+### Step 2: Analyze Current Content
 ```javascript
 // Query all articles and calculate quality scores
 *[_type == "post"] {
@@ -26,11 +78,12 @@ This document provides instructions for Claude Desktop to systematically enhance
   "wordCount": length(pt::text(body)),
   "hasExternalLinks": count(body[].markDefs[_type == "link"]) > 0,
   publishedAt,
-  _updatedAt
+  _updatedAt,
+  qualityMetrics
 }
 ```
 
-### Step 2: Prioritize Enhancement Targets
+### Step 3: Prioritize Enhancement Targets
 **High Priority (Score < 60):**
 1. Articles under 1000 words
 2. No external links
@@ -42,7 +95,7 @@ This document provides instructions for Claude Desktop to systematically enhance
 2. Few external links (1-3)
 3. 3-6 months old
 
-### Step 3: Enhancement Process
+### Step 4: Enhancement Process
 
 #### For Each Low-Scoring Article:
 
@@ -73,16 +126,16 @@ This document provides instructions for Claude Desktop to systematically enhance
    - Include related internal links
    - Update title for search intent
 
-5. **Track Enhancement**
+5. **Track Enhancement in Sanity**
    ```javascript
-   // Document in article metadata:
+   // Update the qualityMetrics field in Sanity:
    {
-     enhancementLog: {
-       date: "2025-09-25",
-       toolsUsed: ["Tavily", "Critique Labs"],
-       beforeScore: 45,
-       afterScore: 85,
-       improvements: "Added 2025 data, 8 external links, expanded to 2500 words"
+     qualityMetrics: {
+       qualityScore: 85,
+       wordCount: 2500,
+       lastEnhanced: "2025-09-25T10:00:00Z",
+       toolsUsed: ["tavily", "critique", "ai"],
+       enhancementNotes: "Added 2025 data from Tavily search, 8 authoritative external links, expanded content from 1000 to 2500 words, added comparison tables"
      }
    }
    ```
