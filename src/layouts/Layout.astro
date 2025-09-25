@@ -76,6 +76,54 @@ import CookieConsent from '../components/CookieConsent.astro';
     <meta name="revisit-after" content="7 days" />
     <meta name="theme-color" content="#1E40AF" />
     
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://relocation.quest/#organization",
+            "name": "Relocation Quest",
+            "url": "https://relocation.quest",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://relocation.quest/images/logo.png",
+              "width": 400,
+              "height": 400
+            },
+            "description": "Expert guidance on international relocation, golden visas, and tax optimization for digital nomads and expatriates.",
+            "sameAs": [
+              "https://twitter.com/RelocationQuest"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer service",
+              "availableLanguage": "English"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relocation.quest/#website", 
+            "url": "https://relocation.quest",
+            "name": "Relocation Quest",
+            "description": "Expert guidance on golden visas, international tax optimization, and global relocation for digital nomads and expatriates.",
+            "publisher": {
+              "@id": "https://relocation.quest/#organization"
+            },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://relocation.quest/search?q={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]
+      }
+    </script>
+    
     <!-- Preconnect to external domains for faster resource loading -->
     <link rel="preconnect" href="https://cdn.sanity.io" />
     <link rel="preconnect" href="https://stream.mux.com" />
