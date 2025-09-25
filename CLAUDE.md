@@ -13,6 +13,7 @@ This is the Relocation Quest project - a content platform focused on internation
 This unified naming eliminates confusion across all platforms.
 
 ## Technical Stack
+### Core Framework
 - **Frontend**: Astro 5.13.10 + React + TypeScript
 - **CMS**: Sanity Studio with enhanced schema
 - **Video**: Mux Player v2 with advanced optimizations
@@ -21,6 +22,21 @@ This unified naming eliminates confusion across all platforms.
 - **Database**: Sanity Cloud (production dataset)
 - **Analytics**: Mux Data integration
 - **Automation**: Vercel Cron Jobs for content publishing
+
+### Content Quality APIs (December 2024)
+- **Firecrawl**: Web scraping, PDF parsing, government site monitoring
+- **Critique Labs**: Autonomous fact-checking, inline citations, verification
+- **LinkUp/Tavily**: Contextual search, real-time web data access
+- **Pipeline**: Automated research → fact-checking → citation-rich content generation
+
+### Video Infrastructure
+All country destinations now feature professional video thumbnails:
+- **Cyprus**: ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM
+- **Portugal**: Z01R9CHNHPpHJU21OLIWoN02GZ2lOLi5fTWltOEKcuOQQ  
+- **Malta**: rC7EUyqkkODi01yLvxd7GDsjQpcjcrO7gV00IsBRN4Es4
+- **Dubai**: 6L02MpxKnUJVvHzC3M00n01ZoYH1XMrl01Kv6Zhi8O6ffY8
+- **Singapore**: Lq02MyaOxqH9o1Y7NEvQ3Z02w00pNl8kgfpHIkW8SmjrTw
+- **Caribbean**: bW029UWH4uUuLmWQMCoDD99JYMsKiY6Z4i500lZ600VBEU
 
 ## Project Structure
 ```
@@ -53,6 +69,12 @@ Required environment variables:
 - `PUBLIC_MUX_ENV_KEY` - Mux environment key
 - `VERCEL_AI_GATEWAY_API_KEY` - AI Gateway integration
 - `CRON_SECRET` - Authentication for automated jobs
+
+## Content Quality API Credentials
+Advanced content research and verification APIs:
+- `FIRECRAWL_API_KEY` - fc-fcc00e00206d4c1db2653d3815a2b0b0 (Web scraping, PDF parsing)
+- `CRITIQUE_LABS_API_KEY` - 4W8L4b9IY0xIzPBsFHRngwQ0M-9v9TcAysgauLqh6s4 (Fact-checking, citations)
+- `LINKUP_API_KEY` - (Advanced contextual search - API key needed)
 
 ## Deployment & Live Sites
 - **Production**: [relocation.quest](https://relocation.quest)
