@@ -5,7 +5,7 @@ export const GET = () => {
 Allow: /
 
 # Sitemap
-Sitemap: ${siteUrl}/sitemap.xml
+Sitemap: ${siteUrl}/sitemap-0.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
