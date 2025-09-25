@@ -22,12 +22,11 @@ const muxEnvKey = "26hi0t52rcm3pl738jugp7sp8";
 
 // Generate optimized poster URLs
 const desktopPoster = `https://image.mux.com/${desktopPlaybackId}/thumbnail.webp?width=1920&height=1080&fit=crop&crop=smart&q=75`;
-const mobilePoster = `https://image.mux.com/${mobilePlaybackId}/thumbnail.webp?width=750&height=1334&fit=crop&crop=smart&q=50`;
+const mobilePoster = `https://image.mux.com/${desktopPlaybackId}/thumbnail.webp?width=750&height=1334&fit=crop&crop=smart&q=50`;
 ---
 
-<!-- Preload LCP poster images for faster loading -->
-<link rel="preload" as="image" href={desktopPoster} media="(min-width: 768px)" fetchpriority="high" />
-<link rel="preload" as="image" href={mobilePoster} media="(max-width: 767px)" fetchpriority="high" />
+<!-- Preload LCP poster image for faster loading -->
+<link rel="preload" as="image" href={desktopPoster} fetchpriority="high" />
 
 <!-- Ensure Mux Player loads properly for mobile -->
 <script>
@@ -61,56 +60,28 @@ const mobilePoster = `https://image.mux.com/${mobilePlaybackId}/thumbnail.webp?w
 <div class="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-600 to-orange-500">
   <!-- Fallback gradient background (maintains current design) -->
   
-  <!-- Maximum Performance Mux Player -->
+  <!-- Single Responsive Mux Player -->
   {desktopPlaybackId && (
     <div class="absolute inset-0">
-      <!-- Desktop: High Quality -->
       <mux-player
         playback-id={desktopPlaybackId}
         metadata-video-title="Relocation Quest - Cyprus International Relocation"
         metadata-video-id={desktopPlaybackId}
-        metadata-viewer-user-id="hero-banner"
-        env-key={muxEnvKey}
-        autoplay
-        muted
-        loop
-        playback-engine="mse"
-        max-resolution="1080p"
-        min-resolution="720p"
-        style="width: 100%; height: 100%; object-fit: cover;"
-        class="w-full h-full hidden md:block"
-        poster={desktopPoster}
-        preload="none"
-        controls="false"
-        default-hidden-captions="true"
-        disable-cookies="true"
-        extra-source-params="redundant_streams=true"
-      >
-      </mux-player>
-      
-      <!-- Mobile: Ultra-Optimized Low-Res Asset -->
-      <mux-player
-        playback-id={mobilePlaybackId}
-        metadata-video-title="Relocation Quest Mobile - Cyprus Low-Res"
-        metadata-video-id={mobilePlaybackId}
-        metadata-viewer-user-id="hero-banner-mobile-optimized"
+        metadata-viewer-user-id="hero-banner-responsive"
         env-key={muxEnvKey}
         autoplay
         muted
         loop
         playsinline
-        playback-engine="mse"
-        max-resolution="480p"
-        min-resolution="360p"
         style="width: 100%; height: 100%; object-fit: cover;"
-        class="w-full h-full md:hidden"
-        poster={mobilePoster}
+        class="w-full h-full"
+        poster={desktopPoster}
         preload="metadata"
         controls="false"
         default-hidden-captions="true"
         disable-cookies="true"
-        target-live-window="5"
-        start-time="0"
+        responsive-width="100%"
+        responsive-height="100%"
       >
       </mux-player>
     </div>
