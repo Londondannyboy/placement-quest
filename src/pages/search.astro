@@ -33,7 +33,7 @@ const allPosts = await sanityClient.fetch(`*[_type == "post"] {
   mainImage,
   publishedAt,
   category->{title, slug},
-  tags[]->title
+  "tags": tags[]->title
 }`);
 
 // Get all categories
