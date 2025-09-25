@@ -42,6 +42,13 @@ export default {
         'slide-down': 'slideDown 0.3s ease-out',
         'scale': 'scale 0.2s ease-in-out',
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate',
+        'shimmer': 'shimmer 2s linear infinite',
+        'slide-in-left': 'slideInLeft 0.5s ease-out',
+        'slide-in-right': 'slideInRight 0.5s ease-out',
+        'wobble': 'wobble 0.6s ease-in-out',
+        'float': 'float 3s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -65,6 +72,39 @@ export default {
           '50%': { transform: 'scale(1.05)' },
           '100%': { transform: 'scale(1)' },
         },
+        bounceGentle: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
+        },
+        glow: {
+          '0%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.2)' },
+          '100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.4), 0 0 30px rgba(249, 115, 22, 0.2)' },
+        },
+        shimmer: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        slideInLeft: {
+          '0%': { opacity: '0', transform: 'translateX(-30px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        slideInRight: {
+          '0%': { opacity: '0', transform: 'translateX(30px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        wobble: {
+          '0%': { transform: 'rotate(0deg)' },
+          '15%': { transform: 'rotate(-5deg)' },
+          '30%': { transform: 'rotate(4deg)' },
+          '45%': { transform: 'rotate(-3deg)' },
+          '60%': { transform: 'rotate(2deg)' },
+          '75%': { transform: 'rotate(-1deg)' },
+          '100%': { transform: 'rotate(0deg)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
       },
       fontFamily: {
         sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
@@ -72,6 +112,16 @@ export default {
       boxShadow: {
         'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
         'glow': '0 0 20px rgba(59, 130, 246, 0.5)',
+        'glow-orange': '0 0 20px rgba(249, 115, 22, 0.5)',
+        'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+        'floating': '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      },
+      backdropBlur: {
+        'xs': '2px',
+      },
+      transitionProperty: {
+        'height': 'height',
+        'spacing': 'margin, padding',
       },
     },
   },

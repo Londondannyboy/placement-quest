@@ -1,0 +1,308 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import SearchBox from '../components/SearchBox.astro';
+import AnimatedSection from '../components/AnimatedSection.astro';
+import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from '@sanity/image-url';
+
+const builder = imageUrlBuilder(sanityClient);
+
+function optimizedImageUrl(source, width = 400, height = 250, quality = 80) {
+  if (!source) return null;
+  
+  return builder
+    .image(source)
+    .width(width)
+    .height(height)
+    .quality(quality)
+    .format('webp')
+    .fit('crop')
+    .crop('center')
+    .auto('format')
+    .url();
+}
+
+// Get all posts for client-side search
+const allPosts = await sanityClient.fetch(`*[_type == "post"] {
+  _id,
+  title,
+  slug,
+  excerpt,
+  mainImage,
+  publishedAt,
+  category->{title, slug},
+  tags[]->title
+}`);
+
+// Get all categories
+const categories = await sanityClient.fetch(`*[_type == "category"] {
+  title,
+  slug,
+  description
+}`);
+---
+
+<Layout 
+  title="Search - Find Relocation Information | Relocation Quest"
+  description="Search through our comprehensive database of international relocation articles, Golden Visa programs, tax guides, and expat resources."
+  keywords="search relocation, find visa information, international living search, expat guides search"
+>
+  <!-- Search Header -->
+  <section class="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-orange-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <AnimatedSection class="text-center mb-8">
+        <h1 class="text-4xl font-bold mb-4 text-gray-900">Search Relocation Resources</h1>
+        <p class="text-xl text-gray-600">Find exactly what you need for your international move</p>
+      </AnimatedSection>
+      
+      <AnimatedSection delay={1}>
+        <SearchBox size="lg" class="max-w-2xl mx-auto" />
+      </AnimatedSection>
+    </div>
+  </section>
+
+  <!-- Search Results Container -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      
+      <!-- Search Results -->
+      <div id="search-results" class="hidden">
+        <div class="mb-8">
+          <h2 class="text-2xl font-bold mb-2">Search Results</h2>
+          <p id="results-count" class="text-gray-600"></p>
+        </div>
+        
+        <div id="results-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Results will be populated by JavaScript -->
+        </div>
+        
+        <div id="no-results" class="hidden text-center py-12">
+          <div class="text-6xl mb-4">🔍</div>
+          <h3 class="text-xl font-semibold mb-2">No results found</h3>
+          <p class="text-gray-600 mb-4">Try searching with different keywords or browse our categories below.</p>
+        </div>
+      </div>
+
+      <!-- Popular Categories -->
+      <div id="popular-categories">
+        <AnimatedSection class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4">Browse by Category</h2>
+          <p class="text-xl text-gray-600">Explore our most popular relocation topics</p>
+        </AnimatedSection>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {categories.slice(0, 8).map((category, index) => (
+            <AnimatedSection delay={Math.floor(index / 4) + 1}>
+              <a 
+                href={`/categories/${category.slug?.current || '#'}`}
+                class="block p-6 bg-white rounded-xl shadow-soft hover:shadow-xl transition-all hover:-translate-y-1 group"
+              >
+                <h3 class="text-lg font-bold mb-2 group-hover:text-primary-600 transition-colors">
+                  {category.title}
+                </h3>
+                <p class="text-gray-600 text-sm">
+                  {category.description || "Explore articles in this category"}
+                </p>
+              </a>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+
+      <!-- Recent Articles -->
+      <div class="mt-16">
+        <AnimatedSection class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4">Recent Articles</h2>
+          <p class="text-xl text-gray-600">Latest insights and guides</p>
+        </AnimatedSection>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {allPosts.slice(0, 6).map((post, index) => (
+            <AnimatedSection delay={Math.floor(index / 3) + 1}>
+              <article class="bg-white rounded-xl shadow-soft hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden">
+                {post.mainImage && (
+                  <div class="aspect-video overflow-hidden">
+                    <img
+                      src={optimizedImageUrl(post.mainImage, 400, 225)}
+                      alt={post.title}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <div class="p-6">
+                  {post.category && (
+                    <span class="text-sm text-primary-600 font-medium">
+                      {post.category.title}
+                    </span>
+                  )}
+                  <h3 class="text-xl font-bold mt-2 mb-3">
+                    <a 
+                      href={`/articles/${post.slug?.current || '#'}`}
+                      class="hover:text-primary-600 transition-colors"
+                    >
+                      {post.title}
+                    </a>
+                  </h3>
+                  <p class="text-gray-600 line-clamp-2">
+                    {post.excerpt}
+                  </p>
+                </div>
+              </article>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script define:vars={{allPosts, categories}}>
+  let searchData = allPosts.map(post => ({
+    ...post,
+    searchText: `${post.title} ${post.excerpt || ''} ${post.category?.title || ''} ${post.tags?.join(' ') || ''}`.toLowerCase()
+  }));
+
+  function performSearch(query) {
+    if (!query || query.length < 2) {
+      showInitialState();
+      return;
+    }
+
+    const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 0);
+    const results = searchData.filter(post => {
+      return searchTerms.some(term => post.searchText.includes(term));
+    });
+
+    displayResults(results, query);
+  }
+
+  function displayResults(results, query) {
+    const resultsContainer = document.getElementById('search-results');
+    const popularCategories = document.getElementById('popular-categories');
+    const resultsGrid = document.getElementById('results-grid');
+    const resultsCount = document.getElementById('results-count');
+    const noResults = document.getElementById('no-results');
+
+    // Show results container
+    resultsContainer.classList.remove('hidden');
+    popularCategories.classList.add('hidden');
+
+    if (results.length === 0) {
+      resultsGrid.classList.add('hidden');
+      noResults.classList.remove('hidden');
+      resultsCount.textContent = `No results found for "${query}"`;
+      return;
+    }
+
+    // Hide no results
+    noResults.classList.add('hidden');
+    resultsGrid.classList.remove('hidden');
+    
+    // Update results count
+    const resultText = results.length === 1 ? 'result' : 'results';
+    resultsCount.textContent = `Found ${results.length} ${resultText} for "${query}"`;
+
+    // Populate results
+    resultsGrid.innerHTML = results.map(post => `
+      <article class="bg-white rounded-xl shadow-soft hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden">
+        ${post.mainImage ? `
+          <div class="aspect-video overflow-hidden">
+            <img
+              src="${post.mainImage.asset ? builder.image(post.mainImage).width(400).height(225).quality(80).format('webp').fit('crop').crop('center').auto('format').url() : ''}"
+              alt="${post.title}"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+          </div>
+        ` : ''}
+        <div class="p-6">
+          ${post.category ? `
+            <span class="text-sm text-primary-600 font-medium">
+              ${post.category.title}
+            </span>
+          ` : ''}
+          <h3 class="text-xl font-bold mt-2 mb-3">
+            <a 
+              href="/articles/${post.slug?.current || '#'}"
+              class="hover:text-primary-600 transition-colors"
+            >
+              ${post.title}
+            </a>
+          </h3>
+          <p class="text-gray-600 line-clamp-2">
+            ${post.excerpt || ''}
+          </p>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  function showInitialState() {
+    const resultsContainer = document.getElementById('search-results');
+    const popularCategories = document.getElementById('popular-categories');
+    
+    resultsContainer.classList.add('hidden');
+    popularCategories.classList.remove('hidden');
+  }
+
+  function initSearch() {
+    // Check URL parameters for search query
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    
+    if (query) {
+      const searchInput = document.querySelector('input[type="search"]');
+      if (searchInput) {
+        searchInput.value = query;
+        performSearch(query);
+      }
+    }
+
+    // Listen for search form submissions
+    const searchForm = document.querySelector('form[role="search"]');
+    if (searchForm) {
+      searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const query = new FormData(e.target).get('q');
+        if (query) {
+          // Update URL without page reload
+          const newUrl = new URL(window.location);
+          newUrl.searchParams.set('q', query);
+          window.history.pushState({}, '', newUrl);
+          
+          performSearch(query);
+        }
+      });
+    }
+
+    // Listen for input changes (real-time search)
+    const searchInput = document.querySelector('input[type="search"]');
+    if (searchInput) {
+      let debounceTimer;
+      searchInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          const query = e.target.value.trim();
+          if (query.length >= 2) {
+            performSearch(query);
+          } else if (query.length === 0) {
+            showInitialState();
+          }
+        }, 300);
+      });
+    }
+  }
+
+  // Initialize search functionality
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearch);
+  } else {
+    initSearch();
+  }
+
+  // Re-initialize for SPA navigation
+  document.addEventListener('astro:page-load', initSearch);
+</script>

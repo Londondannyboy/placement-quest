@@ -3,6 +3,8 @@ export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
 import VideoHero from '../components/VideoHero.astro';
+import AnimatedSection from '../components/AnimatedSection.astro';
+import EnhancedButton from '../components/EnhancedButton.astro';
 import { sanityClient } from 'sanity:client';
 import imageUrlBuilder from '@sanity/image-url';
 
@@ -128,70 +130,82 @@ function getCategoryIcon(categoryTitle) {
   />
 
   <!-- Features Section -->
-  <section class="py-16 bg-white">
+  <section class="py-16 bg-white overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold mb-4">Why Choose Relocation Quest?</h2>
+      <AnimatedSection class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4 text-gradient-primary">Why Choose Relocation Quest?</h2>
         <p class="text-xl text-gray-600 max-w-2xl mx-auto">Comprehensive resources and expert guidance for your international move</p>
-      </div>
+      </AnimatedSection>
       
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="text-center p-6">
-          <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <svg class="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-            </svg>
+        <AnimatedSection delay={1} class="hover-lift">
+          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 rounded-full animate-float">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3 text-gray-900">Golden Visa Programs</h3>
+            <p class="text-gray-600">Navigate investment residency programs in Cyprus, Portugal, Malta, and more. Get expert guidance on requirements and benefits.</p>
           </div>
-          <h3 class="text-xl font-bold mb-3">Golden Visa Programs</h3>
-          <p class="text-gray-600">Navigate investment residency programs in Cyprus, Portugal, Malta, and more. Get expert guidance on requirements and benefits.</p>
-        </div>
-        <div class="text-center p-6">
-          <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <svg class="w-10 h-10 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M8 5a1 1 0 100 2v6h1V7a1 1 0 001-1V6a1 1 0 00-1-1zm2 13a1 1 0 100-2v-6H9v6a1 1 0 001 1z"/>
-              <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd"/>
-            </svg>
+        </AnimatedSection>
+        <AnimatedSection delay={2} class="hover-lift">
+          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-green-500 to-green-600 rounded-full animate-float">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M8 5a1 1 0 100 2v6h1V7a1 1 0 001-1V6a1 1 0 00-1-1zm2 13a1 1 0 100-2v-6H9v6a1 1 0 001 1z"/>
+                <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3 text-gray-900">Tax Optimization</h3>
+            <p class="text-gray-600">Understand international tax planning, non-dom status, and how to legally minimize your tax burden abroad.</p>
           </div>
-          <h3 class="text-xl font-bold mb-3">Tax Optimization</h3>
-          <p class="text-gray-600">Understand international tax planning, non-dom status, and how to legally minimize your tax burden abroad.</p>
-        </div>
-        <div class="text-center p-6">
-          <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <svg class="w-10 h-10 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd" />
-            </svg>
+        </AnimatedSection>
+        <AnimatedSection delay={3} class="hover-lift">
+          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-purple-500 to-purple-600 rounded-full animate-float">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3 text-gray-900">Digital Nomad Visas</h3>
+            <p class="text-gray-600">Discover countries offering remote work visas and learn how to work from paradise legally.</p>
           </div>
-          <h3 class="text-xl font-bold mb-3">Digital Nomad Visas</h3>
-          <p class="text-gray-600">Discover countries offering remote work visas and learn how to work from paradise legally.</p>
-        </div>
-        <div class="text-center p-6">
-          <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <svg class="w-10 h-10 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
-            </svg>
+        </AnimatedSection>
+        <AnimatedSection delay={1} class="hover-lift">
+          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full animate-float">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3 text-gray-900">Company Formation</h3>
+            <p class="text-gray-600">Set up your business in tax-efficient jurisdictions with our comprehensive guides and partner network.</p>
           </div>
-          <h3 class="text-xl font-bold mb-3">Company Formation</h3>
-          <p class="text-gray-600">Set up your business in tax-efficient jurisdictions with our comprehensive guides and partner network.</p>
-        </div>
-        <div class="text-center p-6">
-          <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <svg class="w-10 h-10 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
-              <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
-            </svg>
+        </AnimatedSection>
+        <AnimatedSection delay={2} class="hover-lift">
+          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full animate-float">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+                <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3 text-gray-900">Banking & Finance</h3>
+            <p class="text-gray-600">Open international bank accounts, understand FATCA/CRS requirements, and manage your wealth globally.</p>
           </div>
-          <h3 class="text-xl font-bold mb-3">Banking & Finance</h3>
-          <p class="text-gray-600">Open international bank accounts, understand FATCA/CRS requirements, and manage your wealth globally.</p>
-        </div>
-        <div class="text-center p-6">
-          <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <svg class="w-10 h-10 text-rose-600" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-            </svg>
+        </AnimatedSection>
+        <AnimatedSection delay={3} class="hover-lift">
+          <div class="text-center p-6 bg-white rounded-xl shadow-soft transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-rose-500 to-rose-600 rounded-full animate-float">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3 text-gray-900">Lifestyle & Culture</h3>
+            <p class="text-gray-600">From finding schools to understanding healthcare systems, we cover all aspects of expat life.</p>
           </div>
-          <h3 class="text-xl font-bold mb-3">Lifestyle & Culture</h3>
-          <p class="text-gray-600">From finding schools to understanding healthcare systems, we cover all aspects of expat life.</p>
-        </div>
+        </AnimatedSection>
       </div>
     </div>
   </section>
@@ -260,17 +274,21 @@ function getCategoryIcon(categoryTitle) {
         ))}
       </div>
       
-      <div class="text-center mt-12">
-        <a 
+      <AnimatedSection class="text-center mt-12">
+        <EnhancedButton 
           href="/articles" 
-          class="inline-flex items-center px-8 py-4 bg-gradient-primary text-white rounded-full hover:shadow-glow transform hover:scale-105 transition-all font-semibold text-lg"
+          variant="primary" 
+          size="lg"
+          magnetic={true}
+          shimmer={true}
+          ariaLabel="View all relocation articles"
         >
           View All Articles
           <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
-        </a>
-      </div>
+        </EnhancedButton>
+      </AnimatedSection>
     </div>
   </section>
 
@@ -473,13 +491,22 @@ function getCategoryIcon(categoryTitle) {
   </section>
 
   <!-- Call to Action Section -->
-  <section class="py-16 bg-gradient-to-r from-blue-600 to-orange-500 text-white">
+  <section class="py-16 bg-gradient-to-r from-blue-600 to-orange-500 text-white overflow-hidden">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <h2 class="text-4xl font-bold mb-4">Ready to Start Your Relocation Journey?</h2>
-      <p class="text-xl mb-8 text-blue-100">Get expert guidance and comprehensive resources for your international move</p>
-      <a href="/articles" class="inline-block bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-        Explore All Articles
-      </a>
+      <AnimatedSection>
+        <h2 class="text-4xl font-bold mb-4">Ready to Start Your Relocation Journey?</h2>
+        <p class="text-xl mb-8 text-blue-100">Get expert guidance and comprehensive resources for your international move</p>
+        <EnhancedButton 
+          href="/articles" 
+          variant="secondary"
+          size="lg"
+          magnetic={true}
+          class="bg-white text-blue-600 hover:bg-gray-50"
+          ariaLabel="Explore all relocation articles to start your journey"
+        >
+          Explore All Articles
+        </EnhancedButton>
+      </AnimatedSection>
     </div>
   </section>
 </Layout>

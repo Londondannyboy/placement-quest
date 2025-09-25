@@ -1,0 +1,79 @@
+---
+export interface Props {
+  class?: string;
+  delay?: number;
+  animation?: 'fade-up' | 'slide-in-left' | 'slide-in-right' | 'scale' | 'fade-in';
+  triggerOnce?: boolean;
+}
+
+const { 
+  class: className = '',
+  delay = 0,
+  animation = 'fade-up',
+  triggerOnce = true
+} = Astro.props;
+
+const delayClass = delay > 0 ? `stagger-${Math.min(delay, 5)}` : '';
+---
+
+<div 
+  class={`animate-on-scroll ${delayClass} ${className}`}
+  data-animation={animation}
+  data-trigger-once={triggerOnce}
+>
+  <slot />
+</div>
+
+<script>
+  // Intersection Observer for scroll animations
+  function initScrollAnimations() {
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    
+    if (!animatedElements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const element = entry.target;
+            const animation = element.getAttribute('data-animation') || 'fade-up';
+            const triggerOnce = element.getAttribute('data-trigger-once') === 'true';
+            
+            // Add the animation class
+            element.classList.add('animate-in');
+            element.classList.add(`animate-${animation}`);
+            
+            // Remove from observer if triggerOnce is true
+            if (triggerOnce) {
+              observer.unobserve(element);
+            }
+          } else {
+            // Remove animation if triggerOnce is false (allows re-triggering)
+            const triggerOnce = entry.target.getAttribute('data-trigger-once') === 'true';
+            if (!triggerOnce) {
+              entry.target.classList.remove('animate-in');
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    animatedElements.forEach((element) => {
+      observer.observe(element);
+    });
+  }
+
+  // Initialize on DOM content loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollAnimations);
+  } else {
+    initScrollAnimations();
+  }
+
+  // Re-initialize for dynamic content
+  document.addEventListener('astro:page-load', initScrollAnimations);
+</script>

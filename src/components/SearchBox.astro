@@ -1,0 +1,168 @@
+---
+export interface Props {
+  placeholder?: string;
+  class?: string;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const {
+  placeholder = 'Search articles, countries, topics...',
+  class: className = '',
+  size = 'md'
+} = Astro.props;
+
+const sizeClasses = {
+  sm: 'px-3 py-2 text-sm',
+  md: 'px-4 py-3 text-base',
+  lg: 'px-6 py-4 text-lg'
+};
+---
+
+<div class={`relative ${className}`}>
+  <form action="/search" method="GET" class="relative" role="search">
+    <div class="relative">
+      <input
+        type="search"
+        name="q"
+        placeholder={placeholder}
+        class={`w-full ${sizeClasses[size]} pl-12 pr-4 border border-gray-300 rounded-full bg-white/95 backdrop-blur-sm shadow-soft focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white transition-all duration-200 outline-none`}
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search site content"
+      />
+      
+      <!-- Search Icon -->
+      <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+      
+      <!-- Loading Spinner (hidden by default) -->
+      <div class="absolute right-4 top-1/2 transform -translate-y-1/2 hidden" id="search-loading">
+        <div class="animate-spin rounded-full h-4 w-4 border-2 border-primary-500 border-t-transparent"></div>
+      </div>
+    </div>
+
+    <!-- Search Suggestions Dropdown -->
+    <div 
+      id="search-suggestions" 
+      class="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-floating border border-gray-100 z-50 hidden"
+      role="listbox"
+      aria-label="Search suggestions"
+    >
+      <div class="p-4">
+        <div class="text-sm text-gray-500 mb-3">Popular searches:</div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" class="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-full text-gray-700 transition-colors" onclick="setSearch('golden visa')">
+            Golden Visa
+          </button>
+          <button type="button" class="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-full text-gray-700 transition-colors" onclick="setSearch('cyprus residency')">
+            Cyprus Residency
+          </button>
+          <button type="button" class="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-full text-gray-700 transition-colors" onclick="setSearch('tax optimization')">
+            Tax Optimization
+          </button>
+          <button type="button" class="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-full text-gray-700 transition-colors" onclick="setSearch('digital nomad visa')">
+            Digital Nomad Visa
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  function initSearchBox() {
+    const searchInput = document.querySelector('input[type="search"]');
+    const suggestionsBox = document.getElementById('search-suggestions');
+    const loadingSpinner = document.getElementById('search-loading');
+
+    if (!searchInput || !suggestionsBox) return;
+
+    // Show suggestions on focus
+    searchInput.addEventListener('focus', () => {
+      suggestionsBox.classList.remove('hidden');
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+        suggestionsBox.classList.add('hidden');
+      }
+    });
+
+    // Handle input changes
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.trim();
+      
+      if (query.length > 2) {
+        // Show loading spinner
+        loadingSpinner.classList.remove('hidden');
+        
+        // Simulate search delay
+        setTimeout(() => {
+          loadingSpinner.classList.add('hidden');
+        }, 500);
+      }
+    });
+
+    // Handle form submission
+    searchInput.closest('form').addEventListener('submit', (e) => {
+      const query = searchInput.value.trim();
+      
+      if (!query) {
+        e.preventDefault();
+        return;
+      }
+
+      // Track search event (for analytics)
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'search', {
+          search_term: query
+        });
+      }
+    });
+
+    // Keyboard navigation
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        suggestionsBox.classList.add('hidden');
+        searchInput.blur();
+      }
+    });
+  }
+
+  // Set search query from suggestion
+  function setSearch(query) {
+    const searchInput = document.querySelector('input[type="search"]');
+    const suggestionsBox = document.getElementById('search-suggestions');
+    
+    if (searchInput && suggestionsBox) {
+      searchInput.value = query;
+      suggestionsBox.classList.add('hidden');
+      searchInput.closest('form').submit();
+    }
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearchBox);
+  } else {
+    initSearchBox();
+  }
+
+  // Re-initialize for dynamic content
+  document.addEventListener('astro:page-load', initSearchBox);
+</script>
+
+<style>
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  input[type="search"] {
+    -webkit-appearance: textfield;
+  }
+</style>
