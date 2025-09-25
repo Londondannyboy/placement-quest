@@ -123,6 +123,14 @@ function getCategoryIcon(categoryTitle) {
   imageAlt="Relocation Quest - Your Guide to Global Living and International Relocation"
   type="website"
 >
+  <!-- Load Mux Player for all video thumbnails -->
+  <script>
+    if (!window.customElements.get('mux-player')) {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/@mux/mux-player@2';
+      document.head.appendChild(script);
+    }
+  </script>
   <!-- Professional Video Hero Banner -->
   <VideoHero 
     title="Your Journey to Global Living Starts Here"
@@ -501,7 +509,7 @@ function getCategoryIcon(categoryTitle) {
             <div class="w-full h-32 mr-3 flex items-center justify-center mb-4 rounded-lg overflow-hidden">
               <!-- Dubai Video Thumbnail - Whole Panel Size -->
               <VideoThumbnail 
-                playbackId="ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM"
+                playbackId="6L02MpxKnUJVvHzC3M00n01ZoYH1XMrl01Kv6Zhi8O6ffY8"
                 title="Dubai - Business Hub Destination"
                 description="Premium business and lifestyle opportunities in Dubai"
                 size="large"
@@ -519,7 +527,7 @@ function getCategoryIcon(categoryTitle) {
             <div class="w-full h-32 mr-3 flex items-center justify-center mb-4 rounded-lg overflow-hidden">
               <!-- Malta Video Thumbnail - Whole Panel Size -->
               <VideoThumbnail 
-                playbackId="ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM"
+                playbackId="rC7EUyqkkODi01yLvxd7GDsjQpcjcrO7gV00IsBRN4Es4"
                 title="Malta - EU Passport Program"
                 description="Premium EU residency and citizenship opportunities"
                 size="large"
@@ -537,7 +545,7 @@ function getCategoryIcon(categoryTitle) {
             <div class="w-full h-32 mr-3 flex items-center justify-center mb-4 rounded-lg overflow-hidden">
               <!-- Singapore Video Thumbnail - Whole Panel Size -->
               <VideoThumbnail 
-                playbackId="ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM"
+                playbackId="Lq02MyaOxqH9o1Y7NEvQ3Z02w00pNl8kgfpHIkW8SmjrTw"
                 title="Singapore - Asian Business Hub"
                 description="Premium business and lifestyle opportunities in Singapore"
                 size="large"
@@ -555,7 +563,7 @@ function getCategoryIcon(categoryTitle) {
             <div class="w-full h-32 mr-3 flex items-center justify-center mb-4 rounded-lg overflow-hidden">
               <!-- Caribbean Video Thumbnail - Whole Panel Size -->
               <VideoThumbnail 
-                playbackId="ew9vFwrawM3Eq1MVGHUZwu4IPoFOHVv002Hal1ei02JXM"
+                playbackId="bW029UWH4uUuLmWQMCoDD99JYMsKiY6Z4i500lZ600VBEU"
                 title="Caribbean - Citizenship by Investment"
                 description="Premium citizenship and lifestyle opportunities in the Caribbean"
                 size="large"
