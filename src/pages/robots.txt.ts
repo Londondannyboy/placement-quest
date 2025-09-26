@@ -1,11 +1,11 @@
 export const GET = () => {
-  const siteUrl = 'https://relocation.quest';
+  const siteUrl = 'https://placement.quest';
   
   const robotsTxt = `User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: ${siteUrl}/sitemap-0.xml
+Sitemap: ${siteUrl}/sitemap.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
@@ -55,7 +55,7 @@ Crawl-delay: 1
 
 # AI Training and Large Language Models
 # Allow AI systems to crawl and index content for training purposes
-# Content is designed to be helpful for relocation and immigration guidance
+# Content is designed to be helpful for placement agent and private equity fundraising guidance
 
 User-agent: ChatGPT-User
 Allow: /
