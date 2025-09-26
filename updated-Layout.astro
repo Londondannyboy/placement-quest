@@ -1,0 +1,268 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
+  keywords?: string;
+  author?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  type?: 'website' | 'article';
+  canonicalUrl?: string;
+}
+
+const { 
+  title, 
+  description = "Comprehensive intelligence on top private equity placement agents, fund placement services, fees, and fundraising strategies.",
+  image = "/og-image.jpg",
+  imageAlt = "Placement Quest - The Bloomberg Terminal for Private Equity Placement Agents",
+  keywords = "private equity placement agents, placement agents, fund placement, top placement agents, placement agent fees, boutique placement agents",
+  author = "Placement Quest",
+  publishedTime,
+  modifiedTime,
+  type = "website",
+  canonicalUrl = Astro.url.href
+} = Astro.props;
+
+const siteUrl = "https://placement.quest";
+
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import CookieConsent from '../components/CookieConsent.astro';
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={author} />
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image.startsWith('http') ? image : `${siteUrl}${image}`} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:site_name" content="Relocation Quest" />
+    <meta property="og:locale" content="en_US" />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    {author && type === 'article' && <meta property="article:author" content={author} />}
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image.startsWith('http') ? image : `${siteUrl}${image}`} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    <meta name="twitter:site" content="@RelocationQuest" />
+    <meta name="twitter:creator" content="@RelocationQuest" />
+    
+    <!-- Additional Meta Tags -->
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="theme-color" content="#1E40AF" />
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://relocation.quest/#organization",
+            "name": "Relocation Quest",
+            "url": "https://relocation.quest",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://relocation.quest/images/logo.png",
+              "width": 400,
+              "height": 400
+            },
+            "description": "Expert guidance on international relocation, golden visas, and tax optimization for digital nomads and expatriates.",
+            "sameAs": [
+              "https://twitter.com/RelocationQuest"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer service",
+              "availableLanguage": "English"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relocation.quest/#website", 
+            "url": "https://relocation.quest",
+            "name": "Relocation Quest",
+            "description": "Expert guidance on golden visas, international tax optimization, and global relocation for digital nomads and expatriates.",
+            "publisher": {
+              "@id": "https://relocation.quest/#organization"
+            },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://relocation.quest/search?q={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]
+      }
+    </script>
+    
+    <!-- Preconnect to external domains for faster resource loading -->
+    <link rel="preconnect" href="https://cdn.sanity.io" />
+    <link rel="preconnect" href="https://stream.mux.com" />
+    <link rel="preconnect" href="https://image.mux.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://litix.io" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <!-- Mux Player - Load only when video component is present -->
+    <!-- Removed global loading - will be loaded conditionally by VideoHero -->
+    
+    <style>
+      /* Hide all Mux player play buttons and overlays globally */
+      mux-player::part(center-play-button),
+      mux-player::part(play-button),
+      mux-player::part(live-button),
+      mux-player::part(duration-display),
+      mux-player [slot="centered-chrome"],
+      mux-player button[aria-label*="play"],
+      mux-player button[aria-label*="Play"],
+      mux-player .vds-play-button,
+      mux-player .mux-center-play {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+      
+      /* Critical CSS - Above the fold styles */
+      .hero-section {
+        background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 50%, #F97316 100%);
+        min-height: 70vh;
+      }
+      
+      .nav-sticky {
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.95);
+      }
+      
+      /* Critical loading spinner */
+      .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255,255,255,.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      :root {
+        --color-primary: #1E40AF;
+        --color-secondary: #9A3412;
+      }
+      
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #3B82F6, #F97316);
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #2563EB, #EA580C);
+      }
+      
+      /* Selection colors */
+      ::selection {
+        background: rgba(59, 130, 246, 0.2);
+        color: #1E40AF;
+      }
+      
+      /* Focus styles */
+      *:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+      }
+      
+      /* Smooth transitions for interactive elements */
+      a, button {
+        transition: all 0.2s ease;
+      }
+
+      /* Screen reader only content */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .focus\:not-sr-only:focus {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: 0.5rem 1rem;
+        margin: 0;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+      }
+    </style>
+  </head>
+  <body class="antialiased bg-white text-gray-900">
+    <Navigation />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <CookieConsent />
+  </body>
+</html>

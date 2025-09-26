@@ -13,8 +13,8 @@ This is the Placement Quest project - The Bloomberg Terminal for Private Equity 
 - **GitHub Repository**: `placement-quest`
 - **Vercel Project**: `placement-quest`
 - **Vercel Project ID**: `prj_UllhRcVjX22e9AjRAwlwKwYjBj0x`
-- **Sanity Project**: TO BE CREATED (new project needed)
-- **Local Directory**: `/Users/dankeegan/placement-quest-code`
+- **Sanity Project ID**: `7gr5b7wx`
+- **Local Directory**: `/Users/dankeegan/Placement-quest/`
 
 ## Technical Stack (Inherited from Relocation-Quest)
 ### Core Framework

@@ -19,6 +19,9 @@ pnpm-debug.log*
 
 # credentials and sensitive data
 CREDENTIALS.md
+placement-agents-credentials.md
+**/placement-agents-credentials.md
+*-credentials.md
 
 # macOS-specific files
 .DS_Store

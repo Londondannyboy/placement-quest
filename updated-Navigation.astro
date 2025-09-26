@@ -1,0 +1,244 @@
+---
+// Navigation component for Placement Quest - Private Equity Placement Agents
+import SearchBox from './SearchBox.astro';
+---
+
+<!-- Skip to main content link for screen readers -->
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-blue-600 text-white px-4 py-2 rounded-md z-50">
+  Skip to main content
+</a>
+
+<nav class="bg-white shadow-lg border-b border-gray-100 sticky top-0 z-50" role="navigation" aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a href="/" class="flex items-center">
+          <div class="w-8 h-8 bg-gradient-to-r from-blue-900 to-yellow-500 rounded-full flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+              <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <span class="text-xl font-bold bg-gradient-to-r from-blue-900 to-yellow-500 bg-clip-text text-transparent">
+            Placement Quest
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        <!-- Navigation Links -->
+        <div class="flex items-baseline space-x-6">
+          <a href="/" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+            Home
+          </a>
+          <div class="relative group">
+            <button class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+              Placement Agents
+              <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <div class="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div class="py-1">
+                <a href="/placement-agents" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium">All Placement Agents</a>
+                <div class="border-t border-gray-100 my-1"></div>
+                <a href="/top-private-equity-placement-agents" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Top PE Placement Agents</a>
+                <a href="/boutique-placement-agents" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Boutique Agents</a>
+                <a href="/global-placement-agents" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Global Agents</a>
+                <a href="/placement-agents-by-region" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">By Region</a>
+                <a href="/placement-agent-rankings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">2025 Rankings</a>
+              </div>
+            </div>
+          </div>
+          <div class="relative group">
+            <button class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+              Fund Deals
+              <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <div class="absolute left-0 mt-2 w-56 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div class="py-1">
+                <a href="/fund-deals" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium">Active Fundraising</a>
+                <div class="border-t border-gray-100 my-1"></div>
+                <a href="/recent-closings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Recent Closings</a>
+                <a href="/buyout-funds" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Buyout Funds</a>
+                <a href="/growth-equity" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Growth Equity</a>
+                <a href="/venture-capital" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Venture Capital</a>
+                <a href="/real-estate-funds" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Real Estate</a>
+              </div>
+            </div>
+          </div>
+          <div class="relative group">
+            <button class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+              Resources
+              <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <div class="absolute left-0 mt-2 w-52 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div class="py-1">
+                <a href="/market-insights" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium">Market Insights</a>
+                <div class="border-t border-gray-100 my-1"></div>
+                <a href="/placement-agent-fees" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Fee Benchmarking</a>
+                <a href="/fundraising-guide" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Fundraising Guide</a>
+                <a href="/lp-database" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">LP Database</a>
+                <a href="/league-tables" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">League Tables</a>
+              </div>
+            </div>
+          </div>
+          <a href="/news" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+            News
+          </a>
+        </div>
+        
+        <!-- Search Box -->
+        <div class="flex-shrink-0">
+          <SearchBox 
+            size="sm" 
+            placeholder="Search agents..." 
+            class="w-64" 
+          />
+        </div>
+        
+        <!-- Additional Links -->
+        <div class="flex items-baseline space-x-4">
+          <a href="/about" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+            About
+          </a>
+          <a href="/contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+            Contact
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 p-2 rounded-md" aria-label="Open mobile navigation menu" aria-expanded="false">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="img" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Menu -->
+  <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100" role="navigation" aria-label="Mobile navigation menu">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+        Home
+      </a>
+      <a href="/search" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+        🔍 Search
+      </a>
+      <div class="space-y-1">
+        <button id="mobile-agents-toggle" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 flex items-center justify-between" aria-expanded="false" aria-controls="mobile-agents-submenu">
+          Placement Agents
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <div id="mobile-agents-submenu" class="hidden pl-4 space-y-1">
+          <a href="/placement-agents" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-medium">All Agents</a>
+          <a href="/top-private-equity-placement-agents" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Top PE Agents</a>
+          <a href="/boutique-placement-agents" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Boutique Agents</a>
+          <a href="/global-placement-agents" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Global Agents</a>
+          <a href="/placement-agent-rankings" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">2025 Rankings</a>
+        </div>
+      </div>
+      <div class="space-y-1">
+        <button id="mobile-deals-toggle" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 flex items-center justify-between" aria-expanded="false" aria-controls="mobile-deals-submenu">
+          Fund Deals
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <div id="mobile-deals-submenu" class="hidden pl-4 space-y-1">
+          <a href="/fund-deals" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Active Fundraising</a>
+          <a href="/recent-closings" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Recent Closings</a>
+          <a href="/buyout-funds" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Buyout Funds</a>
+          <a href="/growth-equity" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Growth Equity</a>
+          <a href="/real-estate-funds" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Real Estate</a>
+        </div>
+      </div>
+      <div class="space-y-1">
+        <button id="mobile-resources-toggle" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 flex items-center justify-between" aria-expanded="false" aria-controls="mobile-resources-submenu">
+          Resources
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <div id="mobile-resources-submenu" class="hidden pl-4 space-y-1">
+          <a href="/market-insights" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-medium">Market Insights</a>
+          <a href="/placement-agent-fees" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Fee Benchmarking</a>
+          <a href="/fundraising-guide" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">Fundraising Guide</a>
+          <a href="/lp-database" class="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">LP Database</a>
+        </div>
+      </div>
+      <a href="/news" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+        News
+      </a>
+      <a href="/about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+        About
+      </a>
+      <a href="/contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+        Contact
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script defer>
+  // Mobile menu functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const agentsToggle = document.getElementById('mobile-agents-toggle');
+    const agentsSubmenu = document.getElementById('mobile-agents-submenu');
+    const dealsToggle = document.getElementById('mobile-deals-toggle');
+    const dealsSubmenu = document.getElementById('mobile-deals-submenu');
+    const resourcesToggle = document.getElementById('mobile-resources-toggle');
+    const resourcesSubmenu = document.getElementById('mobile-resources-submenu');
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', function() {
+        const isHidden = mobileMenu.classList.toggle('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', !isHidden);
+      });
+    }
+
+    if (agentsToggle && agentsSubmenu) {
+      agentsToggle.addEventListener('click', function() {
+        const isHidden = agentsSubmenu.classList.toggle('hidden');
+        agentsToggle.setAttribute('aria-expanded', !isHidden);
+      });
+    }
+
+    if (dealsToggle && dealsSubmenu) {
+      dealsToggle.addEventListener('click', function() {
+        const isHidden = dealsSubmenu.classList.toggle('hidden');
+        dealsToggle.setAttribute('aria-expanded', !isHidden);
+      });
+    }
+
+    if (resourcesToggle && resourcesSubmenu) {
+      resourcesToggle.addEventListener('click', function() {
+        const isHidden = resourcesSubmenu.classList.toggle('hidden');
+        resourcesToggle.setAttribute('aria-expanded', !isHidden);
+      });
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      if (mobileMenuButton && mobileMenu) {
+        if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+          mobileMenu.classList.add('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', 'false');
+        }
+      }
+    });
+  });
+</script>
